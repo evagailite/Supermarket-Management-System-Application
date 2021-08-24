@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="577.0" prefWidth="763.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdministratorPanelController">
+   <children>
+      <BorderPane fx:id="bp" prefHeight="600.0" prefWidth="793.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <VBox alignment="TOP_CENTER" prefHeight="537.0" prefWidth="198.0" style="-fx-background-color: CCD5DB;" BorderPane.alignment="CENTER">
+               <children>
+                  <Pane prefHeight="3.0" prefWidth="198.0" />
+                  <Pane prefHeight="3.0" prefWidth="198.0" />
+                  <JFXButton fx:id="buttonCreateProduct" onAction="#handleButtonAction" prefHeight="33.0" prefWidth="187.0" style="-fx-background-color: #EEEEEE; -fx-background-radius: 10;" styleClass="shadow" stylesheets="@../../../java/style/style.css" text="Create Product">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </JFXButton>
+                  <Pane prefHeight="3.0" prefWidth="198.0" />
+                  <JFXButton fx:id="buttonEditProduct" onAction="#handleButtonAction" prefHeight="33.0" prefWidth="187.0" style="-fx-background-color: #EEEEEE; -fx-background-radius: 10;" styleClass="shadow" stylesheets="@../../../java/style/style.css" text="Edit Product">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <Pane prefHeight="3.0" prefWidth="198.0" />
+                  <JFXButton fx:id="buttonViewProducts" onAction="#handleButtonAction" prefHeight="33.0" prefWidth="187.0" style="-fx-background-color: #EEEEEE; -fx-background-radius: 10;" styleClass="shadow" stylesheets="@../../../java/style/style.css" text="View Products">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <Pane prefHeight="3.0" prefWidth="198.0" />
+                  <JFXButton fx:id="buttonSalesReports" onAction="#handleButtonAction" prefHeight="33.0" prefWidth="187.0" style="-fx-background-color: #EEEEEE; -fx-background-radius: 10;" styleClass="shadow" stylesheets="@../../../java/style/style.css" text="Sales Reports">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <Pane prefHeight="3.0" prefWidth="198.0" />
+                  <JFXButton fx:id="buttonUsers" onAction="#handleButtonAction" prefHeight="33.0" prefWidth="187.0" style="-fx-background-color: #EEEEEE; -fx-background-radius: 10;" styleClass="shadow" stylesheets="@../../../java/style/style.css" text="Users">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <Pane prefHeight="3.0" prefWidth="198.0" />
+                  <Pane prefHeight="3.0" prefWidth="198.0" />
+                  <Pane layoutX="10.0" layoutY="46.0" prefHeight="3.0" prefWidth="198.0" />
+                  <Pane layoutX="10.0" layoutY="92.0" prefHeight="3.0" prefWidth="198.0" />
+                  <Pane layoutX="10.0" layoutY="124.0" prefHeight="3.0" prefWidth="198.0" />
+               </children>
+            </VBox>
+         </left>
+         <top>
+            <HBox alignment="CENTER_LEFT" prefHeight="63.0" prefWidth="800.0" style="-fx-background-color: #526069;" BorderPane.alignment="CENTER">
+               <children>
+                  <AnchorPane prefHeight="63.0" prefWidth="315.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="label_welcome_admin" layoutX="24.0" layoutY="17.0" text="Administrator Panel" textFill="WHITE" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="93.0" AnchorPane.topAnchor="17.0">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                  <AnchorPane prefHeight="63.0" prefWidth="276.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Button fx:id="buttonLoggedOut" layoutX="208.0" layoutY="19.0" mnemonicParsing="false" style="-fx-background-color: #EEEEEE; -fx-background-radius: 10;" styleClass="search-box" stylesheets="@../../../java/style/style.css" text="Logout" AnchorPane.bottomAnchor="19.0" AnchorPane.rightAnchor="5.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </HBox>
+         </top>
+         <center>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #e4eaec;" BorderPane.alignment="CENTER">
+               <center>
+                  <AnchorPane fx:id="ap" prefHeight="536.0" prefWidth="595.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <StackPane fx:id="" prefHeight="485.0" prefWidth="596.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <AnchorPane prefHeight="533.0" prefWidth="597.0">
+                                 <children>
+                                    <AnchorPane fx:id="anchorPaneUsers" prefHeight="516.0" prefWidth="565.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <GridPane prefHeight="516.0" prefWidth="565.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <TableView prefHeight="200.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+                                                   <columns>
+                                                      <TableColumn prefWidth="75.0" text="C1" />
+                                                      <TableColumn prefWidth="75.0" text="C2" />
+                                                   </columns>
+                                                </TableView>
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </AnchorPane>
+                                    <Pane fx:id="panelCreateProduct" layoutX="-2.0" layoutY="-8.0" prefHeight="516.0" prefWidth="565.0" style="-fx-background-color: red;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <Pane fx:id="panelViewProducts" layoutX="8.0" layoutY="2.0" prefHeight="516.0" prefWidth="565.0" style="-fx-background-color: green;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <Pane fx:id="panelEditProduct" layoutX="8.0" prefHeight="514.0" prefWidth="565.0" style="-fx-background-color: blue;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <AnchorPane fx:id="anchorPaneSalesReports" prefHeight="516.0" prefWidth="565.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <GridPane prefHeight="516.0" prefWidth="565.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <TableView prefHeight="200.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+                                                  <columns>
+                                                    <TableColumn prefWidth="75.0" text="C1" />
+                                                    <TableColumn prefWidth="75.0" text="C2" />
+                                                  </columns>
+                                                </TableView>
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
+                           </children></StackPane>
+                     </children>
+                  </AnchorPane>
+               </center>
+            </BorderPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

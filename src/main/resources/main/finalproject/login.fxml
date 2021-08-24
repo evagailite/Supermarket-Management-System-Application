@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="793.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+    <children>
+      <BorderPane prefHeight="600.0" prefWidth="728.0" HBox.hgrow="ALWAYS">
+         <center>
+            <HBox prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                    <AnchorPane prefHeight="600.0" prefWidth="600.0" HBox.hgrow="ALWAYS">
+                        <children>
+                        <AnchorPane layoutX="36.0" layoutY="247.0" prefHeight="254.0" prefWidth="400.0">
+                           <children>
+                                  <ImageView fitHeight="248.0" fitWidth="417.0" layoutX="14.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="541.1358642578125">
+                                      <image>
+                                          <Image url="@images/fruitCollage.png" />
+                                      </image>
+                                  </ImageView>
+                                  <Label layoutX="489.0" layoutY="145.0" text="Don't have an account?">
+                                      <font>
+                                          <Font size="13.0" />
+                                      </font>
+                                  </Label>
+                              <Label alignment="CENTER" layoutX="441.0" layoutY="-77.0" opacity="0.91" prefHeight="30.0" prefWidth="236.0" text="Login to your account" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                                  <Button fx:id="buttonSignUp" layoutX="513.0" layoutY="155.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="91.0" style="-fx-background-color: transperent; -fx-cursor: hand;" text="Sign up!" textFill="#4e961c" underline="true">
+                                      <font>
+                                          <Font name="System Bold" size="13.0" />
+                                      </font>
+                                  </Button>
+                                  <Button fx:id="buttonLogIn" alignment="CENTER" layoutX="467.0" layoutY="82.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="183.0" style="-fx-background-color: #4e961c; -fx-cursor: hand; -fx-background-radius: 5;" text="Login" textAlignment="CENTER" textFill="WHITE">
+                                      <font>
+                                          <Font name="System Bold" size="14.0" />
+                                      </font>
+                                  </Button>
+                                  <PasswordField fx:id="passwordTextField" alignment="CENTER" layoutX="464.0" layoutY="25.0" prefHeight="28.0" prefWidth="183.0" promptText="Password" style="-fx-background-radius: 5;" />
+                                  <TextField fx:id="usernameTextField" alignment="CENTER" layoutX="464.0" layoutY="-15.0" prefHeight="28.0" prefWidth="183.0" promptText="Username" style="-fx-background-radius: 5;" />
+                              <ImageView fitHeight="20.0" fitWidth="17.0" layoutX="477.0" layoutY="29.0" opacity="0.32" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../../../../finalProjectAccentureBootcamp/src/sample/images/keys.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="22.0" fitWidth="18.0" layoutX="475.0" layoutY="-10.0" opacity="0.32" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../../../../finalProjectAccentureBootcamp/src/sample/images/user-profile.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <Label layoutX="63.0" layoutY="121.0" text="THE">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="63.0" layoutY="150.0" text="SUPER">
+                           <font>
+                              <Font name="System Bold" size="36.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="173.0" layoutY="150.0" style="-fx-font-color: #4E961C;" text="MARKET" textFill="#4e961c">
+                           <font>
+                              <Font name="System Bold" size="36.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="105.0" layoutY="195.0" text="Shopping has never been so easy" textFill="#4e961c">
+                           <font>
+                              <Font name="System Italic" size="12.0" />
+                           </font>
+                        </Label>
+                        </children>
+                    </AnchorPane>
+               </children>
+            </HBox>
+         </center>
+      </BorderPane>
+    </children>
+</HBox>
