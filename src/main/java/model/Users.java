@@ -3,12 +3,23 @@ package model;
 import types.UserType;
 
 public class Users {
+    private Integer id;
     private String username;
     private String name;
     private String email;
     private String password;
     private double budget;
     private UserType userType;
+
+    public Users(Integer id, String username, String name,
+                 String email, double budget, UserType userType) {
+        this.id = id;
+        this.username = username;
+        this.name = name;
+        this.email = email;
+        this.budget = budget;
+        this.userType = userType;
+    }
 
     public Users(String username, String name, String email, String password, double budget, UserType userType) {
         this.username = username;
@@ -25,6 +36,14 @@ public class Users {
     }
 
     public Users() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Users(UserType userType) {

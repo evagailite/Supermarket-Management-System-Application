@@ -44,3 +44,6 @@ operation_date date not null,
 primary key(balance_id),
 foreign key(user) references user(user_id)
 );
+
+SELECT user_id, username, name, email, budget, user_type
+FROM user;

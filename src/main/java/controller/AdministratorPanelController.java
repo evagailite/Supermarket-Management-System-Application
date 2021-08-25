@@ -1,17 +1,25 @@
 package controller;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import model.Users;
 import service.UserService;
+import types.UserType;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 
@@ -50,6 +58,28 @@ public class AdministratorPanelController implements Initializable {
     @FXML
     private AnchorPane anchorPaneUsers;
 
+
+    @FXML
+    private TableView<Users> userTable;
+
+    @FXML
+    private TableColumn<Users, Integer> columnId;
+
+    @FXML
+    private TableColumn<Users, String> columnUsername;
+
+    @FXML
+    private TableColumn<Users, String> columnName;
+
+    @FXML
+    private TableColumn<Users, String> columnEmail;
+
+    @FXML
+    private TableColumn<Users, Double> columnBudget;
+
+    @FXML
+    private TableColumn<Users, UserType> columnUserType;
+
     @FXML
     void handleButtonAction(ActionEvent event) {
         if (event.getSource() == buttonCreateProduct) {
@@ -62,9 +92,27 @@ public class AdministratorPanelController implements Initializable {
             anchorPaneSalesReports.toFront();
         } else if (event.getSource() == buttonUsers) {
             anchorPaneUsers.toFront();
+            showAllUsers();
         }
     }
 
+    private void showAllUsers() {
+        ObservableList<Users> userList;
+
+        columnId.setCellValueFactory(new PropertyValueFactory<Users, Integer>("id"));
+        columnUsername.setCellValueFactory(new PropertyValueFactory<Users, String>("username"));
+        columnName.setCellValueFactory(new PropertyValueFactory<Users, String>("name"));
+        columnEmail.setCellValueFactory(new PropertyValueFactory<Users, String>("email"));
+        columnBudget.setCellValueFactory(new PropertyValueFactory<Users, Double>("budget"));
+        columnUserType.setCellValueFactory(new PropertyValueFactory<Users, UserType>("userType"));
+
+        try {
+            userList = userService.getAllUsers();
+            userTable.setItems(userList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -80,10 +128,6 @@ public class AdministratorPanelController implements Initializable {
                 }
             }
         });
-
     }
 
-    public void setAdminInformation(String username) {
-        //  label_welcome_admin.setText("Welcome " + username + "!");
-    }
 }

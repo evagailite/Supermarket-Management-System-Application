@@ -102,7 +102,7 @@
                            <children>
                               <AnchorPane prefHeight="533.0" prefWidth="597.0">
                                  <children>
-                                    <AnchorPane fx:id="anchorPaneUsers" prefHeight="516.0" prefWidth="565.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <AnchorPane fx:id="anchorPaneSalesReports" prefHeight="516.0" prefWidth="565.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
                                           <GridPane prefHeight="516.0" prefWidth="565.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <columnConstraints>
@@ -125,7 +125,7 @@
                                     <Pane fx:id="panelCreateProduct" layoutX="-2.0" layoutY="-8.0" prefHeight="516.0" prefWidth="565.0" style="-fx-background-color: red;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                     <Pane fx:id="panelViewProducts" layoutX="8.0" layoutY="2.0" prefHeight="516.0" prefWidth="565.0" style="-fx-background-color: green;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                     <Pane fx:id="panelEditProduct" layoutX="8.0" prefHeight="514.0" prefWidth="565.0" style="-fx-background-color: blue;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                    <AnchorPane fx:id="anchorPaneSalesReports" prefHeight="516.0" prefWidth="565.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <AnchorPane fx:id="anchorPaneUsers" prefHeight="516.0" prefWidth="565.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
                                           <GridPane prefHeight="516.0" prefWidth="565.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <columnConstraints>
@@ -135,10 +135,14 @@
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <TableView prefHeight="200.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+                                                <TableView fx:id="userTable" prefHeight="200.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
                                                   <columns>
-                                                    <TableColumn prefWidth="75.0" text="C1" />
-                                                    <TableColumn prefWidth="75.0" text="C2" />
+                                                    <TableColumn fx:id="columnId" prefWidth="37.600035071372986" text="ID" />
+                                                    <TableColumn fx:id="columnUsername" prefWidth="112.79999542236328" text="Username" />
+                                                      <TableColumn fx:id="columnName" prefWidth="75.0" text="Name" />
+                                                      <TableColumn fx:id="columnEmail" prefWidth="146.40005493164062" text="Email" />
+                                                      <TableColumn fx:id="columnBudget" minWidth="0.0" prefWidth="56.0" text="Budget" />
+                                                      <TableColumn fx:id="columnUserType" prefWidth="134.39999389648438" text="User Type" />
                                                   </columns>
                                                 </TableView>
                                              </children>

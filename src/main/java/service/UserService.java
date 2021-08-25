@@ -3,9 +3,12 @@ package service;
 import controller.ViewController;
 import database.DBHandler;
 import database.Queries;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import model.Users;
+import types.UserType;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -77,5 +80,21 @@ public class UserService extends ViewController {
         DBHandler.closeConnections(resultSet, preparedStatement, connection);
     }
 
+    public ObservableList<Users> getAllUsers() throws SQLException {
+        connection = DBHandler.getConnection();
+        ObservableList<Users> users = FXCollections.observableArrayList();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_ALL_USERS);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            users.add(new Users(resultSet.getInt("user_id"),
+                    resultSet.getString("username"),
+                    resultSet.getString("name"),
+                    resultSet.getString("email"),
+                    resultSet.getDouble("budget"),
+                    UserType.valueOf(resultSet.getString("user_type"))));
+        }
+     //   DBHandler.closeConnections(resultSet, preparedStatement, connection);
+        return users;
+    }
 
 }

@@ -9,4 +9,5 @@ public class Queries {
 
     public static final String CHECK_USERNAME = "SELECT * FROM user WHERE username = ?";
 
+    public static final String GET_ALL_USERS = "SELECT user_id, username, name, email, budget, user_type FROM user";
 }
