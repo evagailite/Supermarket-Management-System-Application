@@ -31,8 +31,8 @@ public class SignUpController extends ViewController implements Initializable {
     private TextField nameTextField;
     @FXML
     private TextField emailTextField;
-    @FXML
-    private TextField budgetTextField;
+//    @FXML
+//    private TextField budgetTextField;
 
     UserService userService = new UserService();
 
@@ -60,7 +60,7 @@ public class SignUpController extends ViewController implements Initializable {
                             nameTextField.getText(),
                             emailTextField.getText(),
                             passwordTextField.getText(),
-                            Double.parseDouble(budgetTextField.getText()),
+                            500,
                             UserType.CUSTOMER
                     );
                     userService.signUpUser(user, event);

@@ -124,7 +124,6 @@
                                     </AnchorPane>
                                     <Pane fx:id="panelCreateProduct" layoutX="-2.0" layoutY="-8.0" prefHeight="516.0" prefWidth="565.0" style="-fx-background-color: red;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                     <Pane fx:id="panelViewProducts" layoutX="8.0" layoutY="2.0" prefHeight="516.0" prefWidth="565.0" style="-fx-background-color: green;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                    <Pane fx:id="panelEditProduct" layoutX="8.0" prefHeight="514.0" prefWidth="565.0" style="-fx-background-color: blue;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                     <AnchorPane fx:id="anchorPaneUsers" prefHeight="516.0" prefWidth="565.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
                                           <GridPane prefHeight="516.0" prefWidth="565.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -149,6 +148,8 @@
                                           </GridPane>
                                        </children>
                                     </AnchorPane>
+                                    <Pane fx:id="panelEditProduct" layoutX="8.0" prefHeight="514.0" prefWidth="565.0" style="-fx-background-color: blue;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <Pane fx:id="startPanel" layoutX="-1.0" prefHeight="526.0" prefWidth="577.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                  </children>
                               </AnchorPane>
                            </children></StackPane>

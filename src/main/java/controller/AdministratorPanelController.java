@@ -1,7 +1,6 @@
 package controller;
 
 import com.jfoenix.controls.JFXButton;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,9 +21,11 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-
 public class AdministratorPanelController implements Initializable {
+
     UserService userService = new UserService();
+    @FXML
+    public Pane startPanel;
     @FXML
     private Button buttonLoggedOut;
 
@@ -57,7 +58,6 @@ public class AdministratorPanelController implements Initializable {
 
     @FXML
     private AnchorPane anchorPaneUsers;
-
 
     @FXML
     private TableView<Users> userTable;
@@ -128,6 +128,12 @@ public class AdministratorPanelController implements Initializable {
                 }
             }
         });
+
+        showFirstPage();
+    }
+
+    private void showFirstPage() {
+        startPanel.toFront();
     }
 
 }
