@@ -1,6 +1,3 @@
-create database if not exists supermarket;
-use supermarket;
-
 create table if not exists user(
 user_id int auto_increment not null,
 username varchar(50) not null,

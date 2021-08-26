@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 
 public class SignUpController extends ViewController implements Initializable {
     @FXML
-    public PasswordField tf_password_confirm;
+    public PasswordField passwordConfirmationTextField;
     @FXML
     private Button buttonSignUp;
     @FXML
@@ -54,7 +54,7 @@ public class SignUpController extends ViewController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    validateUserInfo();
+                    validateUserInfo(passwordTextField.getText(), passwordConfirmationTextField.getText());
                     Users user = new Users(
                             usernameTextField.getText(),
                             nameTextField.getText(),
@@ -72,12 +72,12 @@ public class SignUpController extends ViewController implements Initializable {
         });
     }
 
-    private void validateUserInfo() throws Exception {
-        if (!passwordTextField.getText().equals(tf_password_confirm.getText()))
+    public void validateUserInfo(String password, String passwordConfirmation) throws Exception {
+        if (!password.equals(passwordConfirmation))
             throw new Exception("Password does not match, confirm password");
-        if (passwordTextField.getText().length() < 4)
+        if (password.length() < 4)
             throw new Exception("Password needs to be minimum 4 characters");
-        if (passwordTextField.getText().length() < 5)
+        if (password.length() < 5)
             throw new Exception("Username needs to be minimum 5 characters");
     }
 

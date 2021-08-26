@@ -16,9 +16,9 @@ import java.util.ResourceBundle;
 
 public class LoginController extends ViewController implements Initializable {
     @FXML
-    private Button buttonLogIn;
+    private Button loginButton;
     @FXML
-    private Button buttonSignUp;
+    private Button signUpButton;
 
     @FXML
     private TextField usernameTextField;
@@ -30,7 +30,7 @@ public class LoginController extends ViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        buttonLogIn.setOnAction(new EventHandler<ActionEvent>() {
+        loginButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 try {
@@ -41,7 +41,7 @@ public class LoginController extends ViewController implements Initializable {
             }
         });
 
-        buttonSignUp.setOnAction(new EventHandler<ActionEvent>() {
+        signUpButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 try {

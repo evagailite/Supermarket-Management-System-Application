@@ -93,8 +93,23 @@ public class UserService extends ViewController {
                     resultSet.getDouble("budget"),
                     UserType.valueOf(resultSet.getString("user_type"))));
         }
-     //   DBHandler.closeConnections(resultSet, preparedStatement, connection);
+        //   DBHandler.closeConnections(resultSet, preparedStatement, connection);
         return users;
     }
 
+    public void createUser(Users users) throws SQLException {
+        connection = DBHandler.getConnection();
+
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.CREATE_USER);
+        preparedStatement.setString(1, users.getUsername());
+        preparedStatement.setString(2, users.getPassword());
+        preparedStatement.setString(3, users.getName());
+        preparedStatement.setString(4, users.getEmail());
+        preparedStatement.setDouble(5, users.getBudget());
+        preparedStatement.setString(6, String.valueOf(users.getUserType()));
+        preparedStatement.executeUpdate();
+
+        showAlert("User Created", "User created successfully", Alert.AlertType.CONFIRMATION);
+        DBHandler.closeConnections(preparedStatement, connection);
+    }
 }

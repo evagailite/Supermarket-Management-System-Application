@@ -5,6 +5,8 @@ module main.finalproject {
     requires java.sql;
     requires commons.configuration;
     requires com.jfoenix;
+    requires lombok;
+    requires java.desktop;
 
 
     opens main.finalproject to javafx.fxml, javafx.base;

@@ -34,7 +34,7 @@
                                     </font>
                                 </Label>
                                 <TextField fx:id="usernameTextField" alignment="CENTER" layoutX="112.0" layoutY="175.0" prefHeight="28.0" prefWidth="183.0" promptText="Username" style="-fx-background-radius: 5;" />
-                                <PasswordField fx:id="tf_password_confirm" alignment="CENTER" layoutX="112.0" layoutY="251.0" prefHeight="28.0" prefWidth="183.0" promptText="Confirm password" style="-fx-background-radius: 5;" />
+                                <PasswordField fx:id="passwordConfirmationTextField" alignment="CENTER" layoutX="112.0" layoutY="251.0" prefHeight="28.0" prefWidth="183.0" promptText="Confirm password" style="-fx-background-radius: 5;" />
                                 <Button fx:id="buttonSignUp" layoutX="112.0" layoutY="386.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="183.0" style="-fx-background-color: #4e961c; -fx-background-radius: 5;" text="Sign Up" textFill="WHITE">
                                     <font>
                                         <Font name="System Bold" size="14.0" />

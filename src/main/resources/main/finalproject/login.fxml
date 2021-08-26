@@ -36,12 +36,12 @@
                                     <Font name="System Bold" size="20.0" />
                                  </font>
                               </Label>
-                                  <Button fx:id="buttonSignUp" layoutX="513.0" layoutY="155.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="91.0" style="-fx-background-color: transperent; -fx-cursor: hand;" text="Sign up!" textFill="#4e961c" underline="true">
+                                  <Button fx:id="signUpButton" layoutX="513.0" layoutY="155.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="91.0" style="-fx-background-color: transperent; -fx-cursor: hand;" text="Sign up!" textFill="#4e961c" underline="true">
                                       <font>
                                           <Font name="System Bold" size="13.0" />
                                       </font>
                                   </Button>
-                                  <Button fx:id="buttonLogIn" alignment="CENTER" layoutX="467.0" layoutY="82.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="183.0" style="-fx-background-color: #4e961c; -fx-cursor: hand; -fx-background-radius: 5;" text="Login" textAlignment="CENTER" textFill="WHITE">
+                                  <Button fx:id="loginButton" alignment="CENTER" layoutX="467.0" layoutY="82.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="183.0" style="-fx-background-color: #4e961c; -fx-cursor: hand; -fx-background-radius: 5;" text="Login" textAlignment="CENTER" textFill="WHITE">
                                       <font>
                                           <Font name="System Bold" size="14.0" />
                                       </font>

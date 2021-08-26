@@ -1,76 +1,51 @@
 package model;
 
+import javafx.scene.control.Button;
 import types.Category;
 import types.ProductUnit;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class Product {
-
+    private Integer id;
     private String name;
-    private double price;
-    private double quantityInStock;
+    private double quantity;
     private double pricePerUnit;
     private ProductUnit productUnit;
     private Category category;
+    private String image;
 
-    public Product(String name, double price, double quantityInStock,
-                   double pricePerUnit, ProductUnit productUnit, Category category) {
+    public Product(Integer id, String name, double quantity,
+                   double pricePerUnit, ProductUnit productUnit, Category category, String image) {
+        this.id = id;
         this.name = name;
-        this.price = price;
-        this.quantityInStock = quantityInStock;
+        this.quantity = quantity;
         this.pricePerUnit = pricePerUnit;
         this.productUnit = productUnit;
         this.category = category;
+        this.image = image;
     }
 
-    public Product() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public Product(String name, double quantity, double pricePerUnit,
+                   ProductUnit productUnit, Category category, String image) {
         this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public double getQuantityInStock() {
-        return quantityInStock;
-    }
-
-    public void setQuantityInStock(double quantityInStock) {
-        this.quantityInStock = quantityInStock;
-    }
-
-    public ProductUnit getProductUnit() {
-        return productUnit;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public double getPricePerUnit() {
-        return pricePerUnit;
-    }
-
-    public void setPricePerUnit(double pricePerUnit) {
+        this.quantity = quantity;
         this.pricePerUnit = pricePerUnit;
-    }
-
-    public void setProductUnit(ProductUnit productUnit) {
         this.productUnit = productUnit;
+        this.category = category;
+        this.image = image;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public Product(String name, double quantity, double pricePerUnit,
+                   String productUnit, String category, String image) {
+        this.name = name;
+        this.quantity = quantity;
+        this.pricePerUnit = pricePerUnit;
+        this.productUnit = ProductUnit.valueOf(productUnit);
+        this.category = Category.valueOf(category);
+        this.image = image;
     }
 
 }
