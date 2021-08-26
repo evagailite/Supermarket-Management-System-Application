@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -87,7 +90,7 @@
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                   <AnchorPane prefHeight="63.0" prefWidth="276.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Button fx:id="buttonLoggedOut" layoutX="208.0" layoutY="19.0" mnemonicParsing="false" style="-fx-background-color: #EEEEEE; -fx-background-radius: 10;" styleClass="search-box" stylesheets="@../../../java/style/style.css" text="Logout" AnchorPane.bottomAnchor="19.0" AnchorPane.rightAnchor="5.0" />
+                        <Button fx:id="buttonLoggedOut" layoutX="199.0" layoutY="19.0" mnemonicParsing="false" style="-fx-background-color: #EEEEEE; -fx-background-radius: 10;" styleClass="search-box" stylesheets="@../../../java/style/style.css" text="Logout" AnchorPane.bottomAnchor="19.0" AnchorPane.rightAnchor="14.0" />
                      </children>
                   </AnchorPane>
                </children>
@@ -122,7 +125,6 @@
                                           </GridPane>
                                        </children>
                                     </AnchorPane>
-                                    <Pane fx:id="panelCreateProduct" layoutX="-2.0" layoutY="-8.0" prefHeight="516.0" prefWidth="565.0" style="-fx-background-color: red;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                     <Pane fx:id="panelViewProducts" layoutX="8.0" layoutY="2.0" prefHeight="516.0" prefWidth="565.0" style="-fx-background-color: green;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                     <AnchorPane fx:id="anchorPaneUsers" prefHeight="516.0" prefWidth="565.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
@@ -150,6 +152,43 @@
                                     </AnchorPane>
                                     <Pane fx:id="panelEditProduct" layoutX="8.0" prefHeight="514.0" prefWidth="565.0" style="-fx-background-color: blue;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                     <Pane fx:id="startPanel" layoutX="-1.0" prefHeight="526.0" prefWidth="577.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <Pane fx:id="panelCreateProduct" layoutX="-2.0" layoutY="-8.0" prefHeight="516.0" prefWidth="565.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <AnchorPane prefHeight="222.0" prefWidth="566.0">
+                                             <children>
+                                                <GridPane prefHeight="226.0" prefWidth="565.0">
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <TableView prefHeight="226.0" prefWidth="585.0">
+                                                        <columns>
+                                                          <TableColumn fx:id="idProductColumn" prefWidth="39.999998450279236" text="ID" />
+                                                          <TableColumn fx:id="productNameColumn" prefWidth="110.39995574951172" text="Product Name" />
+                                                            <TableColumn fx:id="productQtyColumn" prefWidth="52.0" text="QTY" />
+                                                            <TableColumn fx:id="productPriceColumn" prefWidth="63.20001220703125" text="Price" />
+                                                            <TableColumn fx:id="productUnitColumn" prefWidth="63.20001220703125" text="Unit" />
+                                                            <TableColumn fx:id="productCategoryColumn" prefWidth="63.20001220703125" text="Category" />
+                                                            <TableColumn fx:id="productImageColumn" prefWidth="63.20001220703125" text="Image" />
+                                                            <TableColumn fx:id="productActionColumn" prefWidth="106.39995727539065" text="Actions" />
+                                                        </columns>
+                                                      </TableView>
+                                                   </children>
+                                                </GridPane>
+                                             </children>
+                                          </AnchorPane>
+                                          <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="330.0" layoutY="247.0" pickOnBounds="true" preserveRatio="true" />
+                                          <TextField fx:id="productNameTextField" layoutX="30.0" layoutY="268.0" prefHeight="28.0" prefWidth="267.0" promptText="Product Name" />
+                                          <TextField fx:id="priceTextField" layoutX="30.0" layoutY="310.0" prefHeight="25.0" prefWidth="66.0" promptText="price" />
+                                          <TextField fx:id="quantityTextField" layoutX="114.0" layoutY="310.0" prefHeight="25.0" prefWidth="66.0" promptText="quantity" />
+                                          <JFXButton fx:id="browseImageButton" layoutX="384.0" layoutY="422.0" text="Browse Image" />
+                                          <JFXButton fx:id="createProductButton" layoutX="64.0" layoutY="461.0" text="Create Product" />
+                                          <JFXComboBox fx:id="unitComboBox" layoutX="32.0" layoutY="351.0" opacity="0.57" prefHeight="25.0" prefWidth="152.0" promptText="Choose unit" />
+                                          <JFXComboBox fx:id="categoryComboBox" layoutX="31.0" layoutY="397.0" opacity="0.57" prefHeight="25.0" prefWidth="155.0" promptText="Choose category" />
+                                       </children></Pane>
                                  </children>
                               </AnchorPane>
                            </children></StackPane>
