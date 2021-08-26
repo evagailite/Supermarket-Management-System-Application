@@ -32,78 +32,54 @@ public class AdministratorPanelController implements Initializable {
     public Pane startPanel;
     @FXML
     private Button buttonLoggedOut;
-
     @FXML
     private JFXButton buttonCreateProduct;
-
     @FXML
     private JFXButton buttonEditProduct;
-
     @FXML
     private JFXButton buttonViewProducts;
-
     @FXML
     private JFXButton buttonSalesReports;
-
     @FXML
     private JFXButton buttonUsers;
-
     @FXML
     private Pane panelCreateProduct;
-
     @FXML
     private Pane panelEditProduct;
-
     @FXML
     private Pane panelViewProducts;
-
     @FXML
     private AnchorPane anchorPaneSalesReports;
-
     @FXML
     private AnchorPane anchorPaneUsers;
-
     @FXML
     private TableView<Users> userTable;
-
     @FXML
     private TableColumn<Users, Integer> columnId;
-
     @FXML
     private TableColumn<Users, String> columnUsername;
-
     @FXML
     private TableColumn<Users, String> columnName;
-
     @FXML
     private TableColumn<Users, String> columnEmail;
-
     @FXML
     private TableColumn<Users, Double> columnBudget;
-
     @FXML
     private TableColumn<Users, UserType> columnUserType;
-
     @FXML
     private TextField productNameTextField;
-
     @FXML
     private TextField priceTextField;
-
     @FXML
     private TextField quantityTextField;
-
     @FXML
     private JFXButton browseImageButton;
-
-    @FXML
-    private JFXButton createProductButton;
-
     @FXML
     private JFXComboBox<ProductUnit> unitComboBox;
-
     @FXML
     private JFXComboBox<Category> categoryComboBox;
+    @FXML
+    private JFXButton handleCreateButtonAction;
 
     @FXML
     void handleButtonAction(ActionEvent event) {
@@ -154,6 +130,13 @@ public class AdministratorPanelController implements Initializable {
             }
         });
 
+        handleCreateButtonAction.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+
+            }
+        });
+
         showFirstPage();
 
         setComboBoxValues();
@@ -167,5 +150,11 @@ public class AdministratorPanelController implements Initializable {
     private void showFirstPage() {
         startPanel.toFront();
     }
+
+    private void getComboBoxSelectedChoice() {
+        unitComboBox.getSelectionModel().getSelectedItem();
+        categoryComboBox.getSelectionModel().getSelectedItem();
+    }
+
 
 }
