@@ -57,12 +57,16 @@ public class ProductService extends ViewController {
         return products;
     }
 
-    public void deleteProduct(String id) throws SQLException {
+    public void deleteProduct(Integer id) throws SQLException {
         connection = DBHandler.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(Queries.DELETE_PRODUCT);
-        preparedStatement.setString(1, id);
+        preparedStatement.setString(1, String.valueOf(id));
         preparedStatement.executeUpdate();
-        showAlert("Product Deleted", "Product deleted successfully", Alert.AlertType.CONFIRMATION);
+       // showAlert("Product Deleted", "Product deleted successfully", Alert.AlertType.CONFIRMATION);
         DBHandler.closeConnections(preparedStatement, connection);
+    }
+
+    public void editProduct(Integer id){
+
     }
 }

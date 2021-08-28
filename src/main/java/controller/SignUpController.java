@@ -54,16 +54,21 @@ public class SignUpController extends ViewController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    validateUserInfo(passwordTextField.getText(), passwordConfirmationTextField.getText());
-                    Users user = new Users(
-                            usernameTextField.getText(),
-                            nameTextField.getText(),
-                            emailTextField.getText(),
-                            passwordTextField.getText(),
-                            500,
-                            UserType.CUSTOMER
-                    );
-                    userService.signUpUser(user, event);
+                    if (usernameTextField.getText().isEmpty() || nameTextField.getText().isEmpty() || emailTextField.getText().isEmpty() ||
+                            passwordTextField.getText().isEmpty() || passwordConfirmationTextField.getText().isEmpty()) {
+                        showAlert("Error", "Please fill all fields", Alert.AlertType.ERROR);
+                    } else {
+                        validateUserInfo(passwordTextField.getText(), passwordConfirmationTextField.getText(), usernameTextField.getText());
+                        Users user = new Users(
+                                usernameTextField.getText(),
+                                nameTextField.getText(),
+                                emailTextField.getText(),
+                                passwordTextField.getText(),
+                                500,
+                                UserType.CUSTOMER
+                        );
+                        userService.signUpUser(user, event);
+                    }
                 } catch (Exception e) {
                     showAlert("Registration Failed", e.getMessage(), Alert.AlertType.ERROR);
                     e.printStackTrace();
@@ -72,13 +77,13 @@ public class SignUpController extends ViewController implements Initializable {
         });
     }
 
-    public void validateUserInfo(String password, String passwordConfirmation) throws Exception {
+    public void validateUserInfo(String password, String passwordConfirmation, String username) throws Exception {
         if (!password.equals(passwordConfirmation))
             throw new Exception("Password does not match, confirm password");
         if (password.length() < 4)
             throw new Exception("Password needs to be minimum 4 characters");
-        if (password.length() < 5)
-            throw new Exception("Username needs to be minimum 5 characters");
+        if (username.length() < 4)
+            throw new Exception("Username needs to be minimum 4 characters");
     }
 
 }

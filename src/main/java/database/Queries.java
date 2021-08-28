@@ -20,5 +20,7 @@ public class Queries {
 
     public static final String DELETE_USER = "DELETE FROM user WHERE user_id = ?;";
 
-    public static final String UPDATE_USER = "UPDATE user SET username = ?, name = ?, email = ?, budget = ?, user_type =?;";
+    public static final String UPDATE_USER = "UPDATE user SET username = ?, name = ?, email = ?, budget = ?, user_type =?";
+
+    public static final String UPDATE_PRODUCT = "UPDATE user SET username = ?, name = ?, email = ?, budget = ?, user_type =?";
 }

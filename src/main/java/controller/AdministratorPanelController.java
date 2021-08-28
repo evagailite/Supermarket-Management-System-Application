@@ -136,6 +136,8 @@ public class AdministratorPanelController extends ViewController implements Init
 
     @FXML
     private TextField createEmailTextField;
+    @FXML
+    private TableColumn columnProductAction;
 
     private Image image;
 
@@ -168,25 +170,6 @@ public class AdministratorPanelController extends ViewController implements Init
         columnEmail.setCellValueFactory(new PropertyValueFactory<Users, String>("email"));
         columnBudget.setCellValueFactory(new PropertyValueFactory<Users, Double>("budget"));
         columnUserType.setCellValueFactory(new PropertyValueFactory<Users, UserType>("userType"));
-
-        try {
-            userList = userService.getAllUsers();
-            userTable.setItems(userList);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void showAllProducts() {
-        ObservableList<Product> productList;
-
-        idProductColumn.setCellValueFactory(new PropertyValueFactory<Product, Integer>("id"));
-        productNameColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
-        productQtyColumn.setCellValueFactory(new PropertyValueFactory<Product, Double>("quantity"));
-        productPriceColumn.setCellValueFactory(new PropertyValueFactory<Product, Double>("pricePerUnit"));
-        productUnitColumn.setCellValueFactory(new PropertyValueFactory<Product, ProductUnit>("productUnit"));
-        productCategoryColumn.setCellValueFactory(new PropertyValueFactory<Product, Category>("category"));
-        productImageColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("image"));
 
         //cell factory to insert a button in every row
         Callback<TableColumn<Users, String>, TableCell<Users, String>> cellFactory = (param) -> {
@@ -221,6 +204,59 @@ public class AdministratorPanelController extends ViewController implements Init
         };
 
         columnUserAction.setCellFactory(cellFactory);
+
+        try {
+            userList = userService.getAllUsers();
+            userTable.setItems(userList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showAllProducts() {
+        ObservableList<Product> productList;
+
+        idProductColumn.setCellValueFactory(new PropertyValueFactory<Product, Integer>("id"));
+        productNameColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
+        productQtyColumn.setCellValueFactory(new PropertyValueFactory<Product, Double>("quantity"));
+        productPriceColumn.setCellValueFactory(new PropertyValueFactory<Product, Double>("pricePerUnit"));
+        productUnitColumn.setCellValueFactory(new PropertyValueFactory<Product, ProductUnit>("productUnit"));
+        productCategoryColumn.setCellValueFactory(new PropertyValueFactory<Product, Category>("category"));
+        productImageColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("image"));
+
+        //cell factory to insert a button in every row
+        Callback<TableColumn<Product, String>, TableCell<Product, String>> cellFactory = (param) -> {
+            final TableCell<Product, String> cell = new TableCell<Product, String>() {
+
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                        setText(null);
+                    } else {
+                        Button deleteButton = new Button("DELETE");
+                        deleteButton.setStyle("-fx-background-color: transparent; -fx-border-color: grey; -fx-border-radius: 5;");
+                        deleteButton.setOnAction(event -> {
+                            Product product = getTableView().getItems().get(getIndex());
+                            try {
+                                productService.deleteProduct(product.getId());
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setContentText("You have deleted product with name: \n " + product.getName());
+                            alert.show();
+                        });
+                        setGraphic(deleteButton);
+                        setText(null);
+                    }
+                }
+            };
+            return cell;
+        };
+
+        columnProductAction.setCellFactory(cellFactory);
 
         try {
             productList = productService.getAllProducts();
@@ -298,9 +334,9 @@ public class AdministratorPanelController extends ViewController implements Init
 
                     if (createUsernameTextField.getText().isEmpty() || createNameTextField.getText().isEmpty() || createEmailTextField.getText().isEmpty() ||
                             passwordTextField.getText().isEmpty() || userTypeComboBox.getSelectionModel().getSelectedItem().toString().isEmpty()) {
-                        showAlert("Something went wrong!", "Please fill all fields", Alert.AlertType.ERROR);
+                        showAlert("Error", "Please fill all fields", Alert.AlertType.ERROR);
                     } else {
-                        signUpController.validateUserInfo(passwordTextField.getText(), passwordConfirmationTextField.getText());
+                        signUpController.validateUserInfo(passwordTextField.getText(), passwordConfirmationTextField.getText(), createUsernameTextField.getText());
 
                         String comboBoxUserTypeChoice = userTypeComboBox.getSelectionModel().getSelectedItem().toString();
                         checkUserTypeForBudget(comboBoxUserTypeChoice);
@@ -316,10 +352,10 @@ public class AdministratorPanelController extends ViewController implements Init
                         clearTextFields();
                     }
                 } catch (Exception e) {
+                    showAlert("Something went wrong", e.getMessage(), Alert.AlertType.ERROR);
                     e.printStackTrace();
                 }
             }
-
         });
 //
 //        handleEditUserButton.setOnAction(new EventHandler<ActionEvent>() {
