@@ -38,21 +38,13 @@ public class AdministratorPanelController extends ViewController implements Init
     @FXML
     private JFXButton buttonCreateProduct;
     @FXML
-    private JFXButton buttonEditProduct;
-    @FXML
-    private JFXButton buttonViewProducts;
-    @FXML
-    private JFXButton buttonSalesReports;
+    private JFXButton buttonDashboard;
     @FXML
     private JFXButton buttonUsers;
     @FXML
     private Pane panelCreateProduct;
     @FXML
-    private Pane panelEditProduct;
-    @FXML
-    private Pane panelViewProducts;
-    @FXML
-    private AnchorPane anchorPaneSalesReports;
+    private AnchorPane anchorPaneDashboard;
     @FXML
     private AnchorPane anchorPaneUsers;
     @FXML
@@ -146,12 +138,8 @@ public class AdministratorPanelController extends ViewController implements Init
         if (event.getSource() == buttonCreateProduct) {
             anchorPaneProducts.toFront();
             showAllProducts();
-        } else if (event.getSource() == buttonEditProduct) {
-            panelEditProduct.toFront();
-        } else if (event.getSource() == buttonViewProducts) {
-            panelViewProducts.toFront();
-        } else if (event.getSource() == buttonSalesReports) {
-            anchorPaneSalesReports.toFront();
+        } else if (event.getSource() == buttonDashboard) {
+            anchorPaneDashboard.toFront();
         } else if (event.getSource() == buttonUsers) {
             anchorPaneUsers.toFront();
             showAllUsers();
@@ -174,7 +162,6 @@ public class AdministratorPanelController extends ViewController implements Init
         //cell factory to insert a button in every row
         Callback<TableColumn<Users, String>, TableCell<Users, String>> cellFactory = (param) -> {
             final TableCell<Users, String> cell = new TableCell<Users, String>() {
-
                 @Override
                 public void updateItem(String item, boolean empty) {
                     super.updateItem(item, empty);
@@ -202,9 +189,7 @@ public class AdministratorPanelController extends ViewController implements Init
             };
             return cell;
         };
-
         columnUserAction.setCellFactory(cellFactory);
-
         try {
             userList = userService.getAllUsers();
             userTable.setItems(userList);
@@ -255,9 +240,7 @@ public class AdministratorPanelController extends ViewController implements Init
             };
             return cell;
         };
-
         columnProductAction.setCellFactory(cellFactory);
-
         try {
             productList = productService.getAllProducts();
             productTable.setItems(productList);
@@ -423,7 +406,7 @@ public class AdministratorPanelController extends ViewController implements Init
     }
 
     private void showFirstPage() {
-        startPanel.toFront();
+        anchorPaneDashboard.toFront();
     }
 
 }

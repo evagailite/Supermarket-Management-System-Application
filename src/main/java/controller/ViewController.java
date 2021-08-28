@@ -55,7 +55,7 @@ public class ViewController {
 
         Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
-        stage.setScene(new Scene(root, 793, 600));
+        stage.setScene(new Scene(root, 850, 600));
         stage.show();
     }
 
