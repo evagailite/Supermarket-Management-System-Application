@@ -36,7 +36,7 @@
                                     <Font name="System Bold" size="20.0" />
                                  </font>
                               </Label>
-                                  <Button fx:id="signUpButton" layoutX="513.0" layoutY="155.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="91.0" style="-fx-background-color: transperent; -fx-cursor: hand;" text="Sign up!" textFill="#4e961c" underline="true">
+                                  <Button fx:id="signUpButton" layoutX="513.0" layoutY="155.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="91.0" style="-fx-cursor: hand; -fx-background-color: #0000;" styleClass="transparent" text="Sign up!" textFill="#4e961c" underline="true">
                                       <font>
                                           <Font name="System Bold" size="13.0" />
                                       </font>

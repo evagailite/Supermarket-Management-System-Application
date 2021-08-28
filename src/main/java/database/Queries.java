@@ -15,5 +15,10 @@ public class Queries {
             "VALUES (?, ?, ?, ?, ?, ?);";
 
     public static final String GET_ALL_PRODUCTS = "SELECT product_id, product_name, quantity, price, unit, category, image FROM product";
+
     public static final String DELETE_PRODUCT = "DELETE FROM product WHERE product_id = ?";
+
+    public static final String DELETE_USER = "DELETE FROM user WHERE user_id = ?;";
+
+    public static final String UPDATE_USER = "UPDATE user SET username = ?, name = ?, email = ?, budget = ?, user_type =?;";
 }

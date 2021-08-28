@@ -15,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import model.Product;
 import model.Users;
 import service.ProductService;
@@ -24,16 +25,12 @@ import types.ProductUnit;
 import types.UserType;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Blob;
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 import java.util.ResourceBundle;
 
-public class AdministratorPanelController implements Initializable {
+public class AdministratorPanelController extends ViewController implements Initializable {
     @FXML
     public Pane startPanel;
     @FXML
@@ -72,6 +69,8 @@ public class AdministratorPanelController implements Initializable {
     private TableColumn<Users, Double> columnBudget;
     @FXML
     private TableColumn<Users, UserType> columnUserType;
+    @FXML
+    private TableColumn columnUserAction;
     @FXML
     private TextField productNameTextField;
     @FXML
@@ -189,6 +188,40 @@ public class AdministratorPanelController implements Initializable {
         productCategoryColumn.setCellValueFactory(new PropertyValueFactory<Product, Category>("category"));
         productImageColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("image"));
 
+        //cell factory to insert a button in every row
+        Callback<TableColumn<Users, String>, TableCell<Users, String>> cellFactory = (param) -> {
+            final TableCell<Users, String> cell = new TableCell<Users, String>() {
+
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                        setText(null);
+                    } else {
+                        Button deleteButton = new Button("DELETE");
+                        deleteButton.setStyle("-fx-background-color: transparent; -fx-border-color: grey; -fx-border-radius: 5;");
+                        deleteButton.setOnAction(event -> {
+                            Users users = getTableView().getItems().get(getIndex());
+                            try {
+                                userService.deleteUser(users.getId());
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setContentText("You have deleted user with username: \n " + users.getUsername());
+                            alert.show();
+                        });
+                        setGraphic(deleteButton);
+                        setText(null);
+                    }
+                }
+            };
+            return cell;
+        };
+
+        columnUserAction.setCellFactory(cellFactory);
+
         try {
             productList = productService.getAllProducts();
             productTable.setItems(productList);
@@ -262,27 +295,64 @@ public class AdministratorPanelController implements Initializable {
             public void handle(ActionEvent event) {
                 SignUpController signUpController = new SignUpController();
                 try {
-                    signUpController.validateUserInfo(passwordTextField.getText(), passwordConfirmationTextField.getText());
 
-                    String comboBoxUserTypeChoice = userTypeComboBox.getSelectionModel().getSelectedItem().toString();
-                    checkUserTypeForBudget(comboBoxUserTypeChoice);
+                    if (createUsernameTextField.getText().isEmpty() || createNameTextField.getText().isEmpty() || createEmailTextField.getText().isEmpty() ||
+                            passwordTextField.getText().isEmpty() || userTypeComboBox.getSelectionModel().getSelectedItem().toString().isEmpty()) {
+                        showAlert("Something went wrong!", "Please fill all fields", Alert.AlertType.ERROR);
+                    } else {
+                        signUpController.validateUserInfo(passwordTextField.getText(), passwordConfirmationTextField.getText());
 
-                    Users user = new Users(
-                            createUsernameTextField.getText(),
-                            createNameTextField.getText(),
-                            createEmailTextField.getText(),
-                            passwordTextField.getText(),
-                            checkUserTypeForBudget(comboBoxUserTypeChoice),
-                            UserType.valueOf(userTypeComboBox.getSelectionModel().getSelectedItem().toString())
-                    );
-                    userService.createUser(user);
-                    clearTextFields();
+                        String comboBoxUserTypeChoice = userTypeComboBox.getSelectionModel().getSelectedItem().toString();
+                        checkUserTypeForBudget(comboBoxUserTypeChoice);
+                        Users user = new Users(
+                                createUsernameTextField.getText(),
+                                createNameTextField.getText(),
+                                createEmailTextField.getText(),
+                                passwordTextField.getText(),
+                                checkUserTypeForBudget(comboBoxUserTypeChoice),
+                                UserType.valueOf(userTypeComboBox.getSelectionModel().getSelectedItem().toString())
+                        );
+                        userService.createUser(user);
+                        clearTextFields();
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
 
         });
+//
+//        handleEditUserButton.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//
+//            }
+//
+//        });
+//
+//        handleDeleteUserButton.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//
+//            }
+//
+//        });
+//
+//        handleEditProductButton.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//
+//            }
+//
+//        });
+//
+//        handleDeleteProductButton.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//
+//            }
+//
+//        });
     }
 
     private void clearTextFields() {

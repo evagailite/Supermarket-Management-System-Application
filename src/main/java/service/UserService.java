@@ -112,4 +112,18 @@ public class UserService extends ViewController {
         showAlert("User Created", "User created successfully", Alert.AlertType.CONFIRMATION);
         DBHandler.closeConnections(preparedStatement, connection);
     }
+
+    public void editUser(String username, String name, String email, Double budget, String userType) {
+
+
+    }
+
+    public void deleteUser(Integer id) throws SQLException {
+        connection = DBHandler.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.DELETE_USER);
+        preparedStatement.setString(1, String.valueOf(id));
+        preparedStatement.executeUpdate();
+        //   showAlert("User Deleted", "User deleted successfully", Alert.AlertType.CONFIRMATION);
+        DBHandler.closeConnections(preparedStatement, connection);
+    }
 }
