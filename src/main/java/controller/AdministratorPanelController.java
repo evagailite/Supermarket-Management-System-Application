@@ -8,7 +8,9 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -16,6 +18,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.converter.DoubleStringConverter;
 import model.Product;
 import model.Users;
 import service.ProductService;
@@ -31,8 +34,6 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AdministratorPanelController extends ViewController implements Initializable {
-    @FXML
-    public Pane startPanel;
     @FXML
     private Button buttonLoggedOut;
     @FXML
@@ -62,7 +63,7 @@ public class AdministratorPanelController extends ViewController implements Init
     @FXML
     private TableColumn<Users, UserType> columnUserType;
     @FXML
-    private TableColumn columnUserAction;
+    private TableColumn columnDeleteUser;
     @FXML
     private TextField productNameTextField;
     @FXML
@@ -83,55 +84,45 @@ public class AdministratorPanelController extends ViewController implements Init
     private ImageView productImageView;
     @FXML
     private AnchorPane anchorPaneProducts;
-
     @FXML
     private TableView<Product> productTable;
-
     @FXML
     private TableColumn<Product, Integer> idProductColumn;
-
     @FXML
     private TableColumn<Product, String> productNameColumn;
-
     @FXML
     private TableColumn<Product, Double> productQtyColumn;
-
     @FXML
     private TableColumn<Product, Double> productPriceColumn;
-
     @FXML
     private TableColumn<Product, ProductUnit> productUnitColumn;
-
     @FXML
     private TableColumn<Product, Category> productCategoryColumn;
-
     @FXML
     private TableColumn<Product, String> productImageColumn;
-
     @FXML
     private JFXButton handleCreateUserFromAdminButton;
-
     @FXML
     private JFXComboBox<UserType> userTypeComboBox;
-
     @FXML
     private TextField createUsernameTextField;
-
     @FXML
     private PasswordField passwordTextField;
-
     @FXML
     private PasswordField passwordConfirmationTextField;
-
     @FXML
     private TextField createNameTextField;
-
     @FXML
     private TextField createEmailTextField;
     @FXML
-    private TableColumn columnProductAction;
-
+    private TableColumn columnDeleteProduct;
+    @FXML
+    private TableColumn columnEditUser;
+    @FXML
+    private TableColumn columnEditProduct;
     private Image image;
+    private ObservableList<Users> userList;
+
 
     @FXML
     void handleButtonAction(ActionEvent event) {
@@ -150,7 +141,6 @@ public class AdministratorPanelController extends ViewController implements Init
     ProductService productService = new ProductService();
 
     private void showAllUsers() {
-        ObservableList<Users> userList;
 
         columnId.setCellValueFactory(new PropertyValueFactory<Users, Integer>("id"));
         columnUsername.setCellValueFactory(new PropertyValueFactory<Users, String>("username"));
@@ -159,8 +149,56 @@ public class AdministratorPanelController extends ViewController implements Init
         columnBudget.setCellValueFactory(new PropertyValueFactory<Users, Double>("budget"));
         columnUserType.setCellValueFactory(new PropertyValueFactory<Users, UserType>("userType"));
 
+        setEditableUsersTableColumns();
+        addDeleteButtonInTheUsersTable();
+        addEditButtonInTheUsersTable();
+
+        try {
+            userList = userService.getAllUsers();
+            userTable.setItems(userList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addEditButtonInTheUsersTable() {
+        Callback<TableColumn<Users, String>, TableCell<Users, String>> cellEditFactory = (param) -> {
+            final TableCell<Users, String> cell = new TableCell<Users, String>() {
+
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                        setText(null);
+                    } else {
+                        Button updateButton = new Button("UPDATE");
+                        updateButton.setStyle("-fx-background-color: white; -fx-border-color: grey; -fx-border-radius: 5;");
+                        updateButton.setOnAction(event -> {
+                            Users users = getTableView().getItems().get(getIndex());
+                            setEditableUsersTableColumns();
+                            try {
+                                userService.editUser(users.getUsername(), users.getName(), users.getEmail(),
+                                        users.getBudget(), users.getUserType(), users.getId());
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                            showAlert("Update", "User with id " + users.getId() + " updated successfully",
+                                    Alert.AlertType.INFORMATION);
+                        });
+                        setGraphic(updateButton);
+                        setText(null);
+                    }
+                }
+            };
+            return cell;
+        };
+        columnEditUser.setCellFactory(cellEditFactory);
+    }
+
+    private void addDeleteButtonInTheUsersTable() {
         //cell factory to insert a button in every row
-        Callback<TableColumn<Users, String>, TableCell<Users, String>> cellFactory = (param) -> {
+        Callback<TableColumn<Users, String>, TableCell<Users, String>> cellDeleteFactory = (param) -> {
             final TableCell<Users, String> cell = new TableCell<Users, String>() {
                 @Override
                 public void updateItem(String item, boolean empty) {
@@ -170,7 +208,7 @@ public class AdministratorPanelController extends ViewController implements Init
                         setText(null);
                     } else {
                         Button deleteButton = new Button("DELETE");
-                        deleteButton.setStyle("-fx-background-color: transparent; -fx-border-color: grey; -fx-border-radius: 5;");
+                        deleteButton.setStyle("-fx-background-color: white; -fx-border-color: grey; -fx-border-radius: 5;");
                         deleteButton.setOnAction(event -> {
                             Users users = getTableView().getItems().get(getIndex());
                             try {
@@ -178,9 +216,7 @@ public class AdministratorPanelController extends ViewController implements Init
                             } catch (SQLException e) {
                                 e.printStackTrace();
                             }
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                            alert.setContentText("You have deleted user with username: \n " + users.getUsername());
-                            alert.show();
+                            showAlert("Delete", "You have deleted user with id " + users.getId(), Alert.AlertType.INFORMATION);
                         });
                         setGraphic(deleteButton);
                         setText(null);
@@ -189,13 +225,37 @@ public class AdministratorPanelController extends ViewController implements Init
             };
             return cell;
         };
-        columnUserAction.setCellFactory(cellFactory);
-        try {
-            userList = userService.getAllUsers();
-            userTable.setItems(userList);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        columnDeleteUser.setCellFactory(cellDeleteFactory);
+    }
+
+    private void setEditableUsersTableColumns() {
+        columnUsername.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnUsername.setOnEditCommit(e -> {
+            e.getTableView().getItems().get(e.getTablePosition().getRow()).setUsername(e.getNewValue());
+        });
+
+        columnName.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnName.setOnEditCommit(e -> {
+            e.getTableView().getItems().get(e.getTablePosition().getRow()).setName(e.getNewValue());
+        });
+
+        columnEmail.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnEmail.setOnEditCommit(e -> {
+            e.getTableView().getItems().get(e.getTablePosition().getRow()).setEmail(e.getNewValue());
+        });
+
+        columnBudget.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        columnBudget.setOnEditCommit(e -> {
+            e.getTableView().getItems().get(e.getTablePosition().getRow()).setBudget(e.getNewValue());
+        });
+
+        columnUserType.setCellFactory(ComboBoxTableCell.forTableColumn(UserType.values()));
+        columnUserType.setOnEditCommit(e -> {
+            e.getTableView().getItems().get(e.getTablePosition().getRow()).setUserType(e.getNewValue());
+        });
+
+        // userTable.setEditable(true);
+
     }
 
     private void showAllProducts() {
@@ -209,8 +269,94 @@ public class AdministratorPanelController extends ViewController implements Init
         productCategoryColumn.setCellValueFactory(new PropertyValueFactory<Product, Category>("category"));
         productImageColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("image"));
 
+        setEditableProductTableColumns();
+        addDeleteButtonInTheProductTable();
+        addEditButtonInTheProductTable();
+
+        try {
+            productList = productService.getAllProducts();
+            productTable.setItems(productList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addEditButtonInTheProductTable() {
+        Callback<TableColumn<Product, String>, TableCell<Product, String>> cellEditFactory = (param) -> {
+            final TableCell<Product, String> cell = new TableCell<Product, String>() {
+
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                        setText(null);
+                    } else {
+                        Button updateButton = new Button("UPDATE");
+                        updateButton.setStyle("-fx-background-color: white; -fx-border-color: grey; -fx-border-radius: 5;");
+                        updateButton.setOnAction(event -> {
+                            Product product = getTableView().getItems().get(getIndex());
+                            setEditableProductTableColumns();
+                            try {
+                                productService.editProduct(product.getName(), product.getQuantity(),
+                                        product.getPricePerUnit(), product.getProductUnit(), product.getCategory(),
+                                        product.getImage(), product.getId());
+
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                            showAlert("Table updated", "Product with id " + product.getId() + " updated successfully", Alert.AlertType.INFORMATION);
+                        });
+                        setGraphic(updateButton);
+                        setText(null);
+                    }
+                }
+            };
+            return cell;
+        };
+        columnEditProduct.setCellFactory(cellEditFactory);
+    }
+
+    private void setEditableProductTableColumns() {
+
+        productNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        productNameColumn.setOnEditCommit(e -> {
+            e.getTableView().getItems().get(e.getTablePosition().getRow()).setName(e.getNewValue());
+        });
+
+        productQtyColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter() {
+        }));
+        productQtyColumn.setOnEditCommit(e -> {
+            e.getTableView().getItems().get(e.getTablePosition().getRow()).setQuantity(e.getNewValue());
+        });
+
+        productPriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        productPriceColumn.setOnEditCommit(e -> {
+            e.getTableView().getItems().get(e.getTablePosition().getRow()).setPricePerUnit(e.getNewValue());
+        });
+
+        productUnitColumn.setCellFactory(ComboBoxTableCell.forTableColumn(ProductUnit.values()));
+        productUnitColumn.setOnEditCommit(e -> {
+            e.getTableView().getItems().get(e.getTablePosition().getRow()).setProductUnit(e.getNewValue());
+        });
+
+        productCategoryColumn.setCellFactory(ComboBoxTableCell.forTableColumn(Category.values()));
+        productCategoryColumn.setOnEditCommit(e -> {
+            e.getTableView().getItems().get(e.getTablePosition().getRow()).setCategory(e.getNewValue());
+        });
+
+        productImageColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        productImageColumn.setOnEditCommit(e -> {
+            e.getTableView().getItems().get(e.getTablePosition().getRow()).setImage(e.getNewValue());
+        });
+
+        // productTable.setEditable(true);
+
+    }
+
+    private void addDeleteButtonInTheProductTable() {
         //cell factory to insert a button in every row
-        Callback<TableColumn<Product, String>, TableCell<Product, String>> cellFactory = (param) -> {
+        Callback<TableColumn<Product, String>, TableCell<Product, String>> cellDeleteFactory = (param) -> {
             final TableCell<Product, String> cell = new TableCell<Product, String>() {
 
                 @Override
@@ -221,7 +367,7 @@ public class AdministratorPanelController extends ViewController implements Init
                         setText(null);
                     } else {
                         Button deleteButton = new Button("DELETE");
-                        deleteButton.setStyle("-fx-background-color: transparent; -fx-border-color: grey; -fx-border-radius: 5;");
+                        deleteButton.setStyle("-fx-background-color: white; -fx-border-color: grey; -fx-border-radius: 5;");
                         deleteButton.setOnAction(event -> {
                             Product product = getTableView().getItems().get(getIndex());
                             try {
@@ -229,9 +375,7 @@ public class AdministratorPanelController extends ViewController implements Init
                             } catch (SQLException e) {
                                 e.printStackTrace();
                             }
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                            alert.setContentText("You have deleted product with name: \n " + product.getName());
-                            alert.show();
+                            showAlert("Delete", "You have deleted product with id: \n " + product.getId(), Alert.AlertType.INFORMATION);
                         });
                         setGraphic(deleteButton);
                         setText(null);
@@ -240,13 +384,7 @@ public class AdministratorPanelController extends ViewController implements Init
             };
             return cell;
         };
-        columnProductAction.setCellFactory(cellFactory);
-        try {
-            productList = productService.getAllProducts();
-            productTable.setItems(productList);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        columnDeleteProduct.setCellFactory(cellDeleteFactory);
     }
 
     @Override
@@ -316,7 +454,7 @@ public class AdministratorPanelController extends ViewController implements Init
                 try {
 
                     if (createUsernameTextField.getText().isEmpty() || createNameTextField.getText().isEmpty() || createEmailTextField.getText().isEmpty() ||
-                            passwordTextField.getText().isEmpty() || userTypeComboBox.getSelectionModel().getSelectedItem().toString().isEmpty()) {
+                            passwordTextField.getText().isEmpty() || userTypeComboBox.getSelectionModel().getSelectedItem() == null) {
                         showAlert("Error", "Please fill all fields", Alert.AlertType.ERROR);
                     } else {
                         signUpController.validateUserInfo(passwordTextField.getText(), passwordConfirmationTextField.getText(), createUsernameTextField.getText());
@@ -340,38 +478,6 @@ public class AdministratorPanelController extends ViewController implements Init
                 }
             }
         });
-//
-//        handleEditUserButton.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//
-//            }
-//
-//        });
-//
-//        handleDeleteUserButton.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//
-//            }
-//
-//        });
-//
-//        handleEditProductButton.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//
-//            }
-//
-//        });
-//
-//        handleDeleteProductButton.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//
-//            }
-//
-//        });
     }
 
     private void clearTextFields() {

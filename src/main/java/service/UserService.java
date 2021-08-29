@@ -113,10 +113,6 @@ public class UserService extends ViewController {
         DBHandler.closeConnections(preparedStatement, connection);
     }
 
-    public void editUser(String username, String name, String email, Double budget, String userType) {
-
-
-    }
 
     public void deleteUser(Integer id) throws SQLException {
         connection = DBHandler.getConnection();
@@ -125,5 +121,21 @@ public class UserService extends ViewController {
         preparedStatement.executeUpdate();
         //   showAlert("User Deleted", "User deleted successfully", Alert.AlertType.CONFIRMATION);
         DBHandler.closeConnections(preparedStatement, connection);
+    }
+
+    public void editUser(String username, String name, String email, double budget, UserType userType, Integer id) throws SQLException {
+        connection = DBHandler.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.UPDATE_USER);
+
+        preparedStatement.setString(1, username);
+        preparedStatement.setString(2, name);
+        preparedStatement.setString(3, email);
+        preparedStatement.setDouble(4, budget);
+        preparedStatement.setString(5, String.valueOf(userType));
+        preparedStatement.setInt(6, id);
+
+        preparedStatement.executeUpdate();
+        DBHandler.closeConnections(preparedStatement, connection);
+
     }
 }

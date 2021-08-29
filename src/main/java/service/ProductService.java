@@ -10,8 +10,6 @@ import model.Product;
 import types.Category;
 import types.ProductUnit;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.sql.*;
 
 public class ProductService extends ViewController {
@@ -20,9 +18,6 @@ public class ProductService extends ViewController {
     public void createProduct(Product product) throws SQLException {
         connection = DBHandler.getConnection();
 
-//            FileInputStream blobFile = new FileInputStream(product.getImage());
-//            System.out.println(blobFile);
-
         PreparedStatement preparedStatement = connection.prepareStatement(Queries.CREATE_PRODUCT);
         preparedStatement.setString(1, product.getName());
         preparedStatement.setDouble(2, product.getPricePerUnit());
@@ -30,7 +25,7 @@ public class ProductService extends ViewController {
         preparedStatement.setString(4, String.valueOf(product.getProductUnit()));
         preparedStatement.setString(5, String.valueOf(product.getCategory()));
         preparedStatement.setString(6, product.getImage());
-//            preparedStatement.setBinaryStream(6, blobFile, product.getImage().length());
+
         preparedStatement.executeUpdate();
 
         showAlert("Product Created", "Product created successfully", Alert.AlertType.CONFIRMATION);
@@ -62,11 +57,25 @@ public class ProductService extends ViewController {
         PreparedStatement preparedStatement = connection.prepareStatement(Queries.DELETE_PRODUCT);
         preparedStatement.setString(1, String.valueOf(id));
         preparedStatement.executeUpdate();
-       // showAlert("Product Deleted", "Product deleted successfully", Alert.AlertType.CONFIRMATION);
+        // showAlert("Product Deleted", "Product deleted successfully", Alert.AlertType.CONFIRMATION);
         DBHandler.closeConnections(preparedStatement, connection);
     }
 
-    public void editProduct(Integer id){
+    public void editProduct(String name, double quantity, double price,
+                            ProductUnit productUnit, Category category, String image,
+                            Integer id) throws SQLException {
+        connection = DBHandler.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.UPDATE_PRODUCT);
 
+        preparedStatement.setString(1, name);
+        preparedStatement.setDouble(2, quantity);
+        preparedStatement.setDouble(3, price);
+        preparedStatement.setString(4, String.valueOf(productUnit));
+        preparedStatement.setString(5, String.valueOf(category));
+        preparedStatement.setString(6, image);
+        preparedStatement.setInt(7, id);
+
+        preparedStatement.executeUpdate();
+        DBHandler.closeConnections(preparedStatement, connection);
     }
 }

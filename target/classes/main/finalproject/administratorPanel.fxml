@@ -22,13 +22,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="577.0" prefWidth="763.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdministratorPanelController">
+<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdministratorPanelController">
    <children>
       <BorderPane fx:id="bp" prefHeight="600.0" prefWidth="793.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
             <VBox alignment="TOP_CENTER" prefHeight="537.0" prefWidth="198.0" style="-fx-background-color: CCD5DB;" BorderPane.alignment="CENTER">
                <children>
-                  <JFXButton fx:id="buttonDashboard" onAction="#handleButtonAction" prefHeight="33.0" prefWidth="187.0" style="-fx-background-color: #EEEEEE; -fx-background-radius: 10;" styleClass="shadow" stylesheets="@style/style.css" text="Dashboard">
+                  <JFXButton fx:id="buttonDashboard" onAction="#handleButtonAction" prefHeight="33.0" prefWidth="187.0" style="-fx-background-color: #EEEEEE; -fx-background-radius: 5;" styleClass="shadow" stylesheets="@style/style.css" text="Dashboard">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -37,13 +37,13 @@
                      </VBox.margin>
                   </JFXButton>
                   <Pane prefHeight="3.0" prefWidth="198.0" />
-                  <JFXButton fx:id="buttonUsers" onAction="#handleButtonAction" prefHeight="33.0" prefWidth="187.0" style="-fx-background-color: #EEEEEE; -fx-background-radius: 10;" styleClass="shadow" stylesheets="@style/style.css" text="Users">
+                  <JFXButton fx:id="buttonUsers" onAction="#handleButtonAction" prefHeight="33.0" prefWidth="187.0" style="-fx-background-color: #EEEEEE; -fx-background-radius: 5;" styleClass="shadow" stylesheets="@style/style.css" text="Users">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </JFXButton>
                   <Pane prefHeight="3.0" prefWidth="198.0" />
-                  <JFXButton fx:id="buttonCreateProduct" onAction="#handleButtonAction" prefHeight="33.0" prefWidth="187.0" style="-fx-background-color: #EEEEEE; -fx-background-radius: 10;" styleClass="shadow" stylesheets="@style/style.css" text="Products">
+                  <JFXButton fx:id="buttonCreateProduct" onAction="#handleButtonAction" prefHeight="33.0" prefWidth="187.0" style="-fx-background-color: #EEEEEE; -fx-background-radius: 5;" styleClass="shadow" stylesheets="@style/style.css" text="Products">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -72,7 +72,7 @@
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                   <AnchorPane prefHeight="63.0" prefWidth="276.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Button fx:id="buttonLoggedOut" layoutX="199.0" layoutY="19.0" mnemonicParsing="false" style="-fx-background-color: #EEEEEE; -fx-background-radius: 10;" styleClass="search-box" stylesheets="@style/style.css" text="Logout" AnchorPane.bottomAnchor="19.0" AnchorPane.rightAnchor="14.0" />
+                        <Button fx:id="buttonLoggedOut" layoutX="199.0" layoutY="19.0" mnemonicParsing="false" style="-fx-background-color: #EEEEEE; -fx-background-radius: 5;" styleClass="search-box" stylesheets="@style/style.css" text="Logout" AnchorPane.bottomAnchor="19.0" AnchorPane.rightAnchor="14.0" />
                      </children>
                   </AnchorPane>
                </children>
@@ -108,6 +108,43 @@
                                           </GridPane>
                                        </children>
                                     </AnchorPane>
+                                    <AnchorPane fx:id="anchorPaneUsers" prefHeight="515.0" prefWidth="565.0" AnchorPane.bottomAnchor="-29.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <Pane fx:id="panelCreateUser" prefHeight="514.0" prefWidth="565.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                <JFXButton fx:id="handleCreateUserFromAdminButton" layoutX="244.0" layoutY="465.0" style="-fx-background-color: #EEEEEE; -fx-background-radius: 5;" styleClass="comboBox" stylesheets="@style/style.css" text="Create User" />
+                                                <JFXComboBox fx:id="userTypeComboBox" focusColor="#405aa800" layoutX="295.0" layoutY="356.0" prefHeight="28.0" prefWidth="183.0" promptText="             Choose User Type" style="-fx-background-color: #EEEEEE; -fx-background-radius: 5;" styleClass="comboBox" stylesheets="@style/style.css" unFocusColor="#4d4d4d00" />
+                                                <TextField fx:id="createUsernameTextField" alignment="CENTER" layoutX="87.0" layoutY="357.0" prefHeight="28.0" prefWidth="183.0" promptText="Username" style="-fx-background-radius: 5;" />
+                                                <PasswordField fx:id="passwordTextField" alignment="CENTER" layoutX="87.0" layoutY="392.0" prefHeight="28.0" prefWidth="183.0" promptText="Password" style="-fx-background-radius: 5;" />
+                                                <PasswordField fx:id="passwordConfirmationTextField" alignment="CENTER" layoutX="295.0" layoutY="392.0" prefHeight="28.0" prefWidth="183.0" promptText="Confirm password" style="-fx-background-radius: 5;" />
+                                                <TextField fx:id="createNameTextField" alignment="CENTER" layoutX="87.0" layoutY="426.0" prefHeight="28.0" prefWidth="183.0" promptText="Name" style="-fx-background-radius: 5;" />
+                                                <TextField fx:id="createEmailTextField" alignment="CENTER" layoutX="295.0" layoutY="426.0" prefHeight="28.0" prefWidth="183.0" promptText="Email" style="-fx-background-radius: 5;" />
+                                             </children>
+                                          </Pane>
+                                          <GridPane prefHeight="342.0" prefWidth="565.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <TableView fx:id="userTable" editable="true" prefHeight="297.0" prefWidth="564.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+                                                  <columns>
+                                                    <TableColumn fx:id="columnId" prefWidth="28.80004918575287" text="ID" />
+                                                    <TableColumn fx:id="columnUsername" prefWidth="95.99993705749512" text="Username" />
+                                                      <TableColumn fx:id="columnName" prefWidth="102.40003204345703" text="Name" />
+                                                      <TableColumn fx:id="columnEmail" prefWidth="95.20004272460938" text="Email" />
+                                                      <TableColumn fx:id="columnBudget" minWidth="0.0" prefWidth="59.199951171875" text="Budget" />
+                                                      <TableColumn fx:id="columnUserType" prefWidth="102.4000244140625" text="User Type" />
+                                                      <TableColumn fx:id="columnDeleteUser" prefWidth="67.0" text="Delete" />
+                                                      <TableColumn fx:id="columnEditUser" prefWidth="79.0" text="Edit" />
+                                                  </columns>
+                                                </TableView>
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </AnchorPane>
                                     <AnchorPane fx:id="anchorPaneProducts" prefHeight="242.0" prefWidth="566.0" AnchorPane.bottomAnchor="243.20000000000002" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
                                           <Pane fx:id="panelCreateProduct" prefHeight="514.0" prefWidth="565.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="-272.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -131,7 +168,7 @@
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <TableView fx:id="productTable" prefHeight="226.0" prefWidth="585.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+                                                <TableView fx:id="productTable" editable="true" prefHeight="226.0" prefWidth="585.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
                                                   <columns>
                                                     <TableColumn fx:id="idProductColumn" prefWidth="39.999998450279236" text="ID" />
                                                     <TableColumn fx:id="productNameColumn" prefWidth="140.79999542236328" text="Product Name" />
@@ -140,43 +177,8 @@
                                                       <TableColumn fx:id="productUnitColumn" prefWidth="56.000030517578125" text="Unit" />
                                                       <TableColumn fx:id="productCategoryColumn" prefWidth="65.5999755859375" text="Category" />
                                                       <TableColumn fx:id="productImageColumn" prefWidth="66.0" text="Image" />
-                                                      <TableColumn fx:id="columnProductAction" prefWidth="66.0" text="Action" />
-                                                  </columns>
-                                                </TableView>
-                                             </children>
-                                          </GridPane>
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane fx:id="anchorPaneUsers" prefHeight="515.0" prefWidth="565.0" AnchorPane.bottomAnchor="-29.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <children>
-                                          <Pane fx:id="panelCreateUser" prefHeight="514.0" prefWidth="565.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                             <children>
-                                                <JFXButton fx:id="handleCreateUserFromAdminButton" layoutX="244.0" layoutY="465.0" style="-fx-background-color: #EEEEEE; -fx-background-radius: 5;" styleClass="comboBox" stylesheets="@style/style.css" text="Create User" />
-                                                <JFXComboBox fx:id="userTypeComboBox" focusColor="#405aa800" layoutX="295.0" layoutY="356.0" prefHeight="28.0" prefWidth="183.0" promptText="             Choose User Type" style="-fx-background-color: #EEEEEE; -fx-background-radius: 5;" styleClass="comboBox" stylesheets="@style/style.css" unFocusColor="#4d4d4d00" />
-                                                <TextField fx:id="createUsernameTextField" alignment="CENTER" layoutX="87.0" layoutY="357.0" prefHeight="28.0" prefWidth="183.0" promptText="Username" style="-fx-background-radius: 5;" />
-                                                <PasswordField fx:id="passwordTextField" alignment="CENTER" layoutX="87.0" layoutY="392.0" prefHeight="28.0" prefWidth="183.0" promptText="Password" style="-fx-background-radius: 5;" />
-                                                <PasswordField fx:id="passwordConfirmationTextField" alignment="CENTER" layoutX="295.0" layoutY="392.0" prefHeight="28.0" prefWidth="183.0" promptText="Confirm password" style="-fx-background-radius: 5;" />
-                                                <TextField fx:id="createNameTextField" alignment="CENTER" layoutX="87.0" layoutY="426.0" prefHeight="28.0" prefWidth="183.0" promptText="Name" style="-fx-background-radius: 5;" />
-                                                <TextField fx:id="createEmailTextField" alignment="CENTER" layoutX="295.0" layoutY="426.0" prefHeight="28.0" prefWidth="183.0" promptText="Email" style="-fx-background-radius: 5;" />
-                                             </children>
-                                          </Pane>
-                                          <GridPane prefHeight="342.0" prefWidth="565.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                            <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
-                                             <children>
-                                                <TableView fx:id="userTable" prefHeight="297.0" prefWidth="564.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
-                                                  <columns>
-                                                    <TableColumn fx:id="columnId" prefWidth="28.80004918575287" text="ID" />
-                                                    <TableColumn fx:id="columnUsername" prefWidth="95.99993705749512" text="Username" />
-                                                      <TableColumn fx:id="columnName" prefWidth="102.40003204345703" text="Name" />
-                                                      <TableColumn fx:id="columnEmail" prefWidth="95.20004272460938" text="Email" />
-                                                      <TableColumn fx:id="columnBudget" minWidth="0.0" prefWidth="59.199951171875" text="Budget" />
-                                                      <TableColumn fx:id="columnUserType" prefWidth="102.4000244140625" text="User Type" />
-                                                      <TableColumn fx:id="columnUserAction" prefWidth="81.59994506835938" text="Action" />
+                                                      <TableColumn fx:id="columnDeleteProduct" prefWidth="75.0" text="Delete" />
+                                                      <TableColumn fx:id="columnEditProduct" prefWidth="79.0" text="Edit" />
                                                   </columns>
                                                 </TableView>
                                              </children>
