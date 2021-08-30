@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MarketController implements Initializable {
+public class ShopController implements Initializable {
     UserService userService = new UserService();
     @FXML
     private Button buttonLogOut;

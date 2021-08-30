@@ -22,5 +22,6 @@ public class Queries {
 
     public static final String UPDATE_USER = "UPDATE user SET username = ?, name = ?, email = ?, budget = ?, user_type =? WHERE user_id = ?";
 
-    public static final String UPDATE_PRODUCT = "UPDATE product SET product_name = ?, quantity = ?, price = ?, unit = ?, category = ?, image = ? WHERE product_id = ?";
+    public static final String UPDATE_PRODUCT = "UPDATE product SET product_name = ?, quantity = ?, price = ?, " +
+            "unit = ?, category = ?, image = ? WHERE product_id = ?";
 }

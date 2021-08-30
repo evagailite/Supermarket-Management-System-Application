@@ -31,8 +31,6 @@ public class SignUpController extends ViewController implements Initializable {
     private TextField nameTextField;
     @FXML
     private TextField emailTextField;
-//    @FXML
-//    private TextField budgetTextField;
 
     UserService userService = new UserService();
 

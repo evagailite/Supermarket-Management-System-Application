@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import main.finalproject.Main;
-import service.UserService;
 
 import java.io.IOException;
 
@@ -42,7 +41,7 @@ public class ViewController {
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 //        stage.setTitle(title);
-        stage.setScene(new Scene(root, 793, 600));
+        stage.setScene(new Scene(root, 850, 600));
         stage.show();
     }
 

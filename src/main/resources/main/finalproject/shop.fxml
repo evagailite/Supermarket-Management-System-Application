@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -14,9 +15,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MarketController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ShopController">
     <children>
-        <BorderPane prefHeight="600.0" prefWidth="793.0">
+        <BorderPane prefHeight="800.0" prefWidth="1000.0">
             <left>
                 <VBox prefHeight="800.0" prefWidth="331.0" styleClass="right-bar" stylesheets="@style/style.css" BorderPane.alignment="CENTER">
                     <children>
@@ -126,24 +127,50 @@
                 </VBox>
             </left>
             <center>
-                <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                <VBox prefHeight="734.0" prefWidth="611.0" BorderPane.alignment="CENTER">
                     <children>
                         <HBox alignment="CENTER_RIGHT" prefHeight="55.0" prefWidth="629.0">
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0" />
                             </VBox.margin>
                             <children>
-                        <Label fx:id="labelToTheSupermarket" text="Label" />
-                                <Pane prefHeight="55.0" prefWidth="85.0" />
-                                <Label prefHeight="53.0" prefWidth="68.0" text="My Account" />
-                                <ImageView fitHeight="34.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-
-                                    </image>
-                                </ImageView>
-                                <Pane prefHeight="55.0" prefWidth="29.0" />
-                                <Button fx:id="buttonLogOut" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" styleClass="search-button" stylesheets="@style/style.css" text="Logout" textFill="WHITE" />
-                                <Pane prefHeight="55.0" prefWidth="24.0" />
+                                <Pane prefHeight="55.0" prefWidth="222.0">
+                           <children>
+                              <JFXButton fx:id="accountButton" layoutX="111.0" layoutY="7.0" prefHeight="42.0" prefWidth="55.0" text=" ">
+                                 <graphic>
+                                    <ImageView fitHeight="26.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/user-profile.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></JFXButton>
+                              <JFXButton fx:id="basketButton" layoutX="63.0" layoutY="7.0" prefHeight="42.0" prefWidth="55.0" text=" ">
+                                 <graphic>
+                                    <ImageView fitHeight="26.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/basket.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></JFXButton>
+                              <JFXButton fx:id="homeButton" layoutX="8.0" layoutY="7.0" prefHeight="42.0" prefWidth="55.0" text=" ">
+                                 <graphic>
+                                    <ImageView fitHeight="26.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/homepage.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </JFXButton>
+                              <JFXButton fx:id="buttonLogOut" layoutX="166.0" layoutY="7.0" prefHeight="42.0" prefWidth="55.0" text=" ">
+                                 <graphic>
+                                    <ImageView fitHeight="26.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/power-off-line.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </JFXButton>
+                           </children></Pane>
                             </children>
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0">

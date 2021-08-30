@@ -31,6 +31,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Date;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AdministratorPanelController extends ViewController implements Initializable {
@@ -120,6 +122,8 @@ public class AdministratorPanelController extends ViewController implements Init
     private TableColumn columnEditUser;
     @FXML
     private TableColumn columnEditProduct;
+    @FXML
+    private Label dateDashboardLabel;
     private Image image;
     private ObservableList<Users> userList;
 
@@ -131,10 +135,16 @@ public class AdministratorPanelController extends ViewController implements Init
             showAllProducts();
         } else if (event.getSource() == buttonDashboard) {
             anchorPaneDashboard.toFront();
+            showCurrentDate();
         } else if (event.getSource() == buttonUsers) {
             anchorPaneUsers.toFront();
             showAllUsers();
         }
+    }
+
+    private void showCurrentDate() {
+        Date date = new Date();
+        dateDashboardLabel.setText(String.valueOf(date));
     }
 
     UserService userService = new UserService();
@@ -211,12 +221,19 @@ public class AdministratorPanelController extends ViewController implements Init
                         deleteButton.setStyle("-fx-background-color: white; -fx-border-color: grey; -fx-border-radius: 5;");
                         deleteButton.setOnAction(event -> {
                             Users users = getTableView().getItems().get(getIndex());
-                            try {
-                                userService.deleteUser(users.getId());
-                            } catch (SQLException e) {
-                                e.printStackTrace();
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setTitle("Confirmation dialog");
+                            alert.setContentText("Are you sure you want to delete user " + users.getUsername() + "?");
+                            alert.setHeaderText(null);
+                            Optional<ButtonType> action = alert.showAndWait();
+                            if (action.get() == ButtonType.OK) {
+                                try {
+                                    userService.deleteUser(users.getId());
+                                } catch (SQLException e) {
+                                    e.printStackTrace();
+                                }
+                                showAlert("Delete", "You have deleted user with id " + users.getId(), Alert.AlertType.INFORMATION);
                             }
-                            showAlert("Delete", "You have deleted user with id " + users.getId(), Alert.AlertType.INFORMATION);
                         });
                         setGraphic(deleteButton);
                         setText(null);
@@ -253,8 +270,6 @@ public class AdministratorPanelController extends ViewController implements Init
         columnUserType.setOnEditCommit(e -> {
             e.getTableView().getItems().get(e.getTablePosition().getRow()).setUserType(e.getNewValue());
         });
-
-        // userTable.setEditable(true);
 
     }
 
@@ -350,8 +365,6 @@ public class AdministratorPanelController extends ViewController implements Init
             e.getTableView().getItems().get(e.getTablePosition().getRow()).setImage(e.getNewValue());
         });
 
-        // productTable.setEditable(true);
-
     }
 
     private void addDeleteButtonInTheProductTable() {
@@ -370,12 +383,19 @@ public class AdministratorPanelController extends ViewController implements Init
                         deleteButton.setStyle("-fx-background-color: white; -fx-border-color: grey; -fx-border-radius: 5;");
                         deleteButton.setOnAction(event -> {
                             Product product = getTableView().getItems().get(getIndex());
-                            try {
-                                productService.deleteProduct(product.getId());
-                            } catch (SQLException e) {
-                                e.printStackTrace();
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setTitle("Confirmation dialog");
+                            alert.setContentText("Are you sure you want to delete product " + product.getName() + "?");
+                            alert.setHeaderText(null);
+                            Optional<ButtonType> action = alert.showAndWait();
+                            if (action.get() == ButtonType.OK) {
+                                try {
+                                    productService.deleteProduct(product.getId());
+                                } catch (SQLException e) {
+                                    e.printStackTrace();
+                                }
+                                showAlert("Delete", "You have deleted product with id: " + product.getId(), Alert.AlertType.INFORMATION);
                             }
-                            showAlert("Delete", "You have deleted product with id: \n " + product.getId(), Alert.AlertType.INFORMATION);
                         });
                         setGraphic(deleteButton);
                         setText(null);

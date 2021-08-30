@@ -59,7 +59,6 @@ public class UserService extends ViewController {
         //if user is not in the database
         if (!resultSet.isBeforeFirst()) {
             showAlert("User not found in the database!", "Provided credentials are incorrect!", Alert.AlertType.ERROR);
-
         } else {
             while (resultSet.next()) {
                 double retrievedBudget = resultSet.getDouble("budget");
@@ -76,7 +75,6 @@ public class UserService extends ViewController {
                 }
             }
         }
-
         DBHandler.closeConnections(resultSet, preparedStatement, connection);
     }
 

@@ -1,6 +1,5 @@
 package model;
 
-import javafx.scene.control.Button;
 import types.Category;
 import types.ProductUnit;
 import lombok.Getter;
