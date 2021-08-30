@@ -65,7 +65,7 @@ public class UserService extends ViewController {
                 String retrieveUserType = resultSet.getString("user_type");
 
                 if (retrieveUserType.equals("CUSTOMER")) {
-                    changeSceneForCustomer(event, "market", username, retrievedBudget);
+                    changeSceneForCustomer(event, "shop", username, retrievedBudget);
                 } else if (retrieveUserType.equals("SALES_MANAGER")) {
                     changeSceneForAdminAndSalesManager(event, "salesManagerPanel", username);
                 } else if (retrieveUserType.equals("ADMINISTRATOR")) {
@@ -107,7 +107,7 @@ public class UserService extends ViewController {
         preparedStatement.setString(6, String.valueOf(users.getUserType()));
         preparedStatement.executeUpdate();
 
-        showAlert("User Created", "User created successfully", Alert.AlertType.CONFIRMATION);
+        showAlert("User Created", "User created successfully", Alert.AlertType.INFORMATION);
         DBHandler.closeConnections(preparedStatement, connection);
     }
 

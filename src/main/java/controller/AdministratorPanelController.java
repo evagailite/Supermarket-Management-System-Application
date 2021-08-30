@@ -438,6 +438,7 @@ public class AdministratorPanelController extends ViewController implements Init
                 );
                 try {
                     productService.createProduct(product);
+                    clearProductTextFields();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -490,7 +491,7 @@ public class AdministratorPanelController extends ViewController implements Init
                                 UserType.valueOf(userTypeComboBox.getSelectionModel().getSelectedItem().toString())
                         );
                         userService.createUser(user);
-                        clearTextFields();
+                        clearUserTextFields();
                     }
                 } catch (Exception e) {
                     showAlert("Something went wrong", e.getMessage(), Alert.AlertType.ERROR);
@@ -500,13 +501,22 @@ public class AdministratorPanelController extends ViewController implements Init
         });
     }
 
-    private void clearTextFields() {
+    private void clearUserTextFields() {
         createUsernameTextField.clear();
         createNameTextField.clear();
         createEmailTextField.clear();
         passwordTextField.clear();
         passwordConfirmationTextField.clear();
         userTypeComboBox.getSelectionModel().clearSelection();
+    }
+
+    private void clearProductTextFields() {
+        productNameTextField.clear();
+        priceTextField.clear();
+        quantityTextField.clear();
+        unitComboBox.getSelectionModel().clearSelection();
+        categoryComboBox.getSelectionModel().clearSelection();
+        imagePathTextField.clear();
     }
 
     private double checkUserTypeForBudget(String comboBoxUserTypeChoice) {
