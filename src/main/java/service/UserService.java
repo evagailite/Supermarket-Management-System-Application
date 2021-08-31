@@ -58,7 +58,7 @@ public class UserService extends ViewController {
 
         //if user is not in the database
         if (!resultSet.isBeforeFirst()) {
-            showAlert("User not found in the database!", "Provided credentials are incorrect!", Alert.AlertType.ERROR);
+            showAlert("Login Error", "Provided credentials are incorrect!", Alert.AlertType.ERROR);
         } else {
             while (resultSet.next()) {
                 double retrievedBudget = resultSet.getDouble("budget");
@@ -71,7 +71,7 @@ public class UserService extends ViewController {
                 } else if (retrieveUserType.equals("ADMINISTRATOR")) {
                     changeSceneForAdminAndSalesManager(event, "administratorPanel", username);
                 } else {
-                    showAlert("Incorrect username or password", "The provided credentials are incorrect!", Alert.AlertType.ERROR);
+                    showAlert("Login Error", "The provided credentials are incorrect!", Alert.AlertType.ERROR);
                 }
             }
         }

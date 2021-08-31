@@ -24,4 +24,5 @@ public class Queries {
 
     public static final String UPDATE_PRODUCT = "UPDATE product SET product_name = ?, quantity = ?, price = ?, " +
             "unit = ?, category = ?, image = ? WHERE product_id = ?";
+
 }

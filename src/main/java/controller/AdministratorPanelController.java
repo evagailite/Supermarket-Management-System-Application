@@ -126,7 +126,8 @@ public class AdministratorPanelController extends ViewController implements Init
     private Label dateDashboardLabel;
     private Image image;
     private ObservableList<Users> userList;
-
+    private UserService userService = new UserService();
+    private ProductService productService = new ProductService();
 
     @FXML
     void handleButtonAction(ActionEvent event) {
@@ -146,9 +147,6 @@ public class AdministratorPanelController extends ViewController implements Init
         Date date = new Date();
         dateDashboardLabel.setText(String.valueOf(date));
     }
-
-    UserService userService = new UserService();
-    ProductService productService = new ProductService();
 
     private void showAllUsers() {
 
@@ -364,7 +362,6 @@ public class AdministratorPanelController extends ViewController implements Init
         productImageColumn.setOnEditCommit(e -> {
             e.getTableView().getItems().get(e.getTablePosition().getRow()).setImage(e.getNewValue());
         });
-
     }
 
     private void addDeleteButtonInTheProductTable() {
@@ -465,7 +462,6 @@ public class AdministratorPanelController extends ViewController implements Init
                     imagePathTextField.setText(fileWithoutPath);
                 }
             }
-
         });
 
         handleCreateUserFromAdminButton.setOnAction(new EventHandler<ActionEvent>() {

@@ -47,4 +47,13 @@ public class Product {
         this.image = image;
     }
 
+    public Product() {
+
+    }
+
+    public Product(String name, double pricePerUnit, String image) {
+        this.name = name;
+        this.pricePerUnit = pricePerUnit;
+        this.image = image;
+    }
 }

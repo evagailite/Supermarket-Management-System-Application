@@ -11,6 +11,7 @@ import types.Category;
 import types.ProductUnit;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class ProductService extends ViewController {
     private Connection connection = DBHandler.getConnection();
@@ -77,5 +78,25 @@ public class ProductService extends ViewController {
 
         preparedStatement.executeUpdate();
         DBHandler.closeConnections(preparedStatement, connection);
+    }
+
+    public ArrayList<Product> getAllProductsForShop() throws SQLException {
+        connection = DBHandler.getConnection();
+
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_ALL_PRODUCTS);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ArrayList<Product> products = new ArrayList<>();
+        while (resultSet.next()) {
+            products.add(new Product(
+                    resultSet.getInt("product_id"),
+                    resultSet.getString("product_name"),
+                    resultSet.getDouble("quantity"),
+                    resultSet.getDouble("price"),
+                    ProductUnit.valueOf(resultSet.getString("unit")),
+                    Category.valueOf(resultSet.getString("category")),
+                    resultSet.getString("image")));
+        }
+          // DBHandler.closeConnections(resultSet, preparedStatement, connection);
+        return products;
     }
 }
