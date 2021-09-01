@@ -56,4 +56,16 @@ public class Product {
         this.pricePerUnit = pricePerUnit;
         this.image = image;
     }
+
+    public Product(String name, double quantity, double pricePerUnit, String image) {
+        this.name = name;
+        this.quantity = quantity;
+        this.pricePerUnit = pricePerUnit;
+        this.image = image;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

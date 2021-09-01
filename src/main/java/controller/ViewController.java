@@ -58,5 +58,19 @@ public class ViewController {
         stage.show();
     }
 
+    public void changeSceneForShop(ActionEvent event, String sceneName) throws IOException {
+        String scenePath = sceneName + ".fxml";
+        Parent root = FXMLLoader.load(Main.class.getResource(scenePath));
+
+//        LoggedInController loggedInController = loader.getController();
+//        loggedInController.setUserInformationForCustomer(username, retrievedBudget);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//        stage.setTitle(title);
+        stage.setScene(new Scene(root, 1000, 800));
+        stage.show();
+    }
+
+
 
 }

@@ -3,15 +3,15 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import model.Product;
+import service.ShopService;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.net.URL;
-import java.util.Objects;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ItemController implements Initializable {
@@ -23,15 +23,29 @@ public class ItemController implements Initializable {
     private Label priceLabel;
     @FXML
     private JFXButton addToCart;
+    @FXML
+    private Button decrementButton;
+    @FXML
+    private Label quantityNumberLabel;
+    @FXML
+    private Button incrementButton;
     public static final String CURRENCY = "$";
-    private Product product;
+    public ShopService shopService = new ShopService();
 
     public void setData(Product product) {
-        this.product = product;
         nameLabel.setText(product.getName());
         priceLabel.setText(CURRENCY + product.getPricePerUnit());
         Image image = new Image("file:///C:/Users/Eva/Dropbox/Programming/AccentureBootcamp2021/projects/finalProject/src/main/resources/main/finalproject/images/shop/" + product.getImage());
         productImage.setImage(image);
+        addToCart.setOnAction(event -> {
+            try {
+                shopService.addProductInTheBasket(product.getName(), 1,
+                        product.getPricePerUnit(), product.getImage());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            addToCart.setVisible(false);
+        });
     }
 
     @Override

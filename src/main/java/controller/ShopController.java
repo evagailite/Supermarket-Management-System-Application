@@ -45,7 +45,7 @@ public class ShopController extends ViewController implements Initializable {
     private List<Product> productList = new ArrayList<>();
     private ProductService productService = new ProductService();
 
-    private List<Product> getData() {
+    public List<Product> getData() {
         List<Product> products = null;
         try {
             products = productService.getAllProductsForShop();
@@ -113,7 +113,7 @@ public class ShopController extends ViewController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    changeSceneForCustomer(event, "shoppingCart", null, 0);
+                    changeSceneForShop(event, "shoppingCart");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -124,7 +124,7 @@ public class ShopController extends ViewController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    changeSceneForCustomer(event, "shop", null, 0);
+                    changeSceneForShop(event, "shop");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

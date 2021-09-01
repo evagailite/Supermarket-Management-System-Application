@@ -196,19 +196,16 @@
                   <HBox prefHeight="643.0" prefWidth="1000.0">
                      <children>
                         <ScrollPane fx:id="scroll" prefHeight="643.0" prefWidth="961.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS">
-                           <content>
-                              <GridPane fx:id="gridpane" alignment="TOP_CENTER" prefHeight="12.0" prefWidth="26.0">
-                                 <rowConstraints>
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" />
-                                 </rowConstraints>
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                              </GridPane>
-                           </content>
                            <HBox.margin>
                               <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
                            </HBox.margin>
+                           <content>
+                              <GridPane fx:id="gridpane" prefHeight="0.0" prefWidth="26.0">
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                 </rowConstraints>
+                              </GridPane>
+                           </content>
                         </ScrollPane>
                      </children>
                   </HBox>
