@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+
+<HBox alignment="CENTER_LEFT" prefHeight="175.0" prefWidth="785.0" stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ShoppingCartItemController">
+   <children>
+      <AnchorPane prefHeight="159.0" prefWidth="168.0">
+         <children>
+            <ImageView fx:id="productImageBasketImage" fitHeight="121.0" fitWidth="107.0" layoutX="32.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/shop/apple.png" />
+               </image>
+            </ImageView>
+         </children>
+         <HBox.margin>
+            <Insets bottom="10.0" top="10.0" />
+         </HBox.margin>
+      </AnchorPane>
+      <HBox alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="220.0">
+         <children>
+            <Label fx:id="productNameBasketLabel" prefHeight="18.0" prefWidth="206.0" text="Ades Tropical Fruit Juice 2L&#10;" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="175.0" prefWidth="93.0">
+         <children>
+            <AnchorPane prefHeight="175.0" prefWidth="138.0">
+               <children>
+                  <ImageView fitHeight="23.0" fitWidth="24.0" layoutX="19.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/expand-minus.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="24.0" layoutX="98.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/collapse-plus.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="quantityNumberLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="56.0" layoutY="78.0" prefHeight="20.0" prefWidth="29.0" text="1">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <JFXButton fx:id="decrementButton" contentDisplay="RIGHT" layoutX="14.0" layoutY="73.0" prefHeight="31.0" prefWidth="35.0" style="-fx-background-color: transparent;" text=" ">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="incrementButton" layoutX="96.0" layoutY="74.0" prefHeight="30.0" prefWidth="29.0" style="-fx-background-color: transparent;" text=" ">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="175.0" prefWidth="132.0">
+         <children>
+            <Label fx:id="priceBasketLabel" alignment="CENTER" text="\$0.68">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="141.0" prefWidth="100.0">
+         <children>
+            <AnchorPane prefHeight="175.0" prefWidth="121.0">
+               <children>
+                  <ImageView fx:id="deleteFromBasketButton" fitHeight="26.0" fitWidth="29.0" layoutX="28.0" layoutY="75.0" opacity="0.61" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/delete.png" />
+                     </image>
+                  </ImageView>
+                  <JFXButton fx:id="removeFromBasketButton" layoutX="16.0" layoutY="75.0" opacity="0.0" style="-fx-background-color: transparent;">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </children>
+   <styleClass>
+      <String fx:value="chosen-fruit-card" />
+      <String fx:value="shadow" />
+   </styleClass>
+</HBox>
