@@ -29,4 +29,8 @@ public class Queries {
     public static final String ADD_PRODUCT_IN_THE_BASKET = "INSERT INTO basket (name, quantity, price, image) VALUES (?, ?, ?, ?)";
     public static final String GET_ALL_SHOPPING_BASKET_PRODUCTS = "SELECT name, quantity, price, image FROM basket;";
     public static final String DELETE_FROM_SHOPPING_BASKET = "DELETE FROM basket WHERE name = ?";
+    public static final String UPDATE_SHOPPING_BASKET_QUANTITY = "UPDATE basket SET quantity = ? WHERE name = ?;";
+    public static String CHECK_PRODUCT_EXISTS_IN_THE_SHOPPING_BASKET = "SELECT quantity FROM basket WHERE name = ?";
+
+    public static String GET_SHOPPING_CART_SIZE = "SELECT count(basket_id) FROM basket";
 }

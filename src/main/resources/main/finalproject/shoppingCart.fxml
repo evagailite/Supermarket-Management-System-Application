@@ -55,7 +55,7 @@
                               <String fx:value="shadow" />
                            </styleClass>
                            <children>
-                              <TextField layoutX="14.0" layoutY="2.0" prefHeight="6.0" prefWidth="353.0" promptText="Type here to search" style="-fx-background-radius: 15;" styleClass="transparent" stylesheets="@style/style.css">
+                              <TextField fx:id="searchTextField" layoutX="14.0" layoutY="2.0" prefHeight="6.0" prefWidth="353.0" promptText="Type here to search" style="-fx-background-radius: 15;" styleClass="transparent" stylesheets="@style/style.css">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
@@ -65,7 +65,7 @@
                                     <Image url="@images/search.png" />
                                  </image>
                               </ImageView>
-                              <JFXButton layoutX="444.0" layoutY="3.0" opacity="0.0" prefHeight="26.0" prefWidth="32.0" text="Button">
+                              <JFXButton fx:id="searchButton" layoutX="444.0" layoutY="3.0" opacity="0.0" prefHeight="26.0" prefWidth="32.0" text="Button">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -127,6 +127,19 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </JFXButton>
+                              <AnchorPane layoutX="93.0" layoutY="6.0">
+                                 <children>
+                                    <Label fx:id="numberInTheBasket" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="16.0" stylesheets="@style/style.css" text="1" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="comboBox" />
+                                          <String fx:value="itemNumber" />
+                                       </styleClass>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
                            </children>
                         </Pane>
                      </children>
@@ -200,7 +213,7 @@
                                           <Font name="System Bold" size="16.0" />
                                        </font>
                                     </JFXButton>
-                                    <Label layoutX="38.0" layoutY="531.0" prefHeight="26.0" prefWidth="142.0" text="Total (tax incl.)">
+                                    <Label layoutX="38.0" layoutY="531.0" prefHeight="26.0" prefWidth="142.0" text="Total">
                                        <font>
                                           <Font name="System Bold" size="16.0" />
                                        </font>

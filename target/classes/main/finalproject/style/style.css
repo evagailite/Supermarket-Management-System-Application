@@ -30,6 +30,11 @@
 -fx-background-radius:30;
 }
 
+.itemNumber{
+ -fx-background-color:grey;
+-fx-background-radius:50;
+}
+
 .add-btn{
  -fx-background-color:#FFFFFF;
     -fx-background-radius:100;

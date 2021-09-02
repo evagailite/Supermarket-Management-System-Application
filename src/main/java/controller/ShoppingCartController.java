@@ -6,9 +6,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import main.finalproject.Main;
 import model.Product;
@@ -32,6 +30,8 @@ public class ShoppingCartController extends ViewController implements Initializa
     private JFXButton buttonLogOut;
     @FXML
     private VBox vbox;
+    @FXML
+    private Label numberInTheBasket;
     private ShopService shopService = new ShopService();
     private List<Product> shoppingBasket = new ArrayList<>();
 
@@ -54,6 +54,8 @@ public class ShoppingCartController extends ViewController implements Initializa
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        showBasketSize();
 
         shoppingBasket.addAll(getShoppingCartData());
 
@@ -112,5 +114,19 @@ public class ShoppingCartController extends ViewController implements Initializa
 
             }
         });
+    }
+
+    public void showBasketSize() {
+        try {
+            int basketSize = shopService.getShoppingCartSize();
+            if (basketSize == 0) {
+                numberInTheBasket.setVisible(false);
+            } else {
+                numberInTheBasket.setVisible(true);
+                numberInTheBasket.setText(String.valueOf(basketSize));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

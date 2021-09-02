@@ -22,7 +22,7 @@ public class ItemController implements Initializable {
     @FXML
     private Label priceLabel;
     @FXML
-    private JFXButton addToCart;
+    public JFXButton addToCart;
     @FXML
     private Button decrementButton;
     @FXML
@@ -37,13 +37,50 @@ public class ItemController implements Initializable {
         priceLabel.setText(CURRENCY + product.getPricePerUnit());
         Image image = new Image("file:///C:/Users/Eva/Dropbox/Programming/AccentureBootcamp2021/projects/finalProject/src/main/resources/main/finalproject/images/shop/" + product.getImage());
         productImage.setImage(image);
+        quantityNumberLabel.setText(String.valueOf(1));
+
         addToCart.setOnAction(event -> {
+
             try {
-                shopService.addProductInTheBasket(product.getName(), 1,
+                shopService.addProductInTheBasket(product.getName(), Double.parseDouble(quantityNumberLabel.getText()),
                         product.getPricePerUnit(), product.getImage());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+
+            incrementButton.setOnAction(event1 -> {
+                try {
+                    int value = Integer.parseInt(quantityNumberLabel.getText());
+                    value = value + 1;
+                    quantityNumberLabel.setText(String.valueOf(value));
+                    shopService.addProductInTheBasket(product.getName(), 1,
+                            product.getPricePerUnit(), product.getImage());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            decrementButton.setOnAction(event1 -> {
+                int value = Integer.parseInt(quantityNumberLabel.getText());
+                value--;
+                if (value == 0) {
+                    try {
+                        shopService.removeProductFromShoppingBasket(product.getName());
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    addToCart.setVisible(true);
+                } else {
+                    try {
+                        quantityNumberLabel.setText(String.valueOf(value));
+                        shopService.addProductInTheBasket(product.getName(), (-1),
+                                product.getPricePerUnit(), product.getImage());
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
             addToCart.setVisible(false);
         });
     }

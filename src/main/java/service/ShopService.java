@@ -3,10 +3,7 @@ package service;
 import controller.ViewController;
 import database.DBHandler;
 import database.Queries;
-import javafx.scene.control.Alert;
 import model.Product;
-import types.Category;
-import types.ProductUnit;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,16 +17,25 @@ public class ShopService extends ViewController {
     public void addProductInTheBasket(String name, double quantity, double price, String image) throws SQLException {
         connection = DBHandler.getConnection();
 
-        PreparedStatement preparedStatement = connection.prepareStatement(Queries.ADD_PRODUCT_IN_THE_BASKET);
-        preparedStatement.setString(1, name);
-        preparedStatement.setDouble(2, quantity);
-        preparedStatement.setDouble(3, price);
-        preparedStatement.setString(4, image);
+        if (checkIfProductExistsInShoppingBasket(name) == 0) {
+            PreparedStatement preparedStatement = connection.prepareStatement(Queries.ADD_PRODUCT_IN_THE_BASKET);
+            preparedStatement.setString(1, name);
+            preparedStatement.setDouble(2, quantity);
+            preparedStatement.setDouble(3, price);
+            preparedStatement.setString(4, image);
 
-        preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
+           // DBHandler.closeConnections(preparedStatement, connection);
+        } else {
+            double quantityInStock = checkIfProductExistsInShoppingBasket(name);
+            double totalQuantity = quantityInStock + quantity;
+            PreparedStatement preparedStatement = connection.prepareStatement(Queries.UPDATE_SHOPPING_BASKET_QUANTITY);
+            preparedStatement.setDouble(1, totalQuantity);
+            preparedStatement.setString(2, name);
 
-//        showAlert("Product Created", "Product created successfully", Alert.AlertType.CONFIRMATION);
-        DBHandler.closeConnections(preparedStatement, connection);
+            preparedStatement.executeUpdate();
+           // DBHandler.closeConnections(preparedStatement, connection);
+        }
     }
 
     public ArrayList<Product> getAllShoppingBasketProducts() throws SQLException {
@@ -45,7 +51,6 @@ public class ShopService extends ViewController {
                     resultSet.getDouble("price"),
                     resultSet.getString("image")));
         }
-        // DBHandler.closeConnections(resultSet, preparedStatement, connection);
         return products;
     }
 
@@ -55,7 +60,33 @@ public class ShopService extends ViewController {
         preparedStatement.setString(1, name);
         preparedStatement.executeUpdate();
 
-         DBHandler.closeConnections(preparedStatement, connection);
+        DBHandler.closeConnections(preparedStatement, connection);
+    }
+
+    public int checkIfProductExistsInShoppingBasket(String name) throws SQLException {
+        connection = DBHandler.getConnection();
+
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.CHECK_PRODUCT_EXISTS_IN_THE_SHOPPING_BASKET);
+        preparedStatement.setString(1, name);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            int quantity = resultSet.getInt("quantity");
+            return quantity;
+        } else {
+            return 0;
+        }
+    }
+
+    public int getShoppingCartSize() throws SQLException {
+        int basketSize = 0;
+        connection = DBHandler.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_SHOPPING_CART_SIZE);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            basketSize = resultSet.getInt(1);
+          //  DBHandler.closeConnections(resultSet, preparedStatement, connection);
+        }
+        return basketSize;
     }
 
 

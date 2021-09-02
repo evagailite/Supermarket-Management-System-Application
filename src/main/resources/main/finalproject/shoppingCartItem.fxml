@@ -36,29 +36,39 @@
                <children>
                   <AnchorPane prefHeight="90.0" prefWidth="125.0">
                      <children>
-                        <Label fx:id="quantityNumberLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="49.0" layoutY="18.0" prefHeight="20.0" prefWidth="37.0" text="1">
+                        <Label fx:id="quantityNumberLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="41.0" layoutY="19.0" prefHeight="20.0" prefWidth="49.0" text="1">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Button mnemonicParsing="false" style="-fx-background-color: transparent;" />
-                        <Button layoutX="79.0" layoutY="15.0" mnemonicParsing="false" style="-fx-background-color: transparent;" />
-                        <ImageView fx:id="decreaseButton" fitHeight="23.0" fitWidth="24.0" layoutX="26.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/remove.png" />
-                           </image>
+                        <Button fx:id="decreaseButton" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fitHeight="23.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/remove.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </graphic>
                            <cursor>
                               <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </ImageView>
-                        <ImageView fx:id="increaseButton" fitHeight="23.0" fitWidth="24.0" layoutX="84.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/add.png" />
-                           </image>
+                           </cursor></Button>
+                        <Button fx:id="increaseButton" layoutX="81.0" layoutY="13.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fitHeight="23.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/add.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </graphic>
                            <cursor>
                               <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </ImageView>
+                           </cursor></Button>
                      </children>
                   </AnchorPane>
                </children>

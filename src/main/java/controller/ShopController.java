@@ -15,6 +15,7 @@ import javafx.scene.layout.Region;
 import main.finalproject.Main;
 import model.Product;
 import service.ProductService;
+import service.ShopService;
 import service.UserService;
 
 import java.io.IOException;
@@ -41,9 +42,12 @@ public class ShopController extends ViewController implements Initializable {
     //    @FXML
 //    private Label label_welcome;
     @FXML
+    private Label numberInTheBasket;
+    @FXML
     private Label labelToTheSupermarket;
     private List<Product> productList = new ArrayList<>();
     private ProductService productService = new ProductService();
+    ShopService shopService = new ShopService();
 
     public List<Product> getData() {
         List<Product> products = null;
@@ -64,6 +68,8 @@ public class ShopController extends ViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        showBasketSize();
 
         productList.addAll(getData());
         int column = 0;
@@ -132,6 +138,20 @@ public class ShopController extends ViewController implements Initializable {
         });
     }
 
+    public void showBasketSize() {
+        try {
+            int basketSize = shopService.getShoppingCartSize();
+            if (basketSize == 0) {
+                numberInTheBasket.setVisible(false);
+            } else {
+                numberInTheBasket.setVisible(true);
+                numberInTheBasket.setText(String.valueOf(basketSize));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setUserInformationForCustomer(String username, double budget) {
         //   label_welcome.setText("Welcome " + username + "!");
         labelToTheSupermarket.setText("You have " + budget + " in your Digital Wallet");
@@ -140,4 +160,6 @@ public class ShopController extends ViewController implements Initializable {
     public void setUserInformation(String username) {
 
     }
+
+
 }
