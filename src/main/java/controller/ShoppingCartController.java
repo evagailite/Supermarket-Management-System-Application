@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import main.finalproject.Main;
@@ -32,6 +33,26 @@ public class ShoppingCartController extends ViewController implements Initializa
     private VBox vbox;
     @FXML
     private Label numberInTheBasket;
+    @FXML
+    private HBox tableNamesForBasket;
+    @FXML
+    private Pane emptyCartPanel;
+    @FXML
+    private Button goBackShoppingButton;
+    @FXML
+    private Label shoppingCartItemsLabel;
+    @FXML
+    private JFXButton checkoutButton;
+    @FXML
+    private VBox orderSummaryVbox;
+    @FXML
+    private Label subtotalLabel;
+    @FXML
+    private Label shippingLabel;
+    @FXML
+    private Label taxRateLabel;
+    @FXML
+    private Label totalLabel;
     private ShopService shopService = new ShopService();
     private List<Product> shoppingBasket = new ArrayList<>();
 
@@ -57,19 +78,22 @@ public class ShoppingCartController extends ViewController implements Initializa
 
         showBasketSize();
 
-        shoppingBasket.addAll(getShoppingCartData());
+        loadShoppingCartItems();
+//        shoppingBasket.addAll(getShoppingCartData());
+//
+//        for (int i = 0; i < shoppingBasket.size(); i++) {
+//            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("shoppingCartItem.fxml"));
+//            try {
+//                AnchorPane hBox = fxmlLoader.load();
+//                ShoppingCartItemController shoppingCartItemController = fxmlLoader.getController();
+//                shoppingCartItemController.setShoppingCartData(shoppingBasket.get(i));
+//                vbox.getChildren().add(hBox);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
-        for (int i = 0; i < shoppingBasket.size(); i++) {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("shoppingCartItem.fxml"));
-            try {
-                AnchorPane hBox = fxmlLoader.load();
-                ShoppingCartItemController shoppingCartItemController = fxmlLoader.getController();
-                shoppingCartItemController.setShoppingCartData(shoppingBasket.get(i));
-                vbox.getChildren().add(hBox);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        getOrderSummaryDetails();
 
         buttonLogOut.setOnAction(new EventHandler<ActionEvent>() {
             //action happens after click on it
@@ -89,9 +113,7 @@ public class ShoppingCartController extends ViewController implements Initializa
             @Override
             public void handle(ActionEvent event) {
                 try {
-
                     changeSceneHome(event, "shoppingCart");
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -109,12 +131,70 @@ public class ShoppingCartController extends ViewController implements Initializa
             }
         });
 
+        goBackShoppingButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    changeSceneHome(event, "shop");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         accountButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
 
             }
         });
+
+        checkoutButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    changeSceneHome(event, "payment");
+                    //save all data to sales table
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void getOrderSummaryDetails() {
+        try {
+            double subTotal = 0;
+            double tax = 1.21;
+            shippingLabel.setText("FREE");
+            taxRateLabel.setText(String.valueOf(tax));
+            ArrayList<Product> chosenProducts = shopService.getAllShoppingBasketProducts();
+            for (Product product : chosenProducts) {
+                subTotal = subTotal + (product.getPricePerUnit() * product.getQuantity());
+            }
+            double total = subTotal * tax;
+//            double taxAmount = total
+            double totalPrice = Math.round(total * 100) / 100D;
+            totalLabel.setText("$" + totalPrice);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadShoppingCartItems() {
+        shoppingBasket.addAll(getShoppingCartData());
+
+        for (int i = 0; i < shoppingBasket.size(); i++) {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("shoppingCartItem.fxml"));
+            try {
+                AnchorPane hBox = fxmlLoader.load();
+                ShoppingCartItemController shoppingCartItemController = fxmlLoader.getController();
+                shoppingCartItemController.setShoppingCartData(shoppingBasket.get(i));
+                vbox.getChildren().add(hBox);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void showBasketSize() {
@@ -122,9 +202,19 @@ public class ShoppingCartController extends ViewController implements Initializa
             int basketSize = shopService.getShoppingCartSize();
             if (basketSize == 0) {
                 numberInTheBasket.setVisible(false);
+                shoppingCartItemsLabel.setVisible(false);
+                tableNamesForBasket.setVisible(false);
+                emptyCartPanel.setVisible(true);
+                orderSummaryVbox.setVisible(false);
+                emptyCartPanel.toFront();
             } else {
                 numberInTheBasket.setVisible(true);
                 numberInTheBasket.setText(String.valueOf(basketSize));
+                shoppingCartItemsLabel.setVisible(true);
+                tableNamesForBasket.setVisible(true);
+                emptyCartPanel.toBack();
+                orderSummaryVbox.setVisible(true);
+                emptyCartPanel.setVisible(false);
             }
         } catch (SQLException e) {
             e.printStackTrace();

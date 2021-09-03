@@ -12,12 +12,13 @@ import javafx.scene.layout.AnchorPane;
 import model.Product;
 import service.ShopService;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class ShoppingCartItemController implements Initializable {
+public class ShoppingCartItemController extends ViewController implements Initializable {
     @FXML
     private ImageView productImageBasketImage;
     @FXML
@@ -45,26 +46,10 @@ public class ShoppingCartItemController implements Initializable {
             productImageBasketImage.setImage(image);
             quantityNumberLabel.setText(String.valueOf(1));
 
-            removeFromBasketButton.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    try {
-                        shopService.removeProductFromShoppingBasket(product.getName());
-                        anchorPane.setVisible(false);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-
             ArrayList<Product> chosenProducts = shopService.getAllShoppingBasketProducts();
             for (Product product1 : chosenProducts) {
                 if (product1.getName().equals(product.getName())) {
                     quantityNumberLabel.setText(String.valueOf((int) product1.getQuantity()));
-//
-//                    double price = product.getQuantity() * product.getPricePerUnit();
-//                    double totalPrice = Math.round(price * 100) / 100D;
-                    priceBasketLabel.setText("$" + (product1.getPricePerUnit()));
 
                     increaseButton.setOnAction(event1 -> {
                         increaseValue(product);
@@ -72,11 +57,44 @@ public class ShoppingCartItemController implements Initializable {
 
                     decreaseButton.setOnAction(event1 -> {
                         decreaseValue(product);
+                        try {
+                            if (checkIfBasketIsEmpty(shopService.getShoppingCartSize())) {
+                                changeSceneForShop(event1, "shoppingCart");
+                            }
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     });
                 }
             }
+
+            removeFromBasketButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    try {
+                        shopService.removeProductFromShoppingBasket(product.getName());
+                        anchorPane.setVisible(false);
+
+                        if (checkIfBasketIsEmpty(shopService.getShoppingCartSize())) {
+                            changeSceneForShop(event, "shoppingCart");
+                        }
+                    } catch (SQLException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    private boolean checkIfBasketIsEmpty(int shoppingCartSize) {
+        if (shoppingCartSize == 0) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -90,6 +108,7 @@ public class ShoppingCartItemController implements Initializable {
             try {
                 shopService.removeProductFromShoppingBasket(product.getName());
                 anchorPane.setVisible(false);
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }

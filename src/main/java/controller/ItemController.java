@@ -30,7 +30,7 @@ public class ItemController implements Initializable {
     private Label quantityNumberLabel;
     @FXML
     private Button incrementButton;
-//    public static final String CURRENCY = "$";
+    //    public static final String CURRENCY = "$";
     public ShopService shopService = new ShopService();
 
     public void setData(Product product) {
@@ -60,6 +60,7 @@ public class ItemController implements Initializable {
                 try {
                     shopService.addProductInTheBasket(product.getName(), Double.parseDouble(quantityNumberLabel.getText()),
                             product.getPricePerUnit(), product.getImage());
+
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
