@@ -30,7 +30,14 @@ public class Queries {
     public static final String GET_ALL_SHOPPING_BASKET_PRODUCTS = "SELECT name, quantity, price, image FROM basket;";
     public static final String DELETE_FROM_SHOPPING_BASKET = "DELETE FROM basket WHERE name = ?";
     public static final String UPDATE_SHOPPING_BASKET_QUANTITY = "UPDATE basket SET quantity = ? WHERE name = ?;";
+    public static final String UPDATE_SHOPPING_BASKET = "UPDATE basket SET price = ? WHERE name = ?";
     public static String CHECK_PRODUCT_EXISTS_IN_THE_SHOPPING_BASKET = "SELECT quantity FROM basket WHERE name = ?";
 
     public static String GET_SHOPPING_CART_SIZE = "SELECT count(basket_id) FROM basket";
+
+    public static String GET_FOOD_PRODUCTS = "SELECT product_id, product_name, quantity, price, unit, category, image FROM product WHERE category = 'FOOD'";
+    public static String GET_NON_FOOD_PRODUCTS = "SELECT product_id, product_name, quantity, price, unit, category, image FROM product WHERE category = 'NON_FOOD'";
+    public static String GET_DRINK_PRODUCTS = "SELECT product_id, product_name, quantity, price, unit, category, image FROM product WHERE category = 'DRINK'";
+
+    public static String CLEAR_SHOPPING_BASKET = "DELETE FROM basket";
 }

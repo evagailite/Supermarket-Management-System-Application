@@ -31,7 +31,7 @@
 }
 
 .itemNumber{
- -fx-background-color:grey;
+ -fx-background-color:#4e961c;
 -fx-background-radius:50;
 }
 
@@ -43,4 +43,9 @@
 .free-delivery{
 -fx-background-color:#D3D3D3;
     -fx-background-radius:30;
+}
+
+.scroll-pane {
+    -fx-hbar-policy: NEVER;
+    -fx-vbar-policy: NEVER;
 }

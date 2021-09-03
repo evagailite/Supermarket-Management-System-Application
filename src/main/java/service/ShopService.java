@@ -25,7 +25,7 @@ public class ShopService extends ViewController {
             preparedStatement.setString(4, image);
 
             preparedStatement.executeUpdate();
-           // DBHandler.closeConnections(preparedStatement, connection);
+            // DBHandler.closeConnections(preparedStatement, connection);
         } else {
             double quantityInStock = checkIfProductExistsInShoppingBasket(name);
             double totalQuantity = quantityInStock + quantity;
@@ -34,7 +34,7 @@ public class ShopService extends ViewController {
             preparedStatement.setString(2, name);
 
             preparedStatement.executeUpdate();
-           // DBHandler.closeConnections(preparedStatement, connection);
+            // DBHandler.closeConnections(preparedStatement, connection);
         }
     }
 
@@ -84,10 +84,26 @@ public class ShopService extends ViewController {
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
             basketSize = resultSet.getInt(1);
-          //  DBHandler.closeConnections(resultSet, preparedStatement, connection);
+            //  DBHandler.closeConnections(resultSet, preparedStatement, connection);
         }
         return basketSize;
     }
 
+    public void updatePrice(String name, double totalPrice) throws SQLException {
+        connection = DBHandler.getConnection();
 
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.UPDATE_SHOPPING_BASKET);
+        preparedStatement.setDouble(1, totalPrice);
+        preparedStatement.setString(2, name);
+
+        preparedStatement.executeUpdate();
+    }
+
+    public void clearBasket() throws SQLException {
+        connection = DBHandler.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.CLEAR_SHOPPING_BASKET);
+
+        preparedStatement.executeUpdate();
+        DBHandler.closeConnections(preparedStatement, connection);
+    }
 }

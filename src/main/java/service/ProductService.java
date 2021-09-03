@@ -96,7 +96,68 @@ public class ProductService extends ViewController {
                     Category.valueOf(resultSet.getString("category")),
                     resultSet.getString("image")));
         }
-          // DBHandler.closeConnections(resultSet, preparedStatement, connection);
+        // DBHandler.closeConnections(resultSet, preparedStatement, connection);
         return products;
     }
+
+    public ArrayList<Product> getFoodProductsForShop() throws SQLException {
+        connection = DBHandler.getConnection();
+
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_FOOD_PRODUCTS);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ArrayList<Product> products = new ArrayList<>();
+        while (resultSet.next()) {
+            products.add(new Product(
+                    resultSet.getInt("product_id"),
+                    resultSet.getString("product_name"),
+                    resultSet.getDouble("quantity"),
+                    resultSet.getDouble("price"),
+                    ProductUnit.valueOf(resultSet.getString("unit")),
+                    Category.valueOf(resultSet.getString("category")),
+                    resultSet.getString("image")));
+        }
+        // DBHandler.closeConnections(resultSet, preparedStatement, connection);
+        return products;
+    }
+
+    public ArrayList<Product> getNonFoodProductsForShop() throws SQLException {
+        connection = DBHandler.getConnection();
+
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_NON_FOOD_PRODUCTS);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ArrayList<Product> products = new ArrayList<>();
+        while (resultSet.next()) {
+            products.add(new Product(
+                    resultSet.getInt("product_id"),
+                    resultSet.getString("product_name"),
+                    resultSet.getDouble("quantity"),
+                    resultSet.getDouble("price"),
+                    ProductUnit.valueOf(resultSet.getString("unit")),
+                    Category.valueOf(resultSet.getString("category")),
+                    resultSet.getString("image")));
+        }
+        // DBHandler.closeConnections(resultSet, preparedStatement, connection);
+        return products;
+    }
+
+    public ArrayList<Product> getDrinksProductsForShop() throws SQLException {
+        connection = DBHandler.getConnection();
+
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_DRINK_PRODUCTS);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ArrayList<Product> products = new ArrayList<>();
+        while (resultSet.next()) {
+            products.add(new Product(
+                    resultSet.getInt("product_id"),
+                    resultSet.getString("product_name"),
+                    resultSet.getDouble("quantity"),
+                    resultSet.getDouble("price"),
+                    ProductUnit.valueOf(resultSet.getString("unit")),
+                    Category.valueOf(resultSet.getString("category")),
+                    resultSet.getString("image")));
+        }
+        // DBHandler.closeConnections(resultSet, preparedStatement, connection);
+        return products;
+    }
+
 }

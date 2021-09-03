@@ -17,9 +17,9 @@
    <children>
       <VBox alignment="CENTER" prefHeight="331.0" prefWidth="255.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane prefHeight="150.0" prefWidth="205.0">
+            <AnchorPane prefHeight="169.0" prefWidth="216.0">
                <children>
-                  <ImageView fx:id="productImage" fitHeight="137.0" fitWidth="134.0" layoutX="57.0" layoutY="7.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" smooth="false">
+                  <ImageView fx:id="productImage" fitHeight="159.0" fitWidth="150.0" layoutX="41.0" layoutY="5.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" smooth="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="41.0" AnchorPane.rightAnchor="41.895355224609375" AnchorPane.topAnchor="5.0">
                      <image>
                         <Image url="@images/shop/apple.png" />
                      </image>
@@ -28,6 +28,9 @@
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
             </AnchorPane>
             <HBox alignment="TOP_CENTER" prefHeight="50.0" prefWidth="206.0">
                <children>
@@ -41,14 +44,14 @@
                   </Label>
                </children>
             </HBox>
-            <HBox prefHeight="38.0" prefWidth="226.0">
+            <HBox prefHeight="38.0" prefWidth="174.0">
                <children>
-                  <Label fx:id="priceLabel" prefHeight="39.0" prefWidth="143.0" text="\$0.68" textAlignment="CENTER" wrapText="true">
+                  <Label fx:id="priceLabel" prefHeight="38.0" prefWidth="179.0" text="\$0.68" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="15.0" />
+                        <Insets left="20.0" />
                      </HBox.margin>
                   </Label>
                </children>
@@ -70,6 +73,9 @@
                                        </image>
                                     </ImageView>
                                  </graphic>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
                               <Label fx:id="quantityNumberLabel" alignment="CENTER" layoutX="76.0" layoutY="8.0" prefHeight="20.0" prefWidth="32.0" text="1">
                                  <font>
@@ -84,6 +90,9 @@
                                        </image>
                                     </ImageView>
                                  </graphic>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
                            </children>
                         </AnchorPane>

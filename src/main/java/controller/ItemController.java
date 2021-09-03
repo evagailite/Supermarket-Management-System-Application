@@ -12,6 +12,7 @@ import service.ShopService;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ItemController implements Initializable {
@@ -29,60 +30,89 @@ public class ItemController implements Initializable {
     private Label quantityNumberLabel;
     @FXML
     private Button incrementButton;
-    public static final String CURRENCY = "$";
+//    public static final String CURRENCY = "$";
     public ShopService shopService = new ShopService();
 
     public void setData(Product product) {
-        nameLabel.setText(product.getName());
-        priceLabel.setText(CURRENCY + product.getPricePerUnit());
-        Image image = new Image("file:///C:/Users/Eva/Dropbox/Programming/AccentureBootcamp2021/projects/finalProject/src/main/resources/main/finalproject/images/shop/" + product.getImage());
-        productImage.setImage(image);
-        quantityNumberLabel.setText(String.valueOf(1));
+        try {
+            nameLabel.setText(product.getName());
+            priceLabel.setText("$" + product.getPricePerUnit());
+            Image image = new Image("file:///C:/Users/Eva/Dropbox/Programming/AccentureBootcamp2021/projects/finalProject/src/main/resources/main/finalproject/images/shop/" + product.getImage());
+            productImage.setImage(image);
+            quantityNumberLabel.setText(String.valueOf(1));
 
-        addToCart.setOnAction(event -> {
+            ArrayList<Product> chosenProducts = shopService.getAllShoppingBasketProducts();
+            for (Product product1 : chosenProducts) {
+                if (product1.getName().equals(product.getName())) {
+                    addToCart.setVisible(false);
+                    quantityNumberLabel.setText(String.valueOf((int) product1.getQuantity()));
+                    incrementButton.setOnAction(event1 -> {
+                        increaseValue(product);
+                    });
 
-            try {
-                shopService.addProductInTheBasket(product.getName(), Double.parseDouble(quantityNumberLabel.getText()),
-                        product.getPricePerUnit(), product.getImage());
-            } catch (SQLException e) {
-                e.printStackTrace();
+                    decrementButton.setOnAction(event1 -> {
+                        decreaseValue(product);
+                    });
+                }
             }
 
-            incrementButton.setOnAction(event1 -> {
+            addToCart.setOnAction(event -> {
                 try {
-                    int value = Integer.parseInt(quantityNumberLabel.getText());
-                    value = value + 1;
-                    quantityNumberLabel.setText(String.valueOf(value));
-                    shopService.addProductInTheBasket(product.getName(), 1,
+                    shopService.addProductInTheBasket(product.getName(), Double.parseDouble(quantityNumberLabel.getText()),
                             product.getPricePerUnit(), product.getImage());
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-            });
 
-            decrementButton.setOnAction(event1 -> {
-                int value = Integer.parseInt(quantityNumberLabel.getText());
-                value--;
-                if (value == 0) {
-                    try {
-                        shopService.removeProductFromShoppingBasket(product.getName());
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    addToCart.setVisible(true);
-                } else {
-                    try {
-                        quantityNumberLabel.setText(String.valueOf(value));
-                        shopService.addProductInTheBasket(product.getName(), (-1),
-                                product.getPricePerUnit(), product.getImage());
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+                incrementButton.setOnAction(event1 -> {
+                    increaseValue(product);
+                });
 
-            addToCart.setVisible(false);
-        });
+                decrementButton.setOnAction(event1 -> {
+                    decreaseValue(product);
+                });
+                addToCart.setVisible(false);
+            });
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void decreaseValue(Product product) {
+        int value = Integer.parseInt(quantityNumberLabel.getText());
+        value--;
+        if (value == 0) {
+            try {
+                shopService.removeProductFromShoppingBasket(product.getName());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            addToCart.setVisible(true);
+        } else {
+            try {
+                quantityNumberLabel.setText(String.valueOf(value));
+                shopService.addProductInTheBasket(product.getName(), (-1),
+                        product.getPricePerUnit(), product.getImage());
+
+//                shopService.updatePrice(product.getName(), );
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void increaseValue(Product product) {
+        try {
+            int value = Integer.parseInt(quantityNumberLabel.getText());
+            value = value + 1;
+            quantityNumberLabel.setText(String.valueOf(value));
+            shopService.addProductInTheBasket(product.getName(), 1,
+                    product.getPricePerUnit(), product.getImage());
+
+            shopService.updatePrice(product.getName(), product.getPricePerUnit() * value);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

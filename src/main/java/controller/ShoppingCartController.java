@@ -77,8 +77,9 @@ public class ShoppingCartController extends ViewController implements Initializa
             public void handle(ActionEvent event) {
                 //if users logged out
                 try {
+                    shopService.clearBasket();
                     changeScene(event, "login");
-                } catch (IOException e) {
+                } catch (IOException | SQLException e) {
                     e.printStackTrace();
                 }
             }
@@ -89,7 +90,7 @@ public class ShoppingCartController extends ViewController implements Initializa
             public void handle(ActionEvent event) {
                 try {
 
-                    changeSceneForCustomer(event, "shoppingCart", null, 0);
+                    changeSceneHome(event, "shoppingCart");
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -101,7 +102,7 @@ public class ShoppingCartController extends ViewController implements Initializa
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    changeSceneForCustomer(event, "shop", null, 0);
+                    changeSceneHome(event, "shop");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

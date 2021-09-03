@@ -4,6 +4,7 @@
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
@@ -24,9 +25,9 @@
             <center>
                 <VBox prefHeight="800.0" prefWidth="860.0" BorderPane.alignment="CENTER">
                     <children>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="67.0" prefWidth="960.0">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="55.0" prefWidth="960.0">
                      <children>
-                        <Pane prefHeight="55.0" prefWidth="224.0">
+                        <Pane prefHeight="55.0" prefWidth="224.0" HBox.hgrow="ALWAYS">
                            <children>
                               <Label layoutX="29.0" layoutY="1.0" text="THE">
                                  <font>
@@ -57,7 +58,7 @@
                               <String fx:value="shadow" />
                            </styleClass>
                            <children>
-                              <TextField fx:id="searchTextfield" layoutX="14.0" layoutY="2.0" prefHeight="6.0" prefWidth="353.0" promptText="Type here to search" style="-fx-background-radius: 15;" styleClass="transparent" stylesheets="@style/style.css">
+                              <TextField fx:id="searchTextField" layoutX="14.0" layoutY="2.0" prefHeight="6.0" prefWidth="353.0" promptText="Type here to search" style="-fx-background-radius: 15;" styleClass="transparent" stylesheets="@style/style.css">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
@@ -74,8 +75,8 @@
                               </JFXButton>
                            </children>
                         </Pane>
-                        <Pane prefHeight="55.0" prefWidth="30.0" />
-                        <Pane prefHeight="55.0" prefWidth="214.0">
+                        <Pane prefHeight="55.0" prefWidth="30.0" HBox.hgrow="ALWAYS" />
+                        <Pane prefHeight="55.0" prefWidth="214.0" HBox.hgrow="ALWAYS">
                            <children>
                               <ImageView fitHeight="26.0" fitWidth="37.0" layoutX="63.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -149,53 +150,90 @@
                         <Insets left="20.0" right="20.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox prefHeight="3.0" prefWidth="1000.0">
+                        <HBox prefHeight="33.0" prefWidth="1000.0">
                      <children>
-                        <AnchorPane prefHeight="33.0" prefWidth="282.0">
+                        <AnchorPane prefHeight="33.0" prefWidth="179.0">
                            <children>
-                              <Label alignment="CENTER" layoutX="67.0" layoutY="4.0" text="Categories">
+                              <Label alignment="CENTER" layoutX="60.0" layoutY="13.0" text="Categories">
                                  <font>
                                     <Font name="System Bold" size="16.0" />
                                  </font>
                               </Label>
                            </children>
                         </AnchorPane>
+                        <AnchorPane prefHeight="50.0" prefWidth="92.0" stylesheets="@style/style.css">
+                           <children>
+                              <ImageView fitHeight="130.0" fitWidth="50.0" layoutX="21.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/grocery.png" />
+                                 </image>
+                              </ImageView>
+                              <Button fx:id="foodButton" layoutX="19.0" layoutY="1.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="61.0" style="-fx-background-color: transparent;">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                           </children>
+                           <styleClass>
+                              <String fx:value="search-box" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </AnchorPane>
+                        <AnchorPane layoutX="189.0" layoutY="10.0" prefHeight="33.0" prefWidth="92.0" stylesheets="@style/style.css">
+                           <styleClass>
+                              <String fx:value="search-box" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                           <children>
+                              <ImageView fitHeight="44.0" fitWidth="44.0" layoutX="24.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/soft-drink.png" />
+                                 </image>
+                              </ImageView>
+                              <Button fx:id="drinksButton" layoutX="16.0" layoutY="2.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="61.0" style="-fx-background-color: transparent;">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                           </children>
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </AnchorPane>
+                        <AnchorPane layoutX="286.0" layoutY="10.0" prefHeight="33.0" prefWidth="92.0" stylesheets="@style/style.css">
+                           <styleClass>
+                              <String fx:value="search-box" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                           <children>
+                              <ImageView fitHeight="44.0" fitWidth="44.0" layoutX="24.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/medical.png" />
+                                 </image>
+                              </ImageView>
+                              <Button fx:id="nonFoodButton" layoutX="16.0" layoutY="2.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="61.0" style="-fx-background-color: transparent;">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                           </children>
+                        </AnchorPane>
                      </children>
-                  </HBox>
-                        <HBox prefHeight="71.0" prefWidth="1000.0">
-                            <children>
-                                <HBox alignment="CENTER" prefHeight="59.0" prefWidth="216.0" stylesheets="@style/style.css">
-                                    <HBox.margin>
-                                        <Insets left="20.0" right="20.0" />
-                                    </HBox.margin>
-                                    <styleClass>
-                                        <String fx:value="free-delivery" />
-                                        <String fx:value="shadow" />
-                                    </styleClass>
-                                </HBox>
-                                <Pane prefHeight="100.0" prefWidth="18.0" />
-                                <HBox alignment="CENTER" prefHeight="59.0" prefWidth="236.0" style="-fx-background-color: #AFD9D3;" stylesheets="@style/style.css">
-                                    <HBox.margin>
-                                        <Insets left="20.0" right="20.0" />
-                                    </HBox.margin>
-                                    <styleClass>
-                                        <String fx:value="free-delivery" />
-                                        <String fx:value="shadow" />
-                                    </styleClass>
-                                </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0" />
-                        <HBox prefHeight="100.0" prefWidth="200.0" />
-                            </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
                         </HBox>
-                  <HBox prefHeight="39.0" prefWidth="1000.0" />
-                  <HBox prefHeight="643.0" prefWidth="1000.0">
+                  <HBox alignment="CENTER" prefHeight="702.0" prefWidth="1000.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <ScrollPane fx:id="scroll" prefHeight="643.0" prefWidth="961.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS">
+                        <ScrollPane fx:id="scroll" hbarPolicy="ALWAYS" prefHeight="673.0" prefWidth="970.0" style="-fx-background-color: transparent;" stylesheets="@style/style.css" vbarPolicy="ALWAYS" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
                            </HBox.margin>
                            <content>
-                              <GridPane fx:id="gridpane" prefHeight="0.0" prefWidth="26.0">
+                              <GridPane fx:id="gridpane" alignment="CENTER" prefHeight="0.0" prefWidth="10.0">
                                  <rowConstraints>
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" />
                                  </rowConstraints>

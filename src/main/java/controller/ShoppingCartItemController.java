@@ -1,7 +1,5 @@
 package controller;
 
-import com.jfoenix.controls.JFXButton;
-import database.DBHandler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,6 +14,7 @@ import service.ShopService;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ShoppingCartItemController implements Initializable {
@@ -37,62 +36,95 @@ public class ShoppingCartItemController implements Initializable {
     private AnchorPane anchorPane;
     private ShopService shopService = new ShopService();
 
-
     public void setShoppingCartData(Product product) {
-        productNameBasketLabel.setText(product.getName());
-        priceBasketLabel.setText(ItemController.CURRENCY + product.getPricePerUnit());
-        Image image = new Image("file:///C:/Users/Eva/Dropbox/Programming/AccentureBootcamp2021/projects/finalProject/src/main/resources/main/finalproject/images/shop/"
-                + product.getImage());
-        productImageBasketImage.setImage(image);
-        quantityNumberLabel.setText(String.valueOf(1));
+        try {
+            productNameBasketLabel.setText(product.getName());
+            priceBasketLabel.setText(String.valueOf(product.getPricePerUnit()));
+            Image image = new Image("file:///C:/Users/Eva/Dropbox/Programming/AccentureBootcamp2021/projects/finalProject/src/main/resources/main/finalproject/images/shop/"
+                    + product.getImage());
+            productImageBasketImage.setImage(image);
+            quantityNumberLabel.setText(String.valueOf(1));
 
-        removeFromBasketButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    shopService.removeProductFromShoppingBasket(product.getName());
-                    anchorPane.setVisible(false);
-                } catch (SQLException e) {
-                    e.printStackTrace();
+            removeFromBasketButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    try {
+                        shopService.removeProductFromShoppingBasket(product.getName());
+                        anchorPane.setVisible(false);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            ArrayList<Product> chosenProducts = shopService.getAllShoppingBasketProducts();
+            for (Product product1 : chosenProducts) {
+                if (product1.getName().equals(product.getName())) {
+                    quantityNumberLabel.setText(String.valueOf((int) product1.getQuantity()));
+//
+//                    double price = product.getQuantity() * product.getPricePerUnit();
+//                    double totalPrice = Math.round(price * 100) / 100D;
+                    priceBasketLabel.setText("$" + (product1.getPricePerUnit()));
+
+                    increaseButton.setOnAction(event1 -> {
+                        increaseValue(product);
+                    });
+
+                    decreaseButton.setOnAction(event1 -> {
+                        decreaseValue(product);
+                    });
                 }
             }
-        });
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-        increaseButton.setOnAction(event1 -> {
+    private void decreaseValue(Product product) {
+        int value = Integer.parseInt(quantityNumberLabel.getText());
+        double startPrice = product.getPricePerUnit() / product.getQuantity();
+        double pricePerQuantity = (startPrice * value) - startPrice;
+        double totalPrice = Math.round(pricePerQuantity * 100) / 100D;
+        value--;
+        if (value == 0) {
             try {
-                int value = Integer.parseInt(quantityNumberLabel.getText());
-                value = value + 1;
-                quantityNumberLabel.setText(String.valueOf(value));
-                shopService.addProductInTheBasket(product.getName(), 1,
-                        product.getPricePerUnit(), product.getImage());
+                shopService.removeProductFromShoppingBasket(product.getName());
+                anchorPane.setVisible(false);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        });
+        } else {
+            try {
+                quantityNumberLabel.setText(String.valueOf(value));
+                priceBasketLabel.setText("$" + (totalPrice));
 
-        decreaseButton.setOnAction(event1 -> {
-            int value = Integer.parseInt(quantityNumberLabel.getText());
-            value--;
-            if (value == 0) {
-                try {
-                    shopService.removeProductFromShoppingBasket(product.getName());
-                    anchorPane.setVisible(false);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                try {
-                    quantityNumberLabel.setText(String.valueOf(value));
-                    shopService.addProductInTheBasket(product.getName(), (-1),
-                            product.getPricePerUnit(), product.getImage());
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                shopService.addProductInTheBasket(product.getName(), (-1),
+                        totalPrice, product.getImage());
+                shopService.updatePrice(product.getName(), totalPrice);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        });
-
+        }
     }
 
+    private void increaseValue(Product product) {
+        try {
+            int value = Integer.parseInt(quantityNumberLabel.getText());
+            value++;
+            quantityNumberLabel.setText(String.valueOf(value));
+
+            double startPrice = product.getPricePerUnit() / product.getQuantity();
+            double pricePerQuantity = startPrice * (value);
+            double totalPrice = Math.round(pricePerQuantity * 100) / 100D;
+            priceBasketLabel.setText("$" + (totalPrice));
+
+            shopService.addProductInTheBasket(product.getName(), 1,
+                    totalPrice, product.getImage());
+            shopService.updatePrice(product.getName(), totalPrice);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

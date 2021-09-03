@@ -32,6 +32,17 @@ public class ViewController {
         alert.show();
     }
 
+    public void changeSceneHome(ActionEvent event, String sceneName) throws IOException {
+        String scenePath = sceneName + ".fxml";
+
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+
+        Parent root = FXMLLoader.load(Main.class.getResource(scenePath));
+        stage.setScene(new Scene(root, 1000, 800));
+        stage.show();
+    }
+
     public void changeSceneForCustomer(ActionEvent event, String sceneName, String username, double retrievedBudget) throws IOException {
         String scenePath = sceneName + ".fxml";
         Parent root = FXMLLoader.load(Main.class.getResource(scenePath));
