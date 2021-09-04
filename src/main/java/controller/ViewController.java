@@ -39,7 +39,7 @@ public class ViewController {
         Stage stage = (Stage) node.getScene().getWindow();
 
         Parent root = FXMLLoader.load(Main.class.getResource(scenePath));
-        stage.setScene(new Scene(root, 1000, 800));
+        stage.setScene(new Scene(root, 1000, 830));
         stage.show();
     }
 
@@ -52,7 +52,7 @@ public class ViewController {
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 //        stage.setTitle(title);
-        stage.setScene(new Scene(root, 1000, 800));
+        stage.setScene(new Scene(root, 1000, 830));
         stage.show();
     }
 
@@ -78,7 +78,7 @@ public class ViewController {
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 //        stage.setTitle(title);
-        stage.setScene(new Scene(root, 1000, 800));
+        stage.setScene(new Scene(root, 1000, 830));
         stage.show();
     }
 

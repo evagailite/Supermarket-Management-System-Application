@@ -1,13 +1,18 @@
 package controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import service.ShopService;
 
 import java.io.IOException;
@@ -33,13 +38,50 @@ public class PaymentController extends ViewController implements Initializable {
     @FXML
     private Label shoppingCartItemsLabel;
     @FXML
-    private Button goBackShoppingButton;
+    private HBox hbox;
+    @FXML
+    private TextField firstNameTextField;
+    @FXML
+    private TextField lastNameTextField;
+    @FXML
+    private TextField emailAddressTextField;
+    @FXML
+    private TextField mobileNumberTextField;
+    @FXML
+    private TextField houseFlatNumberTextField;
+    @FXML
+    private TextField StreetNameTextField;
+    @FXML
+    private TextField zipCodeTextField;
+    @FXML
+    private TextField cityTextField;
+    @FXML
+    private TextField notesTextField;
     @FXML
     private JFXButton payButton;
+    @FXML
+    private TextField cardholderTextField;
+    @FXML
+    private PasswordField cardNUmberTextField;
+    @FXML
+    private JFXComboBox monthComboBox;
+    @FXML
+    private JFXComboBox yearComboBox;
+    @FXML
+    private TextField cvvTextField;
+    @FXML
+    private Button goBackShoppingButton;
+    @FXML
+    private Pane thankYouPagePane;
+    @FXML
+    private VBox deliveryPaymentsWindowVBox;
     private ShopService shopService = new ShopService();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        setComboBoxValues();
+
         showBasketSize();
 
         buttonLogOut.setOnAction(new EventHandler<ActionEvent>() {
@@ -95,6 +137,19 @@ public class PaymentController extends ViewController implements Initializable {
 
             }
         });
+
+        payButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                deliveryPaymentsWindowVBox.setVisible(false);
+                thankYouPagePane.setVisible(true);
+            }
+        });
+    }
+
+    private void setComboBoxValues() {
+        monthComboBox.getItems().addAll("01", "02", "03", "04", "05", "06", "07", "08", "09", 10, 11, 12);
+        yearComboBox.getItems().addAll(2021, 2022, 2023, 2024);
     }
 
     public void showBasketSize() {

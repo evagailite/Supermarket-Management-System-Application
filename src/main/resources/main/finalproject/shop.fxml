@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ShopController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="830.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ShopController">
     <children>
         <BorderPane prefHeight="800.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <center>
@@ -161,7 +161,7 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <AnchorPane prefHeight="50.0" prefWidth="92.0" stylesheets="@style/style.css">
+                        <AnchorPane prefHeight="50.0" prefWidth="92.0" style="-fx-background-color: transparent;" stylesheets="@style/style.css">
                            <children>
                               <ImageView fitHeight="130.0" fitWidth="50.0" layoutX="21.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -182,7 +182,7 @@
                               <Insets right="5.0" />
                            </HBox.margin>
                         </AnchorPane>
-                        <AnchorPane layoutX="189.0" layoutY="10.0" prefHeight="33.0" prefWidth="92.0" stylesheets="@style/style.css">
+                        <AnchorPane layoutX="189.0" layoutY="10.0" prefHeight="33.0" prefWidth="92.0" style="-fx-background-color: transparent;" stylesheets="@style/style.css">
                            <styleClass>
                               <String fx:value="search-box" />
                               <String fx:value="shadow" />
@@ -203,7 +203,7 @@
                               <Insets right="5.0" />
                            </HBox.margin>
                         </AnchorPane>
-                        <AnchorPane layoutX="286.0" layoutY="10.0" prefHeight="33.0" prefWidth="92.0" stylesheets="@style/style.css">
+                        <AnchorPane layoutX="286.0" layoutY="10.0" prefHeight="33.0" prefWidth="92.0" style="-fx-background-color: transparent;" stylesheets="@style/style.css">
                            <styleClass>
                               <String fx:value="search-box" />
                               <String fx:value="shadow" />

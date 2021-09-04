@@ -49,33 +49,37 @@ public class UserService extends ViewController {
     }
 
     public void logInUser(ActionEvent event, String username, String password) throws SQLException, IOException {
+        try {
+            connection = DBHandler.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(Queries.CHECK_USER_EXISTS_USERNAME);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-        connection = DBHandler.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(Queries.CHECK_USER_EXISTS_USERNAME);
-        preparedStatement.setString(1, username);
-        preparedStatement.setString(2, password);
-        ResultSet resultSet = preparedStatement.executeQuery();
+            //if user is not in the database
+            if (!resultSet.isBeforeFirst()) {
+                showAlert("Login Error", "Provided credentials are incorrect!", Alert.AlertType.ERROR);
+            } else {
+                while (resultSet.next()) {
+                    double retrievedBudget = resultSet.getDouble("budget");
+                    String retrieveUserType = resultSet.getString("user_type");
 
-        //if user is not in the database
-        if (!resultSet.isBeforeFirst()) {
-            showAlert("Login Error", "Provided credentials are incorrect!", Alert.AlertType.ERROR);
-        } else {
-            while (resultSet.next()) {
-                double retrievedBudget = resultSet.getDouble("budget");
-                String retrieveUserType = resultSet.getString("user_type");
-
-                if (retrieveUserType.equals("CUSTOMER")) {
-                    changeSceneForCustomer(event, "shop", username, retrievedBudget);
-                } else if (retrieveUserType.equals("SALES_MANAGER")) {
-                    changeSceneForAdminAndSalesManager(event, "salesManagerPanel", username);
-                } else if (retrieveUserType.equals("ADMINISTRATOR")) {
-                    changeSceneForAdminAndSalesManager(event, "administratorPanel", username);
-                } else {
-                    showAlert("Login Error", "The provided credentials are incorrect!", Alert.AlertType.ERROR);
+                    if (retrieveUserType.equals("CUSTOMER")) {
+                        changeSceneForCustomer(event, "shop", username, retrievedBudget);
+                    } else if (retrieveUserType.equals("SALES_MANAGER")) {
+                        changeSceneForAdminAndSalesManager(event, "salesManagerPanel", username);
+                    } else if (retrieveUserType.equals("ADMINISTRATOR")) {
+                        changeSceneForAdminAndSalesManager(event, "administratorPanel", username);
+                    } else {
+                        showAlert("Login Error", "The provided credentials are incorrect!", Alert.AlertType.ERROR);
+                    }
                 }
             }
+            DBHandler.closeConnections(resultSet, preparedStatement, connection);
+        } catch (SQLException e) {
+            System.out.println("Something went wrong!");
+            logInUser(event, username, password);
         }
-        DBHandler.closeConnections(resultSet, preparedStatement, connection);
     }
 
     public ObservableList<Users> getAllUsers() throws SQLException {

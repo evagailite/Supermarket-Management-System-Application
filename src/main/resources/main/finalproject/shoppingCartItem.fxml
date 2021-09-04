@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="66.0" prefWidth="541.0" stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ShoppingCartItemController">
+<AnchorPane fx:id="anchorPane" prefHeight="67.0" prefWidth="652.0" stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ShoppingCartItemController">
    <children>
       <HBox alignment="CENTER_LEFT" layoutX="5.0" prefHeight="58.0" prefWidth="564.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -34,41 +34,51 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="141.0" prefWidth="126.0">
                <children>
-                  <AnchorPane prefHeight="90.0" prefWidth="125.0">
+                  <AnchorPane prefHeight="56.0" prefWidth="112.0" style="-fx-background-radius: 5;">
                      <children>
-                        <Label fx:id="quantityNumberLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="41.0" layoutY="19.0" prefHeight="20.0" prefWidth="49.0" text="1">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="decreaseButton" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
-                           <graphic>
-                              <ImageView fitHeight="23.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/remove.png" />
-                                 </image>
+                        <AnchorPane layoutX="21.0" layoutY="12.0" prefHeight="21.0" prefWidth="91.0" style="-fx-background-color: #EFEFEF;" stylesheets="@style/style.css">
+                           <children>
+                              <Label fx:id="quantityNumberLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="31.0" layoutY="6.0" prefHeight="20.0" prefWidth="31.0" text="1" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="decreaseButton" layoutX="8.0" layoutY="4.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="22.0" style="-fx-background-color: transparent;">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
-                              </ImageView>
-                           </graphic>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor></Button>
-                        <Button fx:id="increaseButton" layoutX="81.0" layoutY="13.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
-                           <graphic>
-                              <ImageView fitHeight="23.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/add.png" />
-                                 </image>
+                                 <graphic>
+                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/remove.png" />
+                                       </image>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="increaseButton" alignment="CENTER" contentDisplay="CENTER" layoutX="56.0" layoutY="5.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="17.0" style="-fx-background-color: transparent;" textAlignment="CENTER">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
-                              </ImageView>
-                           </graphic>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor></Button>
+                                 <font>
+                                    <Font name="Symbol" size="12.0" />
+                                 </font>
+                                 <graphic>
+                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/add.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                           <styleClass>
+                              <String fx:value="comboBox" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                        </AnchorPane>
                      </children>
                   </AnchorPane>
                </children>

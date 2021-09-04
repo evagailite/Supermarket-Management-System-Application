@@ -100,10 +100,16 @@ public class ShopService extends ViewController {
     }
 
     public void clearBasket() throws SQLException {
-        connection = DBHandler.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(Queries.CLEAR_SHOPPING_BASKET);
+        try {
+            connection = DBHandler.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(Queries.CLEAR_SHOPPING_BASKET);
 
-        preparedStatement.executeUpdate();
-        DBHandler.closeConnections(preparedStatement, connection);
+            preparedStatement.executeUpdate();
+            DBHandler.closeConnections(preparedStatement, connection);
+        } catch (SQLException e) {
+            System.out.println("Something went wrong! PLease wait");
+            clearBasket();
+        }
+
     }
 }
