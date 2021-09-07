@@ -51,10 +51,46 @@ public class SaleService extends ViewController {
                     resultSet.getInt("quantity"),
                     resultSet.getDouble("price"),
                     resultSet.getString("image"),
-                    resultSet.getString("user"),
+                    resultSet.getString("username"),
                     resultSet.getDate("purchase_date")));
         }
         return sales;
     }
 
+    public List<Sale> getCustomerSales(String username) throws SQLException {
+        connection = DBHandler.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_CUSTOMER_SALES);
+        preparedStatement.setString(1, username);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ArrayList<Sale> sales = new ArrayList<>();
+        while (resultSet.next()) {
+            sales.add(new Sale(
+                    resultSet.getString("order_number"),
+                    resultSet.getString("product"),
+                    resultSet.getInt("quantity"),
+                    resultSet.getDouble("price"),
+                    resultSet.getString("image"),
+                    resultSet.getString("username"),
+                    resultSet.getDate("purchase_date")));
+        }
+        return sales;
+    }
+
+    public void createSale(String orderNumber, String productName, double quantity,
+                           String username, String currentDate, double pricePerUnit, String image) throws SQLException {
+        connection = DBHandler.getConnection();
+
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.CREATE_ORDER);
+        preparedStatement.setString(1, orderNumber);
+        preparedStatement.setString(2, productName);
+        preparedStatement.setDouble(3, quantity);
+        preparedStatement.setString(4, username);
+        preparedStatement.setString(5, currentDate);
+        preparedStatement.setDouble(6, pricePerUnit);
+        preparedStatement.setString(7, image);
+        preparedStatement.executeUpdate();
+
+        DBHandler.closeConnections(preparedStatement, connection);
+
+    }
 }

@@ -12,6 +12,7 @@ import javafx.scene.layout.*;
 import main.finalproject.Main;
 import model.Product;
 import service.ShopService;
+import service.UserService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -58,6 +59,7 @@ public class ShoppingCartController extends ViewController implements Initializa
     private List<Product> shoppingBasket = new ArrayList<>();
     private final DecimalFormat df = new DecimalFormat("0.00");
     private String shopUser = "test";
+    private UserService userService = new UserService();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -74,6 +76,8 @@ public class ShoppingCartController extends ViewController implements Initializa
             public void handle(ActionEvent event) {
                 //if users logged out
                 try {
+                    String username = userService.getOnlineUser("TRUE");
+                    userService.setUserIsOnlineStatus("FALSE", username);
                     shopService.clearBasket();
                     changeScene(event, "login");
                 } catch (IOException | SQLException e) {
@@ -127,7 +131,7 @@ public class ShoppingCartController extends ViewController implements Initializa
             public void handle(ActionEvent event) {
                 try {
                     changeSceneHome(event, "payment");
-                    //save all data to sales table
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

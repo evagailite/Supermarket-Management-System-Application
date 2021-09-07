@@ -37,7 +37,6 @@ public class AccountItemController extends ViewController implements Initializab
 
             viewOrderButton.setOnAction(event -> {
                 try {
-//                    loadOrder();
                     changeSceneForShop(event, "order");
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -48,13 +47,6 @@ public class AccountItemController extends ViewController implements Initializab
         }
 
     }
-
-
-//
-//    private void loadOrder() {
-//        List<Sale> orders = new ArrayList<>();
-//        orders.addAll()
-//    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

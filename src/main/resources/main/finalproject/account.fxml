@@ -157,16 +157,40 @@
                                     <Font name="System Bold" size="26.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="usernameLabel" layoutX="167.0" layoutY="42.0" text="Label" />
                            </children>
                         </AnchorPane>
                      </children>
                   </HBox>
                   <StackPane prefHeight="568.0" prefWidth="1000.0">
                      <children>
+                        <Pane fx:id="editProfilePane" prefHeight="580.0" prefWidth="1000.0" style="-fx-background-color: transparent;">
+                           <children>
+                              <VBox fx:id="orderProductsVBox" prefHeight="562.0" prefWidth="671.0">
+                                 <children>
+                                    <HBox fx:id="tableNamesForBasket1" prefHeight="35.0" prefWidth="563.0">
+                                       <VBox.margin>
+                                          <Insets left="15.0" right="25.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <AnchorPane prefHeight="36.0" prefWidth="566.0">
+                                             <children>
+                                                <Label alignment="CENTER" opacity="0.53" prefHeight="42.0" prefWidth="243.0" text="Product" textAlignment="CENTER" />
+                                                <Label alignment="CENTER" layoutX="224.0" layoutY="1.0" opacity="0.53" prefHeight="39.0" prefWidth="162.0" text="Price" />
+                                                <Label alignment="CENTER" layoutX="331.0" layoutY="1.0" opacity="0.53" prefHeight="39.0" prefWidth="151.0" text="Quantity" />
+                                                <Label alignment="CENTER" layoutX="459.0" layoutY="1.0" opacity="0.53" prefHeight="40.0" prefWidth="82.0" text="Total" />
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                                 <padding>
+                                    <Insets left="15.0" right="15.0" />
+                                 </padding>
+                              </VBox>
+                           </children></Pane>
                         <HBox fx:id="hbox" prefHeight="554.0" prefWidth="1000.0">
                            <children>
-                              <ScrollPane prefHeight="568.0" prefWidth="529.0" style="-fx-background-color: transparent;" stylesheets="@style/style.css">
+                              <ScrollPane prefHeight="568.0" prefWidth="547.0" style="-fx-background-color: transparent;" stylesheets="@style/style.css">
                                  <content>
                                     <VBox fx:id="vbox" prefHeight="562.0" prefWidth="491.0">
                                        <children>
@@ -177,10 +201,10 @@
                                              <children>
                                                 <AnchorPane prefHeight="36.0" prefWidth="566.0">
                                                    <children>
-                                                      <Label alignment="CENTER" opacity="0.53" prefHeight="42.0" prefWidth="141.0" text="Order no." textAlignment="CENTER" />
-                                                      <Label alignment="CENTER" layoutX="132.0" layoutY="1.0" opacity="0.53" prefHeight="39.0" prefWidth="90.0" text="Date" />
-                                                      <Label alignment="CENTER" layoutX="209.0" layoutY="1.0" opacity="0.53" prefHeight="39.0" prefWidth="100.0" text="Total" />
-                                                      <Label alignment="CENTER" layoutX="279.0" layoutY="1.0" opacity="0.53" prefHeight="40.0" prefWidth="100.0" text="Action" />
+                                                      <Label alignment="CENTER" opacity="0.53" prefHeight="42.0" prefWidth="116.0" text="Order no." textAlignment="CENTER" />
+                                                      <Label alignment="CENTER" layoutX="86.0" layoutY="1.0" opacity="0.53" prefHeight="39.0" prefWidth="136.0" text="Date" />
+                                                      <Label alignment="CENTER" layoutX="209.0" layoutY="1.0" opacity="0.53" prefHeight="39.0" prefWidth="110.0" text="Total" />
+                                                      <Label alignment="CENTER" layoutX="279.0" layoutY="1.0" opacity="0.53" prefHeight="40.0" prefWidth="150.0" text="Action" />
                                                    </children>
                                                 </AnchorPane>
                                              </children>
@@ -210,29 +234,6 @@
                               </VBox>
                            </children>
                         </HBox>
-                        <Pane fx:id="editProfilePane" prefHeight="580.0" prefWidth="1000.0" style="-fx-background-color: transparent;" />
-                        <VBox fx:id="orderProductsVBox" prefHeight="562.0" prefWidth="671.0">
-                           <children>
-                              <HBox fx:id="tableNamesForBasket1" prefHeight="35.0" prefWidth="563.0">
-                                 <VBox.margin>
-                                    <Insets left="15.0" right="25.0" />
-                                 </VBox.margin>
-                                 <children>
-                                    <AnchorPane prefHeight="36.0" prefWidth="566.0">
-                                       <children>
-                                          <Label alignment="CENTER" opacity="0.53" prefHeight="42.0" prefWidth="243.0" text="Product" textAlignment="CENTER" />
-                                          <Label alignment="CENTER" layoutX="224.0" layoutY="1.0" opacity="0.53" prefHeight="39.0" prefWidth="162.0" text="Price" />
-                                          <Label alignment="CENTER" layoutX="331.0" layoutY="1.0" opacity="0.53" prefHeight="39.0" prefWidth="151.0" text="Quantity" />
-                                          <Label alignment="CENTER" layoutX="459.0" layoutY="1.0" opacity="0.53" prefHeight="40.0" prefWidth="82.0" text="Total" />
-                                       </children>
-                                    </AnchorPane>
-                                 </children>
-                              </HBox>
-                           </children>
-                           <padding>
-                              <Insets left="15.0" right="15.0" />
-                           </padding>
-                        </VBox>
                      </children>
                   </StackPane>
                </children>

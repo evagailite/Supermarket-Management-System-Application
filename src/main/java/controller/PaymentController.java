@@ -11,12 +11,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import model.Delivery;
+import model.Product;
+import model.Sale;
 import service.SaleService;
 import service.ShopService;
+import service.UserService;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class PaymentController extends ViewController implements Initializable {
@@ -78,6 +82,7 @@ public class PaymentController extends ViewController implements Initializable {
     private Label confirmationLabel;
     private SaleService saleService = new SaleService();
     private ShopService shopService = new ShopService();
+    private UserService userService = new UserService();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -91,10 +96,13 @@ public class PaymentController extends ViewController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
 
+
                 shoppingCartItemsLabel.setVisible(true);
                 confirmationLabel.setVisible(false);
                 //if users logged out
                 try {
+                    String username = userService.getOnlineUser("TRUE");
+                    userService.setUserIsOnlineStatus("FALSE", username);
                     shopService.clearBasket();
                     changeScene(event, "login");
                 } catch (IOException | SQLException e) {
@@ -152,7 +160,6 @@ public class PaymentController extends ViewController implements Initializable {
             public void handle(ActionEvent event) {
 
                 setDeliveryDetails();
-                createOrder();
 
                 try {
                     Delivery delivery = setDeliveryDetails();
@@ -166,11 +173,19 @@ public class PaymentController extends ViewController implements Initializable {
                     e.printStackTrace();
                 }
 
+                createOrder();
+                try {
+                    shopService.clearBasket();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
                 deliveryPaymentsWindowVBox.setVisible(false);
                 thankYouPagePane.setVisible(true);
 
                 shoppingCartItemsLabel.setVisible(false);
                 confirmationLabel.setVisible(true);
+
 
                 try {
                     shopService.clearBasket();
@@ -183,7 +198,16 @@ public class PaymentController extends ViewController implements Initializable {
     }
 
     private void createOrder() {
-
+        try {
+            String username = userService.getOnlineUser("TRUE");
+            List<Product> basket = shopService.getAllShoppingBasketProducts();
+            for (Product product : basket) {
+                saleService.createSale("#51812924", product.getName(), product.getQuantity(), username,
+                        "2021-09-07", product.getPricePerUnit(), product.getImage());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private Delivery setDeliveryDetails() {

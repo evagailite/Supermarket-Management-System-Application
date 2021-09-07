@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import model.Product;
 import model.Users;
 import service.ShopService;
+import service.UserService;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -36,10 +37,11 @@ public class ItemController implements Initializable {
     private Button incrementButton;
     public ShopService shopService = new ShopService();
     private final DecimalFormat df = new DecimalFormat("0.00");
-    private String shopUser;
+    private UserService userService = new UserService();
 
     public void setData(Product product) {
         try {
+
             df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
 
             nameLabel.setText(product.getName());
@@ -65,6 +67,7 @@ public class ItemController implements Initializable {
 
             addToCart.setOnAction(event -> {
                 try {
+                    String shopUser = userService.getOnlineUser("TRUE");
                     shopService.addProductInTheBasket(product.getName(), Double.parseDouble(quantityNumberLabel.getText()),
                             product.getPricePerUnit(), product.getImage(), shopUser);
 
@@ -98,6 +101,7 @@ public class ItemController implements Initializable {
             addToCart.setVisible(true);
         } else {
             try {
+                String shopUser = userService.getOnlineUser("TRUE");
                 quantityNumberLabel.setText(String.valueOf(value));
                 shopService.addProductInTheBasket(product.getName(), (-1),
                         product.getPricePerUnit(), product.getImage(), shopUser);
@@ -111,6 +115,7 @@ public class ItemController implements Initializable {
 
     private void increaseValue(Product product) {
         try {
+            String shopUser = userService.getOnlineUser("TRUE");
             int value = Integer.parseInt(quantityNumberLabel.getText());
             value = value + 1;
             quantityNumberLabel.setText(String.valueOf(value));
@@ -121,10 +126,6 @@ public class ItemController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public void setUsername(String username) {
-        this.shopUser = username;
     }
 
     @Override

@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import model.Product;
 import service.ShopService;
+import service.UserService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -42,7 +43,8 @@ public class ShoppingCartItemController extends ViewController implements Initia
     private Label priceBasketLabel;
     private ShopService shopService = new ShopService();
     private final DecimalFormat df = new DecimalFormat("0.00");
-    private String shopUser = "test";
+    private UserService userService = new UserService();
+
 
     public void setShoppingCartData(Product product) {
         try {
@@ -114,35 +116,44 @@ public class ShoppingCartItemController extends ViewController implements Initia
 //    }
 
     private void decreaseValue(Product product) {
-        int value = Integer.parseInt(quantityNumberLabel.getText());
-        double startPrice = product.getPricePerUnit();
-        double pricePerQuantity = (startPrice * value) - startPrice;
-        double totalPrice = Math.round(pricePerQuantity * 100) / 100D;
-        value--;
-        if (value == 0) {
-            try {
-                shopService.removeProductFromShoppingBasket(product.getName());
-                anchorPane.setVisible(false);
 
-            } catch (SQLException e) {
-                e.printStackTrace();
+        try {
+            String shopUser = userService.getOnlineUser("TRUE");
+
+            int value = Integer.parseInt(quantityNumberLabel.getText());
+            double startPrice = product.getPricePerUnit();
+            double pricePerQuantity = (startPrice * value) - startPrice;
+            double totalPrice = Math.round(pricePerQuantity * 100) / 100D;
+            value--;
+            if (value == 0) {
+                try {
+                    shopService.removeProductFromShoppingBasket(product.getName());
+                    anchorPane.setVisible(false);
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    quantityNumberLabel.setText(String.valueOf(value));
+                    totalPriceBasketLabel.setText("$" + df.format((totalPrice)));
+
+                    shopService.addProductInTheBasket(product.getName(), (-1),
+                            totalPrice, product.getImage(), shopUser);
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
-        } else {
-            try {
-                quantityNumberLabel.setText(String.valueOf(value));
-                totalPriceBasketLabel.setText("$" + df.format((totalPrice)));
-
-                shopService.addProductInTheBasket(product.getName(), (-1),
-                        totalPrice, product.getImage(), shopUser);
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
     private void increaseValue(Product product) {
         try {
+            String shopUser = userService.getOnlineUser("TRUE");
+
             int value = Integer.parseInt(quantityNumberLabel.getText());
             value++;
             quantityNumberLabel.setText(String.valueOf(value));
