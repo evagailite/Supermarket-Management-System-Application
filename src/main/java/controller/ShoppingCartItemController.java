@@ -42,7 +42,7 @@ public class ShoppingCartItemController extends ViewController implements Initia
     private Label priceBasketLabel;
     private ShopService shopService = new ShopService();
     private final DecimalFormat df = new DecimalFormat("0.00");
-
+    private String shopUser = "test";
 
     public void setShoppingCartData(Product product) {
         try {
@@ -77,13 +77,8 @@ public class ShoppingCartItemController extends ViewController implements Initia
                     decreaseButton.setOnAction(event1 -> {
                         decreaseValue(product);
                         try {
-//                            if (checkIfBasketIsEmpty(shopService.getShoppingCartSize())) {
-//                                changeSceneForShop(event1, "shoppingCart");
-//                            } else {
-                                changeSceneForShop(event1, "shoppingCart");
-//                            }
-//                        } catch (SQLException e) {
-//                            e.printStackTrace();
+                            changeSceneForShop(event1, "shoppingCart");
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -98,9 +93,8 @@ public class ShoppingCartItemController extends ViewController implements Initia
                         shopService.removeProductFromShoppingBasket(product.getName());
                         anchorPane.setVisible(false);
 
-//                        if (checkIfBasketIsEmpty(shopService.getShoppingCartSize())) {
-                            changeSceneForShop(event, "shoppingCart");
-//                        }
+                        changeSceneForShop(event, "shoppingCart");
+
                     } catch (SQLException | IOException e) {
                         e.printStackTrace();
                     }
@@ -110,14 +104,14 @@ public class ShoppingCartItemController extends ViewController implements Initia
             e.printStackTrace();
         }
     }
-
-    private boolean checkIfBasketIsEmpty(int shoppingCartSize) {
-        if (shoppingCartSize == 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+//
+//    private boolean checkIfBasketIsEmpty(int shoppingCartSize) {
+//        if (shoppingCartSize == 0) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 
     private void decreaseValue(Product product) {
         int value = Integer.parseInt(quantityNumberLabel.getText());
@@ -139,8 +133,8 @@ public class ShoppingCartItemController extends ViewController implements Initia
                 totalPriceBasketLabel.setText("$" + df.format((totalPrice)));
 
                 shopService.addProductInTheBasket(product.getName(), (-1),
-                        totalPrice, product.getImage());
-                //  shopService.updatePrice(product.getName(), totalPrice);
+                        totalPrice, product.getImage(), shopUser);
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -159,8 +153,8 @@ public class ShoppingCartItemController extends ViewController implements Initia
             totalPriceBasketLabel.setText("$" + (df.format((totalPrice))));
 
             shopService.addProductInTheBasket(product.getName(), 1,
-                    totalPrice, product.getImage());
-            // shopService.updatePrice(product.getName(), totalPrice);
+                    totalPrice, product.getImage(), shopUser);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -1,6 +1,7 @@
 package controller;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,7 +17,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import main.finalproject.Main;
 import model.Product;
-import model.Users;
 import service.ProductService;
 import service.ShopService;
 import service.UserService;
@@ -30,8 +30,6 @@ import java.util.ResourceBundle;
 
 public class ShopController extends ViewController implements Initializable {
     UserService userService = new UserService();
-    @FXML
-    private Label usernameLabel;
     @FXML
     private TextField searchTextField;
     @FXML
@@ -56,8 +54,10 @@ public class ShopController extends ViewController implements Initializable {
     private ScrollPane scroll;
     @FXML
     private GridPane gridpane;
+
     private List<Product> productList = new ArrayList<>();
     private ProductService productService = new ProductService();
+    private String user;
 
     private ShopService shopService = new ShopService();
 
@@ -76,7 +76,16 @@ public class ShopController extends ViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        Platform.runLater(() -> {
+            try {
+                userService.setUserIsOnlineStatus("TRUE", this.user);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
+
         showBasketSize();
+
         try {
             productList.addAll(getData(productService.getAllProductsForShop()));
         } catch (SQLException e) {
@@ -134,7 +143,9 @@ public class ShopController extends ViewController implements Initializable {
             public void handle(ActionEvent event) {
                 //if users logged out
                 try {
+                    String username = userService.getOnlineUser("TRUE");
                     shopService.clearBasket();
+                    userService.setUserIsOnlineStatus("FALSE", username);
                     userService.changeScene(event, "login");
                 } catch (IOException | SQLException e) {
                     e.printStackTrace();
@@ -168,7 +179,7 @@ public class ShopController extends ViewController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    changeSceneToAccount(event, "account", usernameLabel.getText());
+                    changeSceneForShop(event, "account");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -226,8 +237,7 @@ public class ShopController extends ViewController implements Initializable {
         }
     }
 
-
     public void setUsername(String username) {
-        usernameLabel.setText(username);
+        this.user = username;
     }
 }

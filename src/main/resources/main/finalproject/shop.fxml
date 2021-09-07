@@ -143,7 +143,6 @@
                                     </Label>
                                  </children>
                               </AnchorPane>
-                              <Label fx:id="usernameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="110.0" layoutY="41.0" prefHeight="17.0" prefWidth="58.0" text="username" textAlignment="CENTER" />
                            </children>
                         </Pane>
                      </children>

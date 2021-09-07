@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import model.Product;
+import model.Users;
 import service.ShopService;
 
 import java.net.URL;
@@ -35,6 +36,7 @@ public class ItemController implements Initializable {
     private Button incrementButton;
     public ShopService shopService = new ShopService();
     private final DecimalFormat df = new DecimalFormat("0.00");
+    private String shopUser;
 
     public void setData(Product product) {
         try {
@@ -64,7 +66,7 @@ public class ItemController implements Initializable {
             addToCart.setOnAction(event -> {
                 try {
                     shopService.addProductInTheBasket(product.getName(), Double.parseDouble(quantityNumberLabel.getText()),
-                            product.getPricePerUnit(), product.getImage());
+                            product.getPricePerUnit(), product.getImage(), shopUser);
 
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -98,7 +100,7 @@ public class ItemController implements Initializable {
             try {
                 quantityNumberLabel.setText(String.valueOf(value));
                 shopService.addProductInTheBasket(product.getName(), (-1),
-                        product.getPricePerUnit(), product.getImage());
+                        product.getPricePerUnit(), product.getImage(), shopUser);
 
 //                shopService.getTotalPrice(product.getName());
             } catch (SQLException e) {
@@ -113,12 +115,16 @@ public class ItemController implements Initializable {
             value = value + 1;
             quantityNumberLabel.setText(String.valueOf(value));
             shopService.addProductInTheBasket(product.getName(), 1,
-                    product.getPricePerUnit(), product.getImage());
+                    product.getPricePerUnit(), product.getImage(), shopUser);
 
-          //  shopService.updatePrice(product.getName(), product.getPricePerUnit() * value);
+            //  shopService.updatePrice(product.getName(), product.getPricePerUnit() * value);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setUsername(String username) {
+        this.shopUser = username;
     }
 
     @Override

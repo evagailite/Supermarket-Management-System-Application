@@ -63,7 +63,8 @@ public class SignUpController extends ViewController implements Initializable {
                                 emailTextField.getText(),
                                 passwordTextField.getText(),
                                 500,
-                                UserType.CUSTOMER
+                                UserType.CUSTOMER,
+                                "FALSE"
                         );
                         userService.signUpUser(user, event);
                     }

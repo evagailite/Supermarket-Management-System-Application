@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class ShopService extends ViewController {
     private Connection connection = DBHandler.getConnection();
 
-    public void addProductInTheBasket(String name, double quantity, double price, String image) throws SQLException {
+    public void addProductInTheBasket(String name, double quantity, double price, String image, String username) throws SQLException {
         connection = DBHandler.getConnection();
 
         if (checkIfProductExistsInShoppingBasket(name) == 0) {
@@ -23,6 +23,7 @@ public class ShopService extends ViewController {
             preparedStatement.setDouble(2, quantity);
             preparedStatement.setDouble(3, price);
             preparedStatement.setString(4, image);
+            preparedStatement.setString(5, username);
 
             preparedStatement.executeUpdate();
             // DBHandler.closeConnections(preparedStatement, connection);

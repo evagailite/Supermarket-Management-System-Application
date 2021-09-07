@@ -39,6 +39,7 @@ public class UserService extends ViewController {
             preparedStatement.setString(4, users.getEmail());
             preparedStatement.setDouble(5, users.getBudget());
             preparedStatement.setString(6, String.valueOf(users.getUserType()));
+            preparedStatement.setString(7, users.getIsOnline());
             preparedStatement.executeUpdate();
 
             showAlert("Registration successful", "Registration successful, login to continue", Alert.AlertType.CONFIRMATION);
@@ -139,5 +140,30 @@ public class UserService extends ViewController {
         preparedStatement.executeUpdate();
         DBHandler.closeConnections(preparedStatement, connection);
 
+    }
+
+    public void setUserIsOnlineStatus(String onlineStatus, String username) throws SQLException {
+        connection = DBHandler.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.SET_USER_ONLINE_STATUS);
+        preparedStatement.setString(1, onlineStatus);
+        preparedStatement.setString(2, username);
+
+        preparedStatement.executeUpdate();
+        DBHandler.closeConnections(preparedStatement, connection);
+    }
+
+
+    public String getOnlineUser(String aTrue) throws SQLException {
+        String username = null;
+        connection = DBHandler.getConnection();
+
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.SET_ONLINE_USER);
+        preparedStatement.setString(1, aTrue);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            username = resultSet.getString("username");
+        }
+        return username;
     }
 }

@@ -14,6 +14,7 @@ public class Users {
     private String password;
     private double budget;
     private UserType userType;
+    private String isOnline;
 
     public Users(Integer id, String username, String name,
                  String email, double budget, UserType userType) {
@@ -32,6 +33,16 @@ public class Users {
         this.password = password;
         this.budget = budget;
         this.userType = userType;
+    }
+
+    public Users(String username, String name, String email, String password, double budget, UserType userType, String isOnline) {
+        this.username = username;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.budget = budget;
+        this.userType = userType;
+        this.isOnline = isOnline;
     }
 
     public Users(UserType userType, double budget) {

@@ -49,7 +49,7 @@ public class ViewController {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource(scenePath));
         Parent root = loader.load();
 
-        ShopController shopController = loader.getController();
+        ShopController shopController = loader.getController();;
         shopController.setUsername(username);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

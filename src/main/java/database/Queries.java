@@ -4,8 +4,8 @@ public class Queries {
 
     public static final String CHECK_USER_EXISTS_USERNAME = "SELECT * FROM user WHERE username = ? && password = ? LIMIT 1";
 
-    public static final String CREATE_USER = "INSERT INTO user (username, password, name, email, budget, user_type)" +
-            " VALUES (?, ?, ?, ?, ?, ?)";
+    public static final String CREATE_USER = "INSERT INTO user (username, password, name, email, budget, user_type, isOnline)" +
+            " VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     public static final String CHECK_USERNAME = "SELECT * FROM user WHERE username = ?";
 
@@ -25,12 +25,14 @@ public class Queries {
     public static final String UPDATE_PRODUCT = "UPDATE product SET product_name = ?, quantity = ?, price = ?, " +
             "unit = ?, category = ?, image = ? WHERE product_id = ?";
 
-    public static final String ADD_PRODUCT_IN_THE_BASKET = "INSERT INTO basket (name, quantity, price, image) VALUES (?, ?, ?, ?)";
+    public static final String ADD_PRODUCT_IN_THE_BASKET = "INSERT INTO basket (name, quantity, price, image, username) VALUES (?, ?, ?, ?, ?)";
     public static final String GET_ALL_SHOPPING_BASKET_PRODUCTS = "SELECT name, quantity, price, image FROM basket;";
     public static final String DELETE_FROM_SHOPPING_BASKET = "DELETE FROM basket WHERE name = ?";
     public static final String UPDATE_SHOPPING_BASKET_QUANTITY = "UPDATE basket SET quantity = ? WHERE name = ?;";
     public static final String UPDATE_SHOPPING_BASKET = "UPDATE basket SET price = ? WHERE name = ?";
     public static final String GET_QTY = "SELECT quantity FROM basket WHERE name = ?";
+    public static final String SET_USER_ONLINE_STATUS = "UPDATE user SET isOnline = ? WHERE username = ?";
+    public static final String SET_ONLINE_USER = "SELECT username FROM user WHERE isOnline =?";
 
 
     public static String CHECK_PRODUCT_EXISTS_IN_THE_SHOPPING_BASKET = "SELECT quantity FROM basket WHERE name = ?";

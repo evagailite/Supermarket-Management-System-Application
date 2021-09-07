@@ -57,23 +57,7 @@ public class ShoppingCartController extends ViewController implements Initializa
     private ShopService shopService = new ShopService();
     private List<Product> shoppingBasket = new ArrayList<>();
     private final DecimalFormat df = new DecimalFormat("0.00");
-
-    public List<Product> getShoppingCartData() {
-        List<Product> products = null;
-        try {
-            products = shopService.getAllShoppingBasketProducts();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        for (int i = 0; i < shoppingBasket.size(); i++) {
-            Product product = new Product();
-            product.setName(product.getName());
-            product.setPricePerUnit(product.getPricePerUnit());
-            product.setImage("/images/" + product.getImage());
-            products.add(product);
-        }
-        return products;
-    }
+    private String shopUser = "test";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -81,19 +65,6 @@ public class ShoppingCartController extends ViewController implements Initializa
         showBasketSize();
 
         loadShoppingCartItems();
-//        shoppingBasket.addAll(getShoppingCartData());
-//
-//        for (int i = 0; i < shoppingBasket.size(); i++) {
-//            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("shoppingCartItem.fxml"));
-//            try {
-//                AnchorPane hBox = fxmlLoader.load();
-//                ShoppingCartItemController shoppingCartItemController = fxmlLoader.getController();
-//                shoppingCartItemController.setShoppingCartData(shoppingBasket.get(i));
-//                vbox.getChildren().add(hBox);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
 
         getOrderSummaryDetails();
 
@@ -162,6 +133,23 @@ public class ShoppingCartController extends ViewController implements Initializa
                 }
             }
         });
+    }
+
+    public List<Product> getShoppingCartData() {
+        List<Product> products = null;
+        try {
+            products = shopService.getAllShoppingBasketProducts();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        for (int i = 0; i < shoppingBasket.size(); i++) {
+            Product product = new Product();
+            product.setName(product.getName());
+            product.setPricePerUnit(product.getPricePerUnit());
+            product.setImage("/images/" + product.getImage());
+            products.add(product);
+        }
+        return products;
     }
 
     private void getOrderSummaryDetails() {
