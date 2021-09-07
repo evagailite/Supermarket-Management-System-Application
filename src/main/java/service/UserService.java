@@ -61,11 +61,11 @@ public class UserService extends ViewController {
                 showAlert("Login Error", "Provided credentials are incorrect!", Alert.AlertType.ERROR);
             } else {
                 while (resultSet.next()) {
-                    double retrievedBudget = resultSet.getDouble("budget");
+//                    double retrievedBudget = resultSet.getDouble("budget");
                     String retrieveUserType = resultSet.getString("user_type");
 
                     if (retrieveUserType.equals("CUSTOMER")) {
-                        changeSceneForCustomer(event, "shop", username, retrievedBudget);
+                        changeSceneForCustomer(event, "shop", username);
                     } else if (retrieveUserType.equals("SALES_MANAGER")) {
                         changeSceneForAdminAndSalesManager(event, "salesManagerPanel", username);
                     } else if (retrieveUserType.equals("ADMINISTRATOR")) {

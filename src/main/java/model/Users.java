@@ -42,4 +42,7 @@ public class Users {
     public Users() {
     }
 
+    public Users(String username) {
+        this.username = username;
+    }
 }

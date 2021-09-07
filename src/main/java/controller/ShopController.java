@@ -16,6 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import main.finalproject.Main;
 import model.Product;
+import model.Users;
 import service.ProductService;
 import service.ShopService;
 import service.UserService;
@@ -29,6 +30,8 @@ import java.util.ResourceBundle;
 
 public class ShopController extends ViewController implements Initializable {
     UserService userService = new UserService();
+    @FXML
+    private Label usernameLabel;
     @FXML
     private TextField searchTextField;
     @FXML
@@ -160,6 +163,18 @@ public class ShopController extends ViewController implements Initializable {
                 }
             }
         });
+
+        accountButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    changeSceneToAccount(event, "account", usernameLabel.getText());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 
     private void placeProductsInTheShop() {
@@ -178,6 +193,7 @@ public class ShopController extends ViewController implements Initializable {
                     column = 0;
                     row++;
                 }
+
                 gridpane.add(anchorPane, column++, row);
 
                 gridpane.setMinWidth(Region.USE_COMPUTED_SIZE);
@@ -211,4 +227,7 @@ public class ShopController extends ViewController implements Initializable {
     }
 
 
+    public void setUsername(String username) {
+        usernameLabel.setText(username);
+    }
 }

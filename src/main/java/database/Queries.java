@@ -25,12 +25,14 @@ public class Queries {
     public static final String UPDATE_PRODUCT = "UPDATE product SET product_name = ?, quantity = ?, price = ?, " +
             "unit = ?, category = ?, image = ? WHERE product_id = ?";
 
-
     public static final String ADD_PRODUCT_IN_THE_BASKET = "INSERT INTO basket (name, quantity, price, image) VALUES (?, ?, ?, ?)";
     public static final String GET_ALL_SHOPPING_BASKET_PRODUCTS = "SELECT name, quantity, price, image FROM basket;";
     public static final String DELETE_FROM_SHOPPING_BASKET = "DELETE FROM basket WHERE name = ?";
     public static final String UPDATE_SHOPPING_BASKET_QUANTITY = "UPDATE basket SET quantity = ? WHERE name = ?;";
     public static final String UPDATE_SHOPPING_BASKET = "UPDATE basket SET price = ? WHERE name = ?";
+    public static final String GET_QTY = "SELECT quantity FROM basket WHERE name = ?";
+
+
     public static String CHECK_PRODUCT_EXISTS_IN_THE_SHOPPING_BASKET = "SELECT quantity FROM basket WHERE name = ?";
 
     public static String GET_SHOPPING_CART_SIZE = "SELECT count(basket_id) FROM basket";
@@ -40,4 +42,12 @@ public class Queries {
     public static String GET_DRINK_PRODUCTS = "SELECT product_id, product_name, quantity, price, unit, category, image FROM product WHERE category = 'DRINK'";
 
     public static String CLEAR_SHOPPING_BASKET = "DELETE FROM basket";
+
+    public static String GET_TOTAL_PRICE = "SELECT SUM(quantity*price) FROM basket WHERE name = ?";
+
+    public static String GET_SUBTOTAL = "SELECT SUM(quantity*price) FROM basket";
+
+    public static final String CREATE_DELIVERY_DETAILS = "INSERT INTO delivery (first_name, last_name, email, mobile_number, house_number, street, zip_code, city, note)\n" +
+            " VALUES (?, ?, ?,?,?,?,?,?,?)";
+    public static final String GET_ALL_CUSTOMER_SALES = "SELECT order_number, product, quantity, price, image, user, purchase_date FROM sales";
 }

@@ -154,6 +154,11 @@
                             <children>
                                 <AnchorPane prefHeight="100.0" prefWidth="377.0">
                                     <children>
+                              <Label fx:id="confirmationLabel" layoutX="50.0" layoutY="31.0" text="Confirmation" visible="false">
+                                 <font>
+                                    <Font name="System Bold" size="26.0" />
+                                 </font>
+                              </Label>
                                         <Label fx:id="shoppingCartItemsLabel" layoutX="50.0" layoutY="31.0" text="Checkout">
                                             <font>
                                                 <Font name="System Bold" size="26.0" />
@@ -165,30 +170,6 @@
                         </HBox>
                   <StackPane>
                      <children>
-                        <Pane fx:id="thankYouPagePane" prefHeight="200.0" prefWidth="200.0" visible="false">
-                           <children>
-                              <AnchorPane prefHeight="561.0" prefWidth="1000.0">
-                                 <children>
-                                    <ImageView fitHeight="124.0" fitWidth="115.0" layoutX="455.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@images/delivery-box.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="346.0" layoutY="263.0" prefHeight="85.0" prefWidth="334.0" text="Thank You for  Your Purchase!&#10;Your order has been placed" textAlignment="CENTER">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label layoutX="473.0" layoutY="335.0" text="#51812924" textFill="#4e961c">
-                                       <font>
-                                          <Font name="System Bold" size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label layoutX="422.0" layoutY="400.0" text="View order details in your account" />
-                                 </children>
-                              </AnchorPane>
-                           </children>
-                        </Pane>
                               <VBox fx:id="deliveryPaymentsWindowVBox" prefHeight="646.0" prefWidth="1000.0">
                                   <children>
                                       <HBox fx:id="hbox" prefHeight="562.0" prefWidth="1000.0">
@@ -205,10 +186,18 @@
                                           <TextField fx:id="emailAddressTextField" layoutX="79.0" layoutY="138.0" prefHeight="34.0" prefWidth="178.0" promptText="Email Address" style="-fx-background-radius: 5;" />
                                           <TextField fx:id="mobileNumberTextField" layoutX="285.0" layoutY="138.0" prefHeight="34.0" prefWidth="178.0" promptText="Mobile Number" style="-fx-background-radius: 5;" />
                                           <TextField fx:id="houseFlatNumberTextField" layoutX="79.0" layoutY="189.0" prefHeight="34.0" prefWidth="178.0" promptText="House No/Flat No/Floor" style="-fx-background-radius: 5;" />
-                                          <TextField fx:id="StreetNameTextField" layoutX="285.0" layoutY="189.0" prefHeight="34.0" prefWidth="178.0" promptText="Street name" style="-fx-background-radius: 5;" />
+                                          <TextField fx:id="streetNameTextField" layoutX="285.0" layoutY="189.0" prefHeight="34.0" prefWidth="178.0" promptText="Street name" style="-fx-background-radius: 5;" />
                                           <TextField fx:id="zipCodeTextField" layoutX="79.0" layoutY="243.0" prefHeight="34.0" prefWidth="178.0" promptText="ZIP Code" style="-fx-background-radius: 5;" />
                                           <TextField fx:id="cityTextField" layoutX="285.0" layoutY="243.0" prefHeight="34.0" prefWidth="178.0" promptText="City" style="-fx-background-radius: 5;" />
                                           <TextField fx:id="notesTextField" layoutX="119.0" layoutY="314.0" prefHeight="62.0" prefWidth="306.0" promptText="Note" />
+                                          <Label layoutX="79.0" layoutY="75.0" prefHeight="24.0" prefWidth="6.0" text="*" textFill="RED" />
+                                          <Label layoutX="78.0" layoutY="123.0" prefHeight="24.0" prefWidth="6.0" text="*" textFill="RED" />
+                                          <Label layoutX="284.0" layoutY="76.0" prefHeight="24.0" prefWidth="6.0" text="*" textFill="RED" />
+                                          <Label layoutX="284.0" layoutY="123.0" prefHeight="24.0" prefWidth="6.0" text="*" textFill="RED" />
+                                          <Label layoutX="284.0" layoutY="175.0" prefHeight="24.0" prefWidth="6.0" text="*" textFill="RED" />
+                                          <Label layoutX="284.0" layoutY="229.0" prefHeight="24.0" prefWidth="6.0" text="*" textFill="RED" />
+                                          <Label layoutX="78.0" layoutY="174.0" prefHeight="24.0" prefWidth="6.0" text="*" textFill="RED" />
+                                          <Label layoutX="78.0" layoutY="228.0" prefHeight="24.0" prefWidth="6.0" text="*" textFill="RED" />
                                                     </children>
                                                     <styleClass>
                                                         <String fx:value="chosen-fruit-card" />
@@ -301,6 +290,30 @@
                                         </VBox>
                                   </children>
                               </VBox>
+                        <Pane fx:id="thankYouPagePane" prefHeight="200.0" prefWidth="200.0" visible="false">
+                           <children>
+                              <AnchorPane prefHeight="561.0" prefWidth="1000.0">
+                                 <children>
+                                    <ImageView fitHeight="124.0" fitWidth="115.0" layoutX="455.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/delivery-box.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="346.0" layoutY="263.0" prefHeight="85.0" prefWidth="334.0" text="Thank You for  Your Purchase!&#10;Your order has been placed" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="473.0" layoutY="335.0" text="#51812924" textFill="#4e961c">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="422.0" layoutY="400.0" text="View order details in your account" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </Pane>
                      </children>
                   </StackPane>
                     </children>

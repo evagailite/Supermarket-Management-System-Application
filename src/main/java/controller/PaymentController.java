@@ -6,13 +6,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import model.Delivery;
+import service.SaleService;
 import service.ShopService;
 
 import java.io.IOException;
@@ -50,7 +49,7 @@ public class PaymentController extends ViewController implements Initializable {
     @FXML
     private TextField houseFlatNumberTextField;
     @FXML
-    private TextField StreetNameTextField;
+    private TextField streetNameTextField;
     @FXML
     private TextField zipCodeTextField;
     @FXML
@@ -75,6 +74,9 @@ public class PaymentController extends ViewController implements Initializable {
     private Pane thankYouPagePane;
     @FXML
     private VBox deliveryPaymentsWindowVBox;
+    @FXML
+    private Label confirmationLabel;
+    private SaleService saleService = new SaleService();
     private ShopService shopService = new ShopService();
 
     @Override
@@ -88,6 +90,9 @@ public class PaymentController extends ViewController implements Initializable {
             //action happens after click on it
             @Override
             public void handle(ActionEvent event) {
+
+                shoppingCartItemsLabel.setVisible(true);
+                confirmationLabel.setVisible(false);
                 //if users logged out
                 try {
                     shopService.clearBasket();
@@ -134,17 +139,74 @@ public class PaymentController extends ViewController implements Initializable {
         accountButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
+                try {
+                    changeSceneHome(event, "account");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
         payButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
+                setDeliveryDetails();
+                createOrder();
+
+                try {
+                    Delivery delivery = setDeliveryDetails();
+                    if (delivery != null) {
+                        saleService.createDelivery(delivery);
+                    } else {
+                        setDeliveryDetails();
+                    }
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
                 deliveryPaymentsWindowVBox.setVisible(false);
                 thankYouPagePane.setVisible(true);
+
+                shoppingCartItemsLabel.setVisible(false);
+                confirmationLabel.setVisible(true);
+
+                try {
+                    shopService.clearBasket();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
+    }
+
+    private void createOrder() {
+
+    }
+
+    private Delivery setDeliveryDetails() {
+        if (firstNameTextField.getText().isEmpty() || lastNameTextField.getText().isEmpty() ||
+                emailAddressTextField.getText().isEmpty() || mobileNumberTextField.getText().isEmpty() ||
+                houseFlatNumberTextField.getText().isEmpty() || streetNameTextField.getText().isEmpty() ||
+                zipCodeTextField.getText().isEmpty() || cityTextField.getText().isEmpty()) {
+            showAlert("Error", "Please fill all required fields", Alert.AlertType.ERROR);
+        } else {
+            Delivery delivery = new Delivery(
+                    firstNameTextField.getText(),
+                    lastNameTextField.getText(),
+                    emailAddressTextField.getText(),
+                    mobileNumberTextField.getText(),
+                    houseFlatNumberTextField.getText(),
+                    streetNameTextField.getText(),
+                    zipCodeTextField.getText(),
+                    cityTextField.getText(),
+                    notesTextField.getText()
+            );
+            return delivery;
+        }
+        return null;
     }
 
     private void setComboBoxValues() {

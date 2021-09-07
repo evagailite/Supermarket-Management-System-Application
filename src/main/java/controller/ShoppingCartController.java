@@ -16,6 +16,7 @@ import service.ShopService;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -55,6 +56,7 @@ public class ShoppingCartController extends ViewController implements Initializa
     private Label totalLabel;
     private ShopService shopService = new ShopService();
     private List<Product> shoppingBasket = new ArrayList<>();
+    private final DecimalFormat df = new DecimalFormat("0.00");
 
     public List<Product> getShoppingCartData() {
         List<Product> products = null;
@@ -164,18 +166,15 @@ public class ShoppingCartController extends ViewController implements Initializa
 
     private void getOrderSummaryDetails() {
         try {
-            double subTotal = 0;
             double tax = 1.21;
             shippingLabel.setText("FREE");
-            taxRateLabel.setText(String.valueOf(tax));
-            ArrayList<Product> chosenProducts = shopService.getAllShoppingBasketProducts();
-            for (Product product : chosenProducts) {
-                subTotal = subTotal + (product.getPricePerUnit() * product.getQuantity());
-            }
+            double subTotal = shopService.getSubTotal();
             double total = subTotal * tax;
-//            double taxAmount = total
+            subtotalLabel.setText("$" + df.format(Math.round(subTotal * 100) / 100D));
             double totalPrice = Math.round(total * 100) / 100D;
-            totalLabel.setText("$" + totalPrice);
+            totalLabel.setText("$" + df.format(totalPrice));
+            double taxValue = Math.round((totalPrice - subTotal) * 100) / 100D;
+            taxRateLabel.setText("$" + taxValue);
         } catch (SQLException e) {
             e.printStackTrace();
         }

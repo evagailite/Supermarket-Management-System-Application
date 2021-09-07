@@ -70,7 +70,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="175.0" prefWidth="132.0">
          <children>
-            <Label fx:id="priceBasketLabel" alignment="CENTER" text="\$0.68">
+            <Label fx:id="totalPriceBasketLabel" alignment="CENTER" text="\$0.68">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>

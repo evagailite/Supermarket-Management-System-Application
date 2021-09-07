@@ -12,7 +12,10 @@ import service.ShopService;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ItemController implements Initializable {
@@ -30,13 +33,15 @@ public class ItemController implements Initializable {
     private Label quantityNumberLabel;
     @FXML
     private Button incrementButton;
-    //    public static final String CURRENCY = "$";
     public ShopService shopService = new ShopService();
+    private final DecimalFormat df = new DecimalFormat("0.00");
 
     public void setData(Product product) {
         try {
+            df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
+
             nameLabel.setText(product.getName());
-            priceLabel.setText("$" + product.getPricePerUnit());
+            priceLabel.setText("$" + df.format(product.getPricePerUnit()));
             Image image = new Image("file:///C:/Users/Eva/Dropbox/Programming/AccentureBootcamp2021/projects/finalProject/src/main/resources/main/finalproject/images/shop/" + product.getImage());
             productImage.setImage(image);
             quantityNumberLabel.setText(String.valueOf(1));
@@ -95,7 +100,7 @@ public class ItemController implements Initializable {
                 shopService.addProductInTheBasket(product.getName(), (-1),
                         product.getPricePerUnit(), product.getImage());
 
-//                shopService.updatePrice(product.getName(), );
+//                shopService.getTotalPrice(product.getName());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -110,7 +115,7 @@ public class ItemController implements Initializable {
             shopService.addProductInTheBasket(product.getName(), 1,
                     product.getPricePerUnit(), product.getImage());
 
-            shopService.updatePrice(product.getName(), product.getPricePerUnit() * value);
+          //  shopService.updatePrice(product.getName(), product.getPricePerUnit() * value);
         } catch (SQLException e) {
             e.printStackTrace();
         }

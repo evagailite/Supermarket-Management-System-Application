@@ -43,20 +43,36 @@ public class ViewController {
         stage.show();
     }
 
-    public void changeSceneForCustomer(ActionEvent event, String sceneName, String username, double retrievedBudget) throws IOException {
+    public void changeSceneForCustomer(ActionEvent event, String sceneName, String username) throws IOException {
         String scenePath = sceneName + ".fxml";
-        Parent root = FXMLLoader.load(Main.class.getResource(scenePath));
 
-//        LoggedInController loggedInController = loader.getController();
-//        loggedInController.setUserInformationForCustomer(username, retrievedBudget);
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource(scenePath));
+        Parent root = loader.load();
+
+        ShopController shopController = loader.getController();
+        shopController.setUsername(username);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        stage.setTitle(title);
+        stage.setScene(new Scene(root, 1000, 830));
+        stage.show();
+    }
+
+    public void changeSceneToAccount(ActionEvent event, String sceneName, String username) throws IOException {
+        String scenePath = sceneName + ".fxml";
+
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource(scenePath));
+        Parent root = loader.load();
+
+        AccountController accountController = loader.getController();
+        accountController.setUsername(username);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root, 1000, 830));
         stage.show();
     }
 
     public void changeSceneForAdminAndSalesManager(ActionEvent event, String sceneName, String username) throws IOException {
+
         String scenePath = sceneName + ".fxml";
         Parent root = FXMLLoader.load(Main.class.getResource(scenePath));
 
@@ -81,7 +97,6 @@ public class ViewController {
         stage.setScene(new Scene(root, 1000, 830));
         stage.show();
     }
-
 
 
 }

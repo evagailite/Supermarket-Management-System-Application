@@ -11,11 +11,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="67.0" prefWidth="652.0" stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ShoppingCartItemController">
+<AnchorPane fx:id="anchorPane" prefHeight="67.0" prefWidth="712.0" stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ShoppingCartItemController">
    <children>
-      <HBox alignment="CENTER_LEFT" layoutX="5.0" prefHeight="58.0" prefWidth="564.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+      <HBox alignment="CENTER_LEFT" layoutX="5.0" prefHeight="58.0" prefWidth="692.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
-            <AnchorPane prefHeight="72.0" prefWidth="95.0">
+            <AnchorPane prefHeight="56.0" prefWidth="95.0">
                <children>
                   <ImageView fx:id="productImageBasketImage" fitHeight="46.0" fitWidth="52.0" layoutX="25.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -27,23 +27,36 @@
                   <Insets />
                </HBox.margin>
             </AnchorPane>
-            <HBox alignment="CENTER_LEFT" prefHeight="105.0" prefWidth="162.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="56.0" prefWidth="182.0">
                <children>
-                  <Label fx:id="productNameBasketLabel" prefHeight="26.0" prefWidth="162.0" text="Ades Tropical Fruit Juice 2L&#10;" textAlignment="CENTER" wrapText="true" />
+                  <Label fx:id="productNameBasketLabel" prefHeight="26.0" prefWidth="216.0" text="Ades Tropical Fruit Juice 2L&#10;" textAlignment="CENTER" wrapText="true" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="141.0" prefWidth="126.0">
+            <HBox alignment="CENTER" prefHeight="56.0" prefWidth="79.0">
+               <children>
+                  <AnchorPane prefHeight="56.0" prefWidth="155.0">
+                     <children>
+                        <Label fx:id="priceBasketLabel" alignment="CENTER" layoutX="-1.0" layoutY="18.0" prefHeight="21.0" prefWidth="82.0" text="0.68" textAlignment="CENTER" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="18.0">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="56.0" prefWidth="128.0">
                <children>
                   <AnchorPane prefHeight="56.0" prefWidth="112.0" style="-fx-background-radius: 5;">
                      <children>
-                        <AnchorPane layoutX="21.0" layoutY="12.0" prefHeight="21.0" prefWidth="91.0" style="-fx-background-color: #EFEFEF;" stylesheets="@style/style.css">
+                        <AnchorPane layoutX="12.0" layoutY="14.0" prefHeight="21.0" prefWidth="91.0" style="-fx-background-color: #EFEFEF;" styleClass="comboBox" stylesheets="@style/style.css">
                            <children>
-                              <Label fx:id="quantityNumberLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="31.0" layoutY="6.0" prefHeight="20.0" prefWidth="31.0" text="1" textAlignment="CENTER">
+                              <Label fx:id="quantityNumberLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="27.0" layoutY="4.0" prefHeight="20.0" prefWidth="38.0" text="1" textAlignment="CENTER">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="decreaseButton" layoutX="8.0" layoutY="4.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="22.0" style="-fx-background-color: transparent;">
+                              <Button fx:id="decreaseButton" layoutX="4.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="31.0" style="-fx-background-color: transparent;">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -58,7 +71,7 @@
                                     </ImageView>
                                  </graphic>
                               </Button>
-                              <Button fx:id="increaseButton" alignment="CENTER" contentDisplay="CENTER" layoutX="56.0" layoutY="5.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="17.0" style="-fx-background-color: transparent;" textAlignment="CENTER">
+                              <Button fx:id="increaseButton" alignment="CENTER" contentDisplay="CENTER" layoutX="58.0" layoutY="2.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="31.0" style="-fx-background-color: transparent;" textAlignment="CENTER">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -74,10 +87,6 @@
                                  </graphic>
                               </Button>
                            </children>
-                           <styleClass>
-                              <String fx:value="comboBox" />
-                              <String fx:value="shadow" />
-                           </styleClass>
                         </AnchorPane>
                      </children>
                   </AnchorPane>
@@ -85,9 +94,9 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="67.0" prefWidth="76.0">
                <children>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                  <AnchorPane prefHeight="56.0" prefWidth="155.0">
                      <children>
-                        <Label fx:id="priceBasketLabel" alignment="CENTER" layoutX="18.0" layoutY="18.0" prefHeight="20.0" prefWidth="49.0" text="0.68" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="18.0">
+                        <Label fx:id="totalPriceBasketLabel" alignment="CENTER" layoutX="-4.0" layoutY="18.0" prefHeight="21.0" prefWidth="82.0" text="0.68" textAlignment="CENTER" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="-4.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="18.0">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -96,11 +105,11 @@
                   </AnchorPane>
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="105.0" prefWidth="79.0">
+            <HBox alignment="CENTER" prefHeight="56.0" prefWidth="82.0" HBox.hgrow="ALWAYS">
                <children>
                   <AnchorPane prefHeight="55.0" prefWidth="49.0">
                      <children>
-                        <Button fx:id="removeFromBasketButton" layoutX="21.0" layoutY="16.0" mnemonicParsing="false" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="16.0">
+                        <Button fx:id="removeFromBasketButton" layoutX="11.0" layoutY="15.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
                            <graphic>
                               <ImageView fitHeight="19.0" fitWidth="14.0" opacity="0.67" pickOnBounds="true" preserveRatio="true">
                                  <image>

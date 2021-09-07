@@ -89,14 +89,50 @@ public class ShopService extends ViewController {
         return basketSize;
     }
 
-    public void updatePrice(String name, double totalPrice) throws SQLException {
+    public double getSubTotal() throws SQLException {
+        double subTotal = 0;
+        connection = DBHandler.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_SUBTOTAL);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            subTotal = resultSet.getDouble(1);
+            //  DBHandler.closeConnections(resultSet, preparedStatement, connection);
+        }
+        return subTotal;
+    }
+
+
+//    public void updatePrice(String name, double totalPrice) throws SQLException {
+//        connection = DBHandler.getConnection();
+//
+//        PreparedStatement preparedStatement = connection.prepareStatement(Queries.UPDATE_SHOPPING_BASKET);
+//        preparedStatement.setDouble(1, totalPrice);
+//        preparedStatement.setString(2, name);
+//
+//        preparedStatement.executeUpdate();
+//    }
+//
+//    public void getTotalPrice(String name) throws SQLException {
+//        connection = DBHandler.getConnection();
+//
+//        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_TOTAL_PRICE);
+//        preparedStatement.setString(1, name);
+//
+//        preparedStatement.executeUpdate();
+//    }
+
+    public double getQuantity(String name) throws SQLException {
+        double quantity = 0;
         connection = DBHandler.getConnection();
 
-        PreparedStatement preparedStatement = connection.prepareStatement(Queries.UPDATE_SHOPPING_BASKET);
-        preparedStatement.setDouble(1, totalPrice);
-        preparedStatement.setString(2, name);
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_QTY);
+        preparedStatement.setString(1, name);
+        ResultSet resultSet = preparedStatement.executeQuery();
 
-        preparedStatement.executeUpdate();
+        while (resultSet.next()) {
+            quantity = resultSet.getInt("quantity");
+        }
+        return quantity;
     }
 
     public void clearBasket() throws SQLException {

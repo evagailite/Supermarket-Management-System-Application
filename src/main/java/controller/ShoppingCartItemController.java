@@ -15,7 +15,10 @@ import service.ShopService;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ShoppingCartItemController extends ViewController implements Initializable {
@@ -30,17 +33,24 @@ public class ShoppingCartItemController extends ViewController implements Initia
     @FXML
     private Button increaseButton;
     @FXML
-    private Label priceBasketLabel;
+    private Label totalPriceBasketLabel;
     @FXML
     private Button removeFromBasketButton;
     @FXML
     private AnchorPane anchorPane;
+    @FXML
+    private Label priceBasketLabel;
     private ShopService shopService = new ShopService();
+    private final DecimalFormat df = new DecimalFormat("0.00");
+
 
     public void setShoppingCartData(Product product) {
         try {
+            df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
+
             productNameBasketLabel.setText(product.getName());
-            priceBasketLabel.setText(String.valueOf(product.getPricePerUnit()));
+            priceBasketLabel.setText("$" + df.format(product.getPricePerUnit()));
+            totalPriceBasketLabel.setText("$" + df.format(product.getPricePerUnit()));
             Image image = new Image("file:///C:/Users/Eva/Dropbox/Programming/AccentureBootcamp2021/projects/finalProject/src/main/resources/main/finalproject/images/shop/"
                     + product.getImage());
             productImageBasketImage.setImage(image);
@@ -50,19 +60,30 @@ public class ShoppingCartItemController extends ViewController implements Initia
             for (Product product1 : chosenProducts) {
                 if (product1.getName().equals(product.getName())) {
                     quantityNumberLabel.setText(String.valueOf((int) product1.getQuantity()));
+                    int quantity = (int) shopService.getQuantity(product1.getName());
+                    if (quantity > 1) {
+                        totalPriceBasketLabel.setText("$" + df.format(product1.getQuantity() * product1.getPricePerUnit()));
+                    }
 
                     increaseButton.setOnAction(event1 -> {
                         increaseValue(product);
+                        try {
+                            changeSceneForShop(event1, "shoppingCart");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     });
 
                     decreaseButton.setOnAction(event1 -> {
                         decreaseValue(product);
                         try {
-                            if (checkIfBasketIsEmpty(shopService.getShoppingCartSize())) {
+//                            if (checkIfBasketIsEmpty(shopService.getShoppingCartSize())) {
+//                                changeSceneForShop(event1, "shoppingCart");
+//                            } else {
                                 changeSceneForShop(event1, "shoppingCart");
-                            }
-                        } catch (SQLException e) {
-                            e.printStackTrace();
+//                            }
+//                        } catch (SQLException e) {
+//                            e.printStackTrace();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -77,9 +98,9 @@ public class ShoppingCartItemController extends ViewController implements Initia
                         shopService.removeProductFromShoppingBasket(product.getName());
                         anchorPane.setVisible(false);
 
-                        if (checkIfBasketIsEmpty(shopService.getShoppingCartSize())) {
+//                        if (checkIfBasketIsEmpty(shopService.getShoppingCartSize())) {
                             changeSceneForShop(event, "shoppingCart");
-                        }
+//                        }
                     } catch (SQLException | IOException e) {
                         e.printStackTrace();
                     }
@@ -100,7 +121,7 @@ public class ShoppingCartItemController extends ViewController implements Initia
 
     private void decreaseValue(Product product) {
         int value = Integer.parseInt(quantityNumberLabel.getText());
-        double startPrice = product.getPricePerUnit() / product.getQuantity();
+        double startPrice = product.getPricePerUnit();
         double pricePerQuantity = (startPrice * value) - startPrice;
         double totalPrice = Math.round(pricePerQuantity * 100) / 100D;
         value--;
@@ -115,11 +136,11 @@ public class ShoppingCartItemController extends ViewController implements Initia
         } else {
             try {
                 quantityNumberLabel.setText(String.valueOf(value));
-                priceBasketLabel.setText("$" + (totalPrice));
+                totalPriceBasketLabel.setText("$" + df.format((totalPrice)));
 
                 shopService.addProductInTheBasket(product.getName(), (-1),
                         totalPrice, product.getImage());
-                shopService.updatePrice(product.getName(), totalPrice);
+                //  shopService.updatePrice(product.getName(), totalPrice);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -132,14 +153,14 @@ public class ShoppingCartItemController extends ViewController implements Initia
             value++;
             quantityNumberLabel.setText(String.valueOf(value));
 
-            double startPrice = product.getPricePerUnit() / product.getQuantity();
+            double startPrice = product.getPricePerUnit();
             double pricePerQuantity = startPrice * (value);
             double totalPrice = Math.round(pricePerQuantity * 100) / 100D;
-            priceBasketLabel.setText("$" + (totalPrice));
+            totalPriceBasketLabel.setText("$" + (df.format((totalPrice))));
 
             shopService.addProductInTheBasket(product.getName(), 1,
                     totalPrice, product.getImage());
-            shopService.updatePrice(product.getName(), totalPrice);
+            // shopService.updatePrice(product.getName(), totalPrice);
         } catch (SQLException e) {
             e.printStackTrace();
         }
