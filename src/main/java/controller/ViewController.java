@@ -98,5 +98,19 @@ public class ViewController {
         stage.show();
     }
 
+    public void changeSceneViewOrder(ActionEvent event, String sceneName, String orderNumber) throws IOException {
+        String scenePath = sceneName + ".fxml";
+
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource(scenePath));
+        Parent root = loader.load();
+
+        OrderController orderController = loader.getController();
+        orderController.setOrderNumber(orderNumber);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root, 1000, 830));
+        stage.show();
+    }
+
 
 }

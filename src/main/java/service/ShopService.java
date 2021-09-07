@@ -149,4 +149,17 @@ public class ShopService extends ViewController {
         }
 
     }
+
+    public double getOrderSubTotal(String orderNumber) throws SQLException {
+        double subTotal = 0;
+        connection = DBHandler.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_CUSTOMER_ORDER_SUBTOTAL);
+        preparedStatement.setString(1, orderNumber);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            subTotal = resultSet.getDouble(1);
+            //  DBHandler.closeConnections(resultSet, preparedStatement, connection);
+        }
+        return subTotal;
+    }
 }

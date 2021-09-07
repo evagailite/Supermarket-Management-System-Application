@@ -30,6 +30,7 @@ public class SalesManagerPanelController implements Initializable {
                 }
             }
         });
+
     }
 
     public void setSalesManagerInformation(String username) {

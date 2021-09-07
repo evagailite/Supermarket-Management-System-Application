@@ -44,4 +44,20 @@ public class Sale {
         this.username = username;
         this.orderDate = orderDate;
     }
+
+    public Sale(String productName, int quantity, double price, String image, String username, Date orderDate) {
+        this.productName = productName;
+        this.quantity = quantity;
+        this.price = price;
+        this.image = image;
+        this.username = username;
+        this.orderDate = orderDate;
+    }
+
+    public Sale(String productName, int quantity, double price, String image) {
+        this.productName = productName;
+        this.quantity = quantity;
+        this.price = price;
+        this.image = image;
+    }
 }

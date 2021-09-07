@@ -4,6 +4,7 @@
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
@@ -202,9 +203,9 @@
                                                 <AnchorPane prefHeight="36.0" prefWidth="566.0">
                                                    <children>
                                                       <Label alignment="CENTER" opacity="0.53" prefHeight="42.0" prefWidth="116.0" text="Order no." textAlignment="CENTER" />
-                                                      <Label alignment="CENTER" layoutX="86.0" layoutY="1.0" opacity="0.53" prefHeight="39.0" prefWidth="136.0" text="Date" />
-                                                      <Label alignment="CENTER" layoutX="209.0" layoutY="1.0" opacity="0.53" prefHeight="39.0" prefWidth="110.0" text="Total" />
-                                                      <Label alignment="CENTER" layoutX="279.0" layoutY="1.0" opacity="0.53" prefHeight="40.0" prefWidth="150.0" text="Action" />
+                                                      <Label alignment="CENTER" layoutX="86.0" layoutY="1.0" opacity="0.53" prefHeight="39.0" prefWidth="163.0" text="Date" />
+                                                      <Label alignment="CENTER" layoutX="209.0" layoutY="1.0" opacity="0.53" prefHeight="39.0" prefWidth="129.0" text="Total" />
+                                                      <Label alignment="CENTER" layoutX="272.0" layoutY="1.0" opacity="0.53" prefHeight="40.0" prefWidth="193.0" text="Action" />
                                                    </children>
                                                 </AnchorPane>
                                              </children>
@@ -236,6 +237,30 @@
                         </HBox>
                      </children>
                   </StackPane>
+                  <HBox prefHeight="71.0" prefWidth="1000.0">
+                     <children>
+                        <AnchorPane prefHeight="71.0" prefWidth="278.0">
+                           <children>
+                              <Button fx:id="goBackShoppingButton" layoutX="30.0" layoutY="20.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <graphic>
+                                    <ImageView fitHeight="23.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/left-arrow.png" />
+                                       </image>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Label layoutX="70.0" layoutY="27.0" opacity="0.53" text="Continue Shopping" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </HBox>
                </children>
             </VBox>
          </center>

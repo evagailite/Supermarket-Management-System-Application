@@ -54,11 +54,9 @@ public class ShopController extends ViewController implements Initializable {
     private ScrollPane scroll;
     @FXML
     private GridPane gridpane;
-
     private List<Product> productList = new ArrayList<>();
     private ProductService productService = new ProductService();
     private String user;
-
     private ShopService shopService = new ShopService();
 
     public List<Product> getData(ArrayList<Product> allProductsForShop) {

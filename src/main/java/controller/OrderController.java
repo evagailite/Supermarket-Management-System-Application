@@ -1,20 +1,20 @@
 package controller;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import main.finalproject.Main;
 import model.Sale;
-import model.Users;
 import service.SaleService;
 import service.ShopService;
 import service.UserService;
@@ -23,16 +23,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
-public class AccountController extends ViewController implements Initializable {
-    @FXML
-    private Label usernameLabel;
-    @FXML
-    private VBox vbox;
+public class OrderController extends ViewController implements Initializable {
     @FXML
     private TextField searchTextField;
     @FXML
@@ -52,45 +46,67 @@ public class AccountController extends ViewController implements Initializable {
     @FXML
     private HBox hbox;
     @FXML
-    private HBox tableNamesForBasket;
+    private VBox vbox;
+    @FXML
+    private HBox tableNamesForBasket1;
     @FXML
     private VBox orderSummaryVbox;
     @FXML
     private AnchorPane profileAnchorPane;
+
     @FXML
-    private Pane editProfilePane;
+    private Label currentOrderNumber;
     @FXML
-    private VBox orderProductsVBox;
-    @FXML
-    private HBox tableNamesForBasket1;
-    private List<Sale> customerSales = new ArrayList<>();
-    private SaleService saleService = new SaleService();
+    private Button goBackShoppingButton;
     private ShopService shopService = new ShopService();
     private UserService userService = new UserService();
+    private SaleService saleService = new SaleService();
+    private List<Sale> productList = new ArrayList<>();
+    private String orderNumber;
 
-    public List<Sale> getCustomerSales() {
-        List<Sale> sales = null;
+    public List<Sale> getOrderProducts(String orderNumber) {
+        List<Sale> saleProducts = null;
         try {
             String username = userService.getOnlineUser("TRUE");
-            sales = saleService.getCustomerSales(username);
+            saleProducts = saleService.getCustomerSalesProductsByOrderNumber(username, orderNumber);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        for (int i = 0; i < customerSales.size(); i++) {
-            Sale sale = new Sale();
-            sale.setOrderNumber(sale.getOrderNumber());
-            sale.setOrderDate(sale.getOrderDate());
-            sale.setPrice(sale.getPrice());
-            sales.add(sale);
+        for (int i = 0; i < productList.size(); i++) {
+            Sale sales = new Sale();
+            sales.setProductName(sales.getProductName());
+            sales.setPrice(sales.getPrice());
+            sales.setQuantity(sales.getQuantity());
+            sales.setImage(sales.getImage());
+            saleProducts.add(sales);
         }
-        return sales;
+        return saleProducts;
     }
 
+    public void loadOrderViewItems(String orderNumber) {
+        productList.addAll(getOrderProducts(orderNumber));
+
+        for (int i = 0; i < productList.size(); i++) {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("orderItem.fxml"));
+                AnchorPane hBox = fxmlLoader.load();
+                OrderItemController orderItemController = fxmlLoader.getController();
+                orderItemController.setOrderDetails(productList.get(i));
+                vbox.getChildren().add(hBox);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        loadSaleOrders();
+        Platform.runLater(() -> {
+            currentOrderNumber.setText(this.orderNumber);
+            loadOrderViewItems(this.orderNumber);
+        });
+
 
         buttonLogOut.setOnAction(new EventHandler<ActionEvent>() {
             //action happens after click on it
@@ -140,26 +156,20 @@ public class AccountController extends ViewController implements Initializable {
                 }
             }
         });
-    }
 
-    private void loadSaleOrders() {
-
-        customerSales.addAll(getCustomerSales());
-
-        for (int i = 0; i < customerSales.size(); i++) {
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("accountItem.fxml"));
-                AnchorPane hBox = fxmlLoader.load();
-                AccountItemController accountItemController = fxmlLoader.getController();
-                accountItemController.setSalesDates(customerSales.get(i));
-                vbox.getChildren().add(hBox);
-            } catch (IOException e) {
-                e.printStackTrace();
+        goBackShoppingButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    changeSceneHome(event, "account");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }
+        });
     }
 
-    public void setUsername(String username) {
-
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
     }
 }
