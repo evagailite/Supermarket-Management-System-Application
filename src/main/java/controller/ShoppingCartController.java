@@ -58,7 +58,6 @@ public class ShoppingCartController extends ViewController implements Initializa
     private ShopService shopService = new ShopService();
     private List<Product> shoppingBasket = new ArrayList<>();
     private final DecimalFormat df = new DecimalFormat("0.00");
-    private String shopUser = "test";
     private UserService userService = new UserService();
 
     @Override

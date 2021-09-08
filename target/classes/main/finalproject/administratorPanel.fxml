@@ -216,9 +216,9 @@
                                                 <Label fx:id="orderCountLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="299.0" layoutY="181.0" prefHeight="17.0" prefWidth="49.0" text="1" textAlignment="CENTER" />
                                                 <Label fx:id="userCountLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="481.0" layoutY="181.0" prefHeight="17.0" prefWidth="49.0" text="1" textAlignment="CENTER" />
                                                 <Label layoutX="125.0" layoutY="245.0" text="Top 3 best-selling products:" />
-                                                <BarChart fx:id="productBarChart" cacheShape="false" centerShape="false" layoutX="50.0" layoutY="262.0" legendVisible="false" prefHeight="266.0" prefWidth="372.0" scaleShape="false">
+                                                <BarChart fx:id="productBarChart" layoutX="50.0" layoutY="262.0" legendVisible="false" prefHeight="266.0" prefWidth="470.0">
                                                   <xAxis>
-                                                    <CategoryAxis fx:id="productNameXAxis" label="Product" maxWidth="10.0" minWidth="10.0" side="BOTTOM" tickLabelGap="2.0" tickLength="4.0" />
+                                                    <CategoryAxis fx:id="productNameXAxis" label="Product" side="BOTTOM" tickLabelGap="2.0" tickLength="4.0" />
                                                   </xAxis>
                                                   <yAxis>
                                                     <NumberAxis fx:id="productQtyYAxis" label="Quantity" side="LEFT" />

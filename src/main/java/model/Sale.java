@@ -15,14 +15,14 @@ public class Sale {
     private double price;
     private String image;
     private String username;
-    private Date orderDate;
+    private String orderDate;
 
     public Sale() {
     }
 
     public Sale(Integer id, String orderNumber, String productName,
                 int quantity, double price, String image,
-                String username, Date orderDate) {
+                String username, String orderDate) {
         this.id = id;
         this.orderNumber = orderNumber;
         this.productName = productName;
@@ -35,7 +35,7 @@ public class Sale {
 
     public Sale(String orderNumber, String productName,
                 int quantity, double price, String image,
-                String username, Date orderDate) {
+                String username, String orderDate) {
         this.orderNumber = orderNumber;
         this.productName = productName;
         this.quantity = quantity;
@@ -45,7 +45,7 @@ public class Sale {
         this.orderDate = orderDate;
     }
 
-    public Sale(String productName, int quantity, double price, String image, String username, Date orderDate) {
+    public Sale(String productName, int quantity, double price, String image, String username, String orderDate) {
         this.productName = productName;
         this.quantity = quantity;
         this.price = price;

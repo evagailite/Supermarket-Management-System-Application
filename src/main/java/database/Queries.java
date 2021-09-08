@@ -34,8 +34,8 @@ public class Queries {
     public static final String GET_TOTAL_PRICE = "SELECT SUM(quantity*price) FROM basket WHERE name = ?";
     public static final String GET_SUBTOTAL = "SELECT SUM(quantity*price) FROM basket";
     public static final String GET_CUSTOMER_ORDER_SUBTOTAL = "SELECT SUM(quantity*price) FROM sales WHERE order_number =?";
-    public static final String CREATE_DELIVERY_DETAILS = "INSERT INTO delivery (first_name, last_name, email, mobile_number, house_number, street, zip_code, city, note)\n" +
-            " VALUES (?, ?, ?,?,?,?,?,?,?)";
+    public static final String CREATE_DELIVERY_DETAILS = "INSERT INTO delivery (first_name, last_name, email, mobile_number, house_number, street, zip_code, city, note, username, order_number)\n" +
+            " VALUES (?, ?, ?,?,?,?,?,?,?, ?, ?)";
     public static final String GET_ALL_CUSTOMER_SALES = "SELECT order_number, product, quantity, price, image, username, purchase_date FROM sales";
     public static final String GET_CUSTOMER_SALES_TOTAL = "";
     public static final String CHECK_PRODUCT_EXISTS_IN_THE_SALES = "SELECT order_number FROM sales WHERE USERNAME = ?";
@@ -54,4 +54,6 @@ public class Queries {
     public static final String GET_SALES_COUNT = "SELECT count(distinct order_number) FROM sales";
     public static final String GET_USER_COUNT = "SELECT count(distinct user_id) FROM user";
     public static final String GET_PRODUCT_COUNT = "SELECT count(distinct product_id) FROM product";
+    public static final String GET_PRODUCTS_NAME = "SELECT product_name FROM product";
+
 }

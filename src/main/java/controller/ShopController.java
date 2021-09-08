@@ -24,9 +24,8 @@ import service.UserService;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ShopController extends ViewController implements Initializable {
     UserService userService = new UserService();
@@ -89,7 +88,7 @@ public class ShopController extends ViewController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        placeProductsInTheShop();
+        placeProductsInTheShop(productList);
 
         foodButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -98,7 +97,7 @@ public class ShopController extends ViewController implements Initializable {
                     gridpane.getChildren().retainAll(gridpane.getChildren().get(0));
                     productList.clear();
                     productList.addAll(getData(productService.getFoodProductsForShop()));
-                    placeProductsInTheShop();
+                    placeProductsInTheShop(productList);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -112,7 +111,7 @@ public class ShopController extends ViewController implements Initializable {
                     gridpane.getChildren().retainAll(gridpane.getChildren().get(0));
                     productList.clear();
                     productList.addAll(getData(productService.getDrinksProductsForShop()));
-                    placeProductsInTheShop();
+                    placeProductsInTheShop(productList);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -127,7 +126,25 @@ public class ShopController extends ViewController implements Initializable {
                     gridpane.getChildren().retainAll(gridpane.getChildren().get(0));
                     productList.clear();
                     productList.addAll(getData(productService.getNonFoodProductsForShop()));
-                    placeProductsInTheShop();
+                    placeProductsInTheShop(productList);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+        searchButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    gridpane.getChildren().retainAll(gridpane.getChildren().get(0));
+                    productList.clear();
+
+
+                    //*********************
+                    productList.addAll(getData(productService.getNonFoodProductsForShop()));
+                    placeProductsInTheShop(productList);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -187,7 +204,7 @@ public class ShopController extends ViewController implements Initializable {
 
     }
 
-    private void placeProductsInTheShop() {
+    private void placeProductsInTheShop(List<Product> productList) {
 
         int column = 0;
         int row = 1;
@@ -235,6 +252,30 @@ public class ShopController extends ViewController implements Initializable {
             e.printStackTrace();
         }
     }
+
+//    public void findProduct(){
+//        ArrayList<Product> foundProduct = new ArrayList<>();
+//        for (Product product : productList) {
+//            if (searchList(searchTextField.getText(), ))
+//                foundProduct.add(product);
+//        }
+//    }
+
+//    private List<String> searchList(String searchWords, List<String> listOfProducts) {
+//        List<String> searchWordsArray = Arrays.asList(searchWords.trim().split(" "));
+//
+//        return listOfProducts.stream().filter(input -> {
+//            return searchWordsArray.stream().allMatch(word -> input.toLowerCase().contains(word.toLowerCase()));
+//        }).collect(Collectors.toList());
+//    }
+
+//    private boolean searchList(String searchWords, List<Product> listOfProducts) {
+//        List<String> searchWordsArray = Arrays.asList(searchWords.trim().split(" "));
+//
+//        return listOfProducts.stream().filter(input -> {
+//            return searchWordsArray.stream().allMatch(word -> input.toLowerCase().contains(word.toLowerCase()));
+//        }).collect(Collectors.toList());
+//    }
 
     public void setUsername(String username) {
         this.user = username;

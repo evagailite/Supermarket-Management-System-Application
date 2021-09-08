@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -152,7 +153,7 @@
                             <children>
                                 <AnchorPane prefHeight="100.0" prefWidth="377.0">
                                     <children>
-                                        <Label fx:id="shoppingCartItemsLabel" layoutX="50.0" layoutY="31.0" text="Account">
+                                        <Label fx:id="shoppingCartItemsLabel" layoutX="50.0" layoutY="31.0" text="Order Details">
                                             <font>
                                                 <Font name="System Bold" size="26.0" />
                                             </font>
@@ -195,15 +196,39 @@
                                 </ScrollPane>
                                 <VBox fx:id="orderSummaryVbox" prefHeight="568.0" prefWidth="440.0">
                                     <children>
-                                        <AnchorPane fx:id="profileAnchorPane" prefHeight="298.0" prefWidth="289.0" stylesheets="@style/style.css">
-                                            <styleClass>
-                                                <String fx:value="chosen-fruit-card" />
-                                                <String fx:value="shadow" />
-                                            </styleClass>
-                                            <VBox.margin>
-                                                <Insets left="15.0" right="30.0" />
-                                            </VBox.margin>
-                                        </AnchorPane>
+                              <StackPane>
+                                 <VBox.margin>
+                                    <Insets left="15.0" right="30.0" />
+                                 </VBox.margin>
+                                 <children>
+                                    <AnchorPane fx:id="profileAnchorPane1" prefHeight="298.0" prefWidth="289.0" style="-fx-background-radius: 10;" stylesheets="@style/style.css">
+                                       <styleClass>
+                                          <String fx:value="chosen-fruit-card" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                       <children>
+                                          <Label layoutX="37.0" layoutY="50.0" text="Delivery Details:" />
+                                          <Label layoutX="37.0" layoutY="21.0" text="Order number:" />
+                                          <Label fx:id="totalLabel" alignment="CENTER_RIGHT" layoutX="248.0" layoutY="220.0" prefHeight="18.0" prefWidth="107.0" text="Label">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="taxRateLabel" alignment="CENTER_RIGHT" layoutX="248.0" layoutY="166.0" prefHeight="18.0" prefWidth="107.0" text="Label" />
+                                          <Label layoutX="37.0" layoutY="162.0" prefHeight="26.0" prefWidth="142.0" text="Shipping" />
+                                          <Label fx:id="shippingLabel" alignment="CENTER_RIGHT" layoutX="248.0" layoutY="190.0" prefHeight="18.0" prefWidth="107.0" text="Label" />
+                                          <Label fx:id="subtotalLabel" alignment="CENTER_RIGHT" layoutX="248.0" layoutY="140.0" prefHeight="18.0" prefWidth="107.0" text="Label" />
+                                          <Label layoutX="37.0" layoutY="136.0" prefHeight="26.0" prefWidth="142.0" text="Subtotal" />
+                                          <Label layoutX="37.0" layoutY="186.0" prefHeight="26.0" prefWidth="142.0" text="TAX rate 21%" />
+                                          <Label layoutX="37.0" layoutY="225.0" prefHeight="26.0" prefWidth="142.0" text="Total">
+                                             <font>
+                                                <Font name="System Bold" size="16.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </StackPane>
                                     </children>
                                 </VBox>
                             </children>

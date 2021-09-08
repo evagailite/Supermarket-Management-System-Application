@@ -7,17 +7,15 @@ import database.Queries;
 import model.Delivery;
 import model.Sale;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class SaleService extends ViewController {
     private Connection connection = DBHandler.getConnection();
 
-    public void createDelivery(Delivery delivery) throws SQLException {
+    public void createDelivery(Delivery delivery, String username, int orderNumber) throws SQLException {
         connection = DBHandler.getConnection();
 
         PreparedStatement preparedStatement = connection.prepareStatement(Queries.CREATE_DELIVERY_DETAILS);
@@ -30,8 +28,8 @@ public class SaleService extends ViewController {
         preparedStatement.setString(7, delivery.getZipCode());
         preparedStatement.setString(8, delivery.getCity());
         preparedStatement.setString(9, delivery.getNote());
-//        preparedStatement.setString(10, delivery.ge());
-//        preparedStatement.setString(11, delivery.getNote());
+        preparedStatement.setString(10, username);
+        preparedStatement.setInt(11, orderNumber);
         preparedStatement.executeUpdate();
 
 //        showAlert("User Created", "User created successfully", Alert.AlertType.INFORMATION);
@@ -51,7 +49,7 @@ public class SaleService extends ViewController {
                     resultSet.getDouble("price"),
                     resultSet.getString("image"),
                     resultSet.getString("username"),
-                    resultSet.getDate("purchase_date")));
+                    resultSet.getString("purchase_date")));
         }
         return sales;
     }
@@ -70,7 +68,7 @@ public class SaleService extends ViewController {
                     resultSet.getDouble("price"),
                     resultSet.getString("image"),
                     resultSet.getString("username"),
-                    resultSet.getDate("purchase_date")));
+                    resultSet.getString("purchase_date")));
         }
         return sales;
     }
@@ -100,12 +98,12 @@ public class SaleService extends ViewController {
         return orderNumber;
     }
 
-    public void createSale(String orderNumber, String productName, double quantity,
+    public void createSale(int orderNumber, String productName, double quantity,
                            String username, String currentDate, double pricePerUnit, String image) throws SQLException {
         connection = DBHandler.getConnection();
 
         PreparedStatement preparedStatement = connection.prepareStatement(Queries.CREATE_ORDER);
-        preparedStatement.setString(1, orderNumber);
+        preparedStatement.setInt(1, orderNumber);
         preparedStatement.setString(2, productName);
         preparedStatement.setDouble(3, quantity);
         preparedStatement.setString(4, username);

@@ -172,4 +172,18 @@ public class ProductService extends ViewController {
         return total;
     }
 
+    public ArrayList<String> getProductsName() throws SQLException {
+        connection = DBHandler.getConnection();
+
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_PRODUCTS_NAME);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ArrayList<String> products = new ArrayList<>();
+        while (resultSet.next()) {
+            products.add(
+                    resultSet.getString(1));
+        }
+        // DBHandler.closeConnections(resultSet, preparedStatement, connection);
+        return products;
+    }
+
 }
