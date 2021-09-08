@@ -60,4 +60,9 @@ public class Sale {
         this.price = price;
         this.image = image;
     }
+
+    public Sale(String productName, int quantity) {
+        this.productName = productName;
+        this.quantity = quantity;
+    }
 }

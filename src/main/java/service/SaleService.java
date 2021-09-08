@@ -151,7 +151,7 @@ public class SaleService extends ViewController {
         return sales;
     }
 
-    public int getLastOrderNUmber() throws SQLException {
+    public int getLastOrderNumber() throws SQLException {
         connection = DBHandler.getConnection();
         int orderId = 0;
         PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_LAST_ORDER_NUMBER);
@@ -160,6 +160,32 @@ public class SaleService extends ViewController {
             orderId = resultSet.getInt(1);
         }
         return orderId;
-
     }
+
+    public List<Sale> getBestSellingItems() throws SQLException {
+        connection = DBHandler.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_BEST_SELLING_ITEMS);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ArrayList<Sale> sales = new ArrayList<>();
+        while (resultSet.next()) {
+            sales.add(new Sale(
+                    resultSet.getString(1),
+                    resultSet.getInt(2)
+            ));
+        }
+        return sales;
+    }
+
+    public int getSalesCount() throws SQLException {
+        int total = 0;
+        connection = DBHandler.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_SALES_COUNT);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            total = resultSet.getInt(1);
+            //  DBHandler.closeConnections(resultSet, preparedStatement, connection);
+        }
+        return total;
+    }
+
 }

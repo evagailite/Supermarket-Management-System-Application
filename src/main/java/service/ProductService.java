@@ -160,4 +160,16 @@ public class ProductService extends ViewController {
         return products;
     }
 
+    public int getProductCount() throws SQLException {
+        int total = 0;
+        connection = DBHandler.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_PRODUCT_COUNT);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            total = resultSet.getInt(1);
+            //  DBHandler.closeConnections(resultSet, preparedStatement, connection);
+        }
+        return total;
+    }
+
 }

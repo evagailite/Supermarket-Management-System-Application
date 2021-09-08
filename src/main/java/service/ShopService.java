@@ -147,7 +147,6 @@ public class ShopService extends ViewController {
             System.out.println("Something went wrong! PLease wait");
             clearBasket();
         }
-
     }
 
     public double getOrderSubTotal(String orderNumber) throws SQLException {
@@ -162,4 +161,5 @@ public class ShopService extends ViewController {
         }
         return subTotal;
     }
+
 }

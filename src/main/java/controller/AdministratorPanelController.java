@@ -7,6 +7,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -20,8 +24,10 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.converter.DoubleStringConverter;
 import model.Product;
+import model.Sale;
 import model.Users;
 import service.ProductService;
+import service.SaleService;
 import service.UserService;
 import types.Category;
 import types.ProductUnit;
@@ -32,10 +38,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class AdministratorPanelController extends ViewController implements Initializable {
     @FXML
@@ -126,10 +129,30 @@ public class AdministratorPanelController extends ViewController implements Init
     private TableColumn columnEditProduct;
     @FXML
     private Label dateDashboardLabel;
+    @FXML
+    private Button productsButton;
+    @FXML
+    private Button orderButton;
+    @FXML
+    private Button userButton;
+    @FXML
+    private Label productCountLabel;
+    @FXML
+    private Label orderCountLabel;
+    @FXML
+    private Label userCountLabel;
+    @FXML
+    private BarChart<?, ?> productBarChart;
+    @FXML
+    private CategoryAxis productNameXAxis;
+    @FXML
+    private NumberAxis productQtyYAxis;
     private Image image;
     private ObservableList<Users> userList;
     private UserService userService = new UserService();
     private ProductService productService = new ProductService();
+    private SaleService saleService = new SaleService();
+    private List<Sale> topThreeProducts = new ArrayList<>();
 
     @FXML
     void handleButtonAction(ActionEvent event) {
@@ -138,12 +161,40 @@ public class AdministratorPanelController extends ViewController implements Init
             showAllProducts();
         } else if (event.getSource() == buttonDashboard) {
             anchorPaneDashboard.toFront();
-           // showCurrentDate();
+            // showCurrentDate();
             getCurrentDate();
         } else if (event.getSource() == buttonUsers) {
             anchorPaneUsers.toFront();
             showAllUsers();
         }
+    }
+
+    private void showProductChart() {
+        try {
+            topThreeProducts.addAll(getBestSellingData(saleService.getBestSellingItems()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        XYChart.Series set = new XYChart.Series();
+
+        for (int i = 0; i < topThreeProducts.size(); i++) {
+            String x = topThreeProducts.get(i).getProductName();
+            int y = topThreeProducts.get(i).getQuantity();
+            set.getData().add(new XYChart.Data<>(x, y));
+        }
+        productBarChart.getData().addAll(set);
+
+    }
+
+    private List<Sale> getBestSellingData(List<Sale> bestSellingProducts) {
+        List<Sale> products = bestSellingProducts;
+        for (int i = 0; i < topThreeProducts.size(); i++) {
+            Sale sale = new Sale();
+            sale.setProductName(sale.getProductName());
+            sale.setQuantity(sale.getQuantity());
+            products.add(sale);
+        }
+        return products;
     }
 
     private void showCurrentDate() {
@@ -415,8 +466,33 @@ public class AdministratorPanelController extends ViewController implements Init
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         showFirstPage();
+
         setComboBoxValues();
+
+        productsButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                anchorPaneProducts.toFront();
+                showAllProducts();
+            }
+        });
+
+        orderButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+            }
+        });
+
+        userButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                anchorPaneUsers.toFront();
+                showAllUsers();
+            }
+        });
 
         buttonLoggedOut.setOnAction(new EventHandler<ActionEvent>() {
             //action happens after click on it
@@ -448,6 +524,9 @@ public class AdministratorPanelController extends ViewController implements Init
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+
+                showAllProducts();
+                getStatistic();
             }
         });
 
@@ -502,6 +581,8 @@ public class AdministratorPanelController extends ViewController implements Init
                     showAlert("Something went wrong", e.getMessage(), Alert.AlertType.ERROR);
                     e.printStackTrace();
                 }
+                showAllUsers();
+                getStatistic();
             }
         });
     }
@@ -548,9 +629,20 @@ public class AdministratorPanelController extends ViewController implements Init
 
     private void showFirstPage() {
         anchorPaneDashboard.toFront();
-       // showCurrentDate();
+        // showCurrentDate();
         dateDashboardLabel.setText(getCurrentDate());
+        getStatistic();
+        showProductChart();
+    }
 
+    private void getStatistic() {
+        try {
+            userCountLabel.setText(String.valueOf(userService.getUserCount()));
+            productCountLabel.setText(String.valueOf(productService.getProductCount()));
+            orderCountLabel.setText(String.valueOf(saleService.getSalesCount()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

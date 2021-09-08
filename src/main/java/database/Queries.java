@@ -48,4 +48,10 @@ public class Queries {
     public static final String GET_CUSTOMER_SALES_PRODUCTS_BY_ORDER_NUMBER = "SELECT product, quantity, price, image FROM sales WHERE username = ? AND order_number = ?";
 
     public static final String GET_LAST_ORDER_NUMBER = "SELECT order_number FROM sales ORDER BY sales_id desc LIMIT 1";
+
+    public static final String GET_BEST_SELLING_ITEMS = "SELECT product, SUM(quantity) AS TOTAL_QTY FROM sales GROUP BY product ORDER BY TOTAL_QTY DESC LIMIT 3";
+
+    public static final String GET_SALES_COUNT = "SELECT count(distinct order_number) FROM sales";
+    public static final String GET_USER_COUNT = "SELECT count(distinct user_id) FROM user";
+    public static final String GET_PRODUCT_COUNT = "SELECT count(distinct product_id) FROM product";
 }

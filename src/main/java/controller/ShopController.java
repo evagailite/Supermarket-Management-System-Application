@@ -185,7 +185,6 @@ public class ShopController extends ViewController implements Initializable {
         });
 
 
-
     }
 
     private void placeProductsInTheShop() {

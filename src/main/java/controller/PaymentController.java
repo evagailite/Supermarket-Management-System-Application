@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -179,6 +178,8 @@ public class PaymentController extends ViewController implements Initializable {
                 }
 
                 createOrder();
+
+
                 try {
                     shopService.clearBasket();
                 } catch (SQLException e) {
@@ -206,7 +207,7 @@ public class PaymentController extends ViewController implements Initializable {
         try {
             String username = userService.getOnlineUser("TRUE");
             List<Product> basket = shopService.getAllShoppingBasketProducts();
-            String orderNumber = "#" + saleService.getLastOrderNUmber();
+            String orderNumber = "#" + saleService.getLastOrderNumber();
             for (Product product : basket) {
                 saleService.createSale(orderNumber, product.getName(), product.getQuantity(), username,
                         getCurrentDate(), product.getPricePerUnit(), product.getImage());

@@ -4,12 +4,16 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -26,7 +30,7 @@
    <children>
       <BorderPane fx:id="bp" prefHeight="600.0" prefWidth="793.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
-            <VBox alignment="TOP_CENTER" prefHeight="537.0" prefWidth="198.0" style="-fx-background-color: CCD5DB;" BorderPane.alignment="CENTER">
+            <VBox alignment="TOP_CENTER" prefHeight="537.0" prefWidth="198.0" style="-fx-background-color: #B9D4A7;" BorderPane.alignment="CENTER">
                <children>
                   <JFXButton fx:id="buttonDashboard" onAction="#handleButtonAction" prefHeight="33.0" prefWidth="187.0" style="-fx-background-color: #EEEEEE; -fx-background-radius: 5;" styleClass="shadow" stylesheets="@style/style.css" text="Dashboard">
                      <cursor>
@@ -55,7 +59,7 @@
             </VBox>
          </left>
          <top>
-            <HBox alignment="CENTER_LEFT" prefHeight="63.0" prefWidth="800.0" style="-fx-background-color: #526069;" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER_LEFT" prefHeight="63.0" prefWidth="800.0" style="-fx-background-color: #4e961c;" BorderPane.alignment="CENTER">
                <children>
                   <AnchorPane prefHeight="63.0" prefWidth="315.0" HBox.hgrow="ALWAYS">
                      <children>
@@ -164,11 +168,62 @@
                                           </GridPane>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="anchorPaneDashboard" prefHeight="516.0" prefWidth="565.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <AnchorPane fx:id="anchorPaneDashboard" prefHeight="534.0" prefWidth="652.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <Pane fx:id="dashboardPanel" prefHeight="501.0" prefWidth="651.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
+                                          <Pane fx:id="dashboardPanel" prefHeight="536.0" prefWidth="651.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="-27.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
                                              <children>
-                                                <Label fx:id="dateDashboardLabel" layoutX="429.0" layoutY="14.0" prefHeight="35.0" prefWidth="211.0" />
+                                                <Label fx:id="dateDashboardLabel" alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="387.0" layoutY="14.0" prefHeight="38.0" prefWidth="232.0" text="September 8, 2021" textAlignment="RIGHT">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font></Label>
+                                                <Button fx:id="productsButton" layoutX="85.0" layoutY="92.0" mnemonicParsing="false" prefHeight="89.0" prefWidth="114.0" style="-fx-background-color: transparent;">
+                                                   <graphic>
+                                                      <ImageView fitHeight="81.0" fitWidth="229.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@images/grocery.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                   <cursor>
+                                                      <Cursor fx:constant="HAND" />
+                                                   </cursor>
+                                                </Button>
+                                                <Button fx:id="orderButton" layoutX="263.0" layoutY="92.0" mnemonicParsing="false" prefHeight="89.0" prefWidth="120.0" style="-fx-background-color: transparent;">
+                                                   <graphic>
+                                                      <ImageView fitHeight="81.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@images/delivery-box.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                   <cursor>
+                                                      <Cursor fx:constant="HAND" />
+                                                   </cursor>
+                                                </Button>
+                                                <Button fx:id="userButton" layoutX="445.0" layoutY="92.0" mnemonicParsing="false" prefHeight="89.0" prefWidth="121.0" style="-fx-background-color: transparent;">
+                                                   <graphic>
+                                                      <ImageView fitHeight="81.0" fitWidth="102.0" opacity="0.69" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@images/user-profile.png" />
+                                                         </image>
+                                                         <cursor>
+                                                            <Cursor fx:constant="HAND" />
+                                                         </cursor>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </Button>
+                                                <Label fx:id="productCountLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="128.0" layoutY="181.0" prefHeight="17.0" prefWidth="49.0" text="1" textAlignment="CENTER" />
+                                                <Label fx:id="orderCountLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="299.0" layoutY="181.0" prefHeight="17.0" prefWidth="49.0" text="1" textAlignment="CENTER" />
+                                                <Label fx:id="userCountLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="481.0" layoutY="181.0" prefHeight="17.0" prefWidth="49.0" text="1" textAlignment="CENTER" />
+                                                <Label layoutX="125.0" layoutY="245.0" text="Top 3 best-selling products:" />
+                                                <BarChart fx:id="productBarChart" cacheShape="false" centerShape="false" layoutX="50.0" layoutY="262.0" legendVisible="false" prefHeight="266.0" prefWidth="372.0" scaleShape="false">
+                                                  <xAxis>
+                                                    <CategoryAxis fx:id="productNameXAxis" label="Product" maxWidth="10.0" minWidth="10.0" side="BOTTOM" tickLabelGap="2.0" tickLength="4.0" />
+                                                  </xAxis>
+                                                  <yAxis>
+                                                    <NumberAxis fx:id="productQtyYAxis" label="Quantity" side="LEFT" />
+                                                  </yAxis>
+                                                </BarChart>
                                              </children></Pane>
                                        </children>
                                     </AnchorPane>
