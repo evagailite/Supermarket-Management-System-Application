@@ -299,12 +299,12 @@
                                           <Image url="@images/delivery-box.png" />
                                        </image>
                                     </ImageView>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="346.0" layoutY="263.0" prefHeight="85.0" prefWidth="334.0" text="Thank You for  Your Purchase!&#10;Your order has been placed" textAlignment="CENTER">
+                                    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="346.0" layoutY="263.0" prefHeight="85.0" prefWidth="334.0" text="Thank You for Your Purchase!&#10;Your order has been placed" textAlignment="CENTER">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="473.0" layoutY="335.0" text="#51812924" textFill="#4e961c">
+                                    <Label fx:id="orderNumberLabel" layoutX="473.0" layoutY="335.0" text="#51812924" textFill="#4e961c">
                                        <font>
                                           <Font name="System Bold" size="16.0" />
                                        </font>

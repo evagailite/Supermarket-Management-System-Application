@@ -31,7 +31,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -136,7 +138,8 @@ public class AdministratorPanelController extends ViewController implements Init
             showAllProducts();
         } else if (event.getSource() == buttonDashboard) {
             anchorPaneDashboard.toFront();
-            showCurrentDate();
+           // showCurrentDate();
+            getCurrentDate();
         } else if (event.getSource() == buttonUsers) {
             anchorPaneUsers.toFront();
             showAllUsers();
@@ -146,6 +149,12 @@ public class AdministratorPanelController extends ViewController implements Init
     private void showCurrentDate() {
         Date date = new Date();
         dateDashboardLabel.setText(String.valueOf(date));
+    }
+
+    private String getCurrentDate() {
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG, Locale.ENGLISH);
+        String date = dateFormat.format(new Date());
+        return date;
     }
 
     private void showAllUsers() {
@@ -539,6 +548,9 @@ public class AdministratorPanelController extends ViewController implements Init
 
     private void showFirstPage() {
         anchorPaneDashboard.toFront();
+       // showCurrentDate();
+        dateDashboardLabel.setText(getCurrentDate());
+
     }
 
 }

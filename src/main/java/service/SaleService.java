@@ -5,7 +5,6 @@ import database.DBHandler;
 import database.Queries;
 
 import model.Delivery;
-import model.Product;
 import model.Sale;
 
 import java.sql.Connection;
@@ -150,5 +149,17 @@ public class SaleService extends ViewController {
                     resultSet.getString("image")));
         }
         return sales;
+    }
+
+    public int getLastOrderNUmber() throws SQLException {
+        connection = DBHandler.getConnection();
+        int orderId = 0;
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_LAST_ORDER_NUMBER);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            orderId = resultSet.getInt(1);
+        }
+        return orderId;
+
     }
 }

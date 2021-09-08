@@ -12,7 +12,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import model.Delivery;
 import model.Product;
-import model.Sale;
 import service.SaleService;
 import service.ShopService;
 import service.UserService;
@@ -20,7 +19,11 @@ import service.UserService;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class PaymentController extends ViewController implements Initializable {
@@ -80,6 +83,8 @@ public class PaymentController extends ViewController implements Initializable {
     private VBox deliveryPaymentsWindowVBox;
     @FXML
     private Label confirmationLabel;
+    @FXML
+    private Label orderNumberLabel;
     private SaleService saleService = new SaleService();
     private ShopService shopService = new ShopService();
     private UserService userService = new UserService();
@@ -201,13 +206,22 @@ public class PaymentController extends ViewController implements Initializable {
         try {
             String username = userService.getOnlineUser("TRUE");
             List<Product> basket = shopService.getAllShoppingBasketProducts();
+            String orderNumber = "#" + saleService.getLastOrderNUmber();
             for (Product product : basket) {
-                saleService.createSale("#51812924", product.getName(), product.getQuantity(), username,
-                        "2021-09-07", product.getPricePerUnit(), product.getImage());
+                saleService.createSale(orderNumber, product.getName(), product.getQuantity(), username,
+                        getCurrentDate(), product.getPricePerUnit(), product.getImage());
+                orderNumberLabel.setText(orderNumber);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private String getCurrentDate() {
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.ENGLISH);
+        String date = dateFormat.format(new Date());
+        return date;
     }
 
     private Delivery setDeliveryDetails() {

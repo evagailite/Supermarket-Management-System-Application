@@ -46,4 +46,6 @@ public class Queries {
 
     public static final String GET_CUSTOMER_SALES_PRODUCTS = "SELECT product, quantity, price, image FROM sales WHERE username = ?";
     public static final String GET_CUSTOMER_SALES_PRODUCTS_BY_ORDER_NUMBER = "SELECT product, quantity, price, image FROM sales WHERE username = ? AND order_number = ?";
+
+    public static final String GET_LAST_ORDER_NUMBER = "SELECT order_number FROM sales ORDER BY sales_id desc LIMIT 1";
 }

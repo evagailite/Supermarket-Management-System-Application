@@ -168,7 +168,10 @@
                                        <children>
                                           <Pane fx:id="dashboardPanel" prefHeight="501.0" prefWidth="651.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
                                              <children>
-                                                <Label fx:id="dateDashboardLabel" layoutX="429.0" layoutY="14.0" prefHeight="35.0" prefWidth="211.0" />
+                                                <Label fx:id="dateDashboardLabel" alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="387.0" layoutY="14.0" prefHeight="38.0" prefWidth="232.0" text="September 8, 2021" textAlignment="RIGHT">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font></Label>
                                              </children></Pane>
                                        </children>
                                     </AnchorPane>
