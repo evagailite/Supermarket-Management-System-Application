@@ -4,37 +4,18 @@ import controller.ViewController;
 import database.DBHandler;
 import database.Queries;
 
-import model.Delivery;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import model.Sale;
+import model.Users;
+import types.UserType;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class SaleService extends ViewController {
     private Connection connection = DBHandler.getConnection();
-
-    public void createDelivery(Delivery delivery, String username, int orderNumber) throws SQLException {
-        connection = DBHandler.getConnection();
-
-        PreparedStatement preparedStatement = connection.prepareStatement(Queries.CREATE_DELIVERY_DETAILS);
-        preparedStatement.setString(1, delivery.getFirstName());
-        preparedStatement.setString(2, delivery.getLastName());
-        preparedStatement.setString(3, delivery.getEmail());
-        preparedStatement.setString(4, delivery.getMobileNumber());
-        preparedStatement.setString(5, delivery.getHouseFlatNumber());
-        preparedStatement.setString(6, delivery.getStreetName());
-        preparedStatement.setString(7, delivery.getZipCode());
-        preparedStatement.setString(8, delivery.getCity());
-        preparedStatement.setString(9, delivery.getNote());
-        preparedStatement.setString(10, username);
-        preparedStatement.setInt(11, orderNumber);
-        preparedStatement.executeUpdate();
-
-//        showAlert("User Created", "User created successfully", Alert.AlertType.INFORMATION);
-        DBHandler.closeConnections(preparedStatement, connection);
-    }
 
     public List<Sale> getAllCustomerSales() throws SQLException {
         connection = DBHandler.getConnection();
@@ -186,4 +167,45 @@ public class SaleService extends ViewController {
         return total;
     }
 
+    public double getSaleSubTotal(int orderNumber) throws SQLException {
+        double subTotal = 0;
+        connection = DBHandler.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_SALES_SUBTOTAL);
+        preparedStatement.setInt(1, orderNumber);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            subTotal = resultSet.getDouble(1);
+            //  DBHandler.closeConnections(resultSet, preparedStatement, connection);
+        }
+        return subTotal;
+    }
+
+    public double getAllSalesTotal() throws SQLException {
+        double total = 0;
+        connection = DBHandler.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_SALES_TOTAL);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            total = resultSet.getDouble(1);
+            //  DBHandler.closeConnections(resultSet, preparedStatement, connection);
+        }
+        return total;
+    }
+
+    public ObservableList<Sale> getAllSales() throws SQLException {
+        connection = DBHandler.getConnection();
+        ObservableList<Sale> saleOrders = FXCollections.observableArrayList();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_ALL_SALES);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            saleOrders.add(new Sale(resultSet.getInt("order_number"),
+                    resultSet.getString("product"),
+                    resultSet.getInt("quantity"),
+                    resultSet.getDouble("price"),
+                    resultSet.getString("username"),
+                    resultSet.getString("purchase_date")));
+        }
+        //   DBHandler.closeConnections(resultSet, preparedStatement, connection);
+        return saleOrders;
+    }
 }

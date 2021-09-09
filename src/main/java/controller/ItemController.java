@@ -8,10 +8,10 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import model.Product;
-import model.Users;
 import service.ShopService;
 import service.UserService;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class ItemController implements Initializable {
+public class ItemController extends ViewController implements Initializable {
     @FXML
     private ImageView productImage;
     @FXML
@@ -81,13 +81,22 @@ public class ItemController implements Initializable {
 
                 decrementButton.setOnAction(event1 -> {
                     decreaseValue(product);
+
                 });
                 addToCart.setVisible(false);
+
+//                try {
+//                    changeSceneForShop(event, "shop");
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+
             });
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 
     private void decreaseValue(Product product) {
         int value = Integer.parseInt(quantityNumberLabel.getText());

@@ -158,6 +158,11 @@
                                     <Font name="System Bold" size="26.0" />
                                  </font>
                               </Label>
+                              <Label layoutX="50.0" layoutY="77.0" text="Order History">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
                      </children>
@@ -222,7 +227,7 @@
                               </ScrollPane>
                               <VBox fx:id="orderSummaryVbox" prefHeight="568.0" prefWidth="440.0">
                                  <children>
-                                    <AnchorPane fx:id="profileAnchorPane" prefHeight="298.0" prefWidth="289.0" stylesheets="@style/style.css">
+                                    <AnchorPane fx:id="profileAnchorPane" prefHeight="298.0" prefWidth="289.0" style="-fx-background-radius: 10;" stylesheets="@style/style.css">
                                        <styleClass>
                                           <String fx:value="chosen-fruit-card" />
                                           <String fx:value="shadow" />

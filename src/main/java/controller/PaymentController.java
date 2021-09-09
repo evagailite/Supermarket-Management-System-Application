@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import model.Delivery;
 import model.Product;
+import service.DeliveryService;
 import service.SaleService;
 import service.ShopService;
 import service.UserService;
@@ -107,6 +108,7 @@ public class PaymentController extends ViewController implements Initializable {
     private SaleService saleService = new SaleService();
     private ShopService shopService = new ShopService();
     private UserService userService = new UserService();
+    private DeliveryService deliveryService = new DeliveryService();
     private final DecimalFormat df = new DecimalFormat("0.00");
 
     @Override
@@ -121,7 +123,6 @@ public class PaymentController extends ViewController implements Initializable {
             //action happens after click on it
             @Override
             public void handle(ActionEvent event) {
-
 
                 shoppingCartItemsLabel.setVisible(true);
                 confirmationLabel.setVisible(false);
@@ -248,7 +249,7 @@ public class PaymentController extends ViewController implements Initializable {
     private void createDeliveryDetails() {
         try {
             Delivery delivery = setDeliveryDetails();
-            saleService.createDelivery(delivery, getShopUser(), getOrderNumber());
+            deliveryService.createDelivery(delivery, getShopUser(), getOrderNumber());
         } catch (SQLException e) {
             e.printStackTrace();
         }

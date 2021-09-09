@@ -3,8 +3,6 @@ package model;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Date;
-
 @Getter
 @Setter
 public class Sale {
@@ -29,6 +27,16 @@ public class Sale {
         this.quantity = quantity;
         this.price = price;
         this.image = image;
+        this.username = username;
+        this.orderDate = orderDate;
+    }
+
+    public Sale(Integer orderNumber, String productName, int quantity, double price,
+                String username, String orderDate) {
+        this.orderNumber = String.valueOf(orderNumber);
+        this.productName = productName;
+        this.quantity = quantity;
+        this.price = price;
         this.username = username;
         this.orderDate = orderDate;
     }
@@ -65,4 +73,5 @@ public class Sale {
         this.productName = productName;
         this.quantity = quantity;
     }
+
 }

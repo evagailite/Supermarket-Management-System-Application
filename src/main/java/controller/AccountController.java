@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -63,6 +64,8 @@ public class AccountController extends ViewController implements Initializable {
     private VBox orderProductsVBox;
     @FXML
     private HBox tableNamesForBasket1;
+    @FXML
+    private Button goBackShoppingButton;
     private List<Sale> customerSales = new ArrayList<>();
     private SaleService saleService = new SaleService();
     private ShopService shopService = new ShopService();
@@ -91,6 +94,8 @@ public class AccountController extends ViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         loadSaleOrders();
+
+        showBasketSize();
 
         buttonLogOut.setOnAction(new EventHandler<ActionEvent>() {
             //action happens after click on it
@@ -140,6 +145,31 @@ public class AccountController extends ViewController implements Initializable {
                 }
             }
         });
+
+        goBackShoppingButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    changeSceneHome(event, "shop");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void showBasketSize() {
+        try {
+            int basketSize = shopService.getShoppingCartSize();
+            if (basketSize == 0) {
+                numberInTheBasket.setVisible(false);
+            } else {
+                numberInTheBasket.setVisible(true);
+                numberInTheBasket.setText(String.valueOf(basketSize));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadSaleOrders() {

@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ShopController extends ViewController implements Initializable {
     UserService userService = new UserService();
@@ -49,8 +48,6 @@ public class ShopController extends ViewController implements Initializable {
     private Button drinksButton;
     @FXML
     private Button nonFoodButton;
-    @FXML
-    private ScrollPane scroll;
     @FXML
     private GridPane gridpane;
     private List<Product> productList = new ArrayList<>();
@@ -201,7 +198,30 @@ public class ShopController extends ViewController implements Initializable {
             }
         });
 
+    }
 
+    @FXML
+    void sortByHighestPrice(ActionEvent event) {
+        gridpane.getChildren().retainAll(gridpane.getChildren().get(0));
+        productList.clear();
+        try {
+            productList.addAll(getData(productService.getProductsSortedByHighestPrice()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        placeProductsInTheShop(productList);
+    }
+
+    @FXML
+    void sortByLowestPrice(ActionEvent event) {
+        gridpane.getChildren().retainAll(gridpane.getChildren().get(0));
+        productList.clear();
+        try {
+            productList.addAll(getData(productService.getProductsSortedByLowestPrice()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        placeProductsInTheShop(productList);
     }
 
     private void placeProductsInTheShop(List<Product> productList) {

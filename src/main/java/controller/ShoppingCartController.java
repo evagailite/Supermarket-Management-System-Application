@@ -121,7 +121,11 @@ public class ShoppingCartController extends ViewController implements Initializa
         accountButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
+                try {
+                    changeSceneForShop(event, "account");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -155,7 +159,7 @@ public class ShoppingCartController extends ViewController implements Initializa
         return products;
     }
 
-    private void getOrderSummaryDetails() {
+    public void getOrderSummaryDetails() {
         try {
             double tax = 1.21;
             shippingLabel.setText("FREE");

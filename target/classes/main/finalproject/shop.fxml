@@ -6,6 +6,8 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -221,6 +223,8 @@
                               </Button>
                            </children>
                         </AnchorPane>
+                        <AnchorPane prefHeight="50.0" prefWidth="105.0" />
+                        <AnchorPane layoutX="475.0" layoutY="10.0" prefHeight="50.0" prefWidth="425.0" />
                      </children>
                      <opaqueInsets>
                         <Insets />
@@ -233,11 +237,27 @@
                               <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
                            </HBox.margin>
                            <content>
-                              <GridPane fx:id="gridpane" alignment="CENTER" prefHeight="0.0" prefWidth="10.0">
-                                 <rowConstraints>
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" />
-                                 </rowConstraints>
-                              </GridPane>
+                              <AnchorPane prefHeight="35.0" prefWidth="969.0">
+                                 <children>
+                                    <GridPane fx:id="gridpane" alignment="TOP_RIGHT" prefHeight="24.0" prefWidth="127.0">
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                       </rowConstraints>
+                                    </GridPane>
+                                    <MenuButton layoutX="875.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="88.0" style="-fx-background-color: transparent;" text="Sort By">
+                                       <items>
+                                          <MenuItem mnemonicParsing="false" onAction="#sortByLowestPrice" text="Lowest Price First" />
+                                          <MenuItem mnemonicParsing="false" onAction="#sortByHighestPrice" text="Highest Price First" />
+                                       </items>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </MenuButton>
+                                 </children>
+                              </AnchorPane>
                            </content>
                         </ScrollPane>
                      </children>

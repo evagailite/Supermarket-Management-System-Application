@@ -140,6 +140,46 @@ public class ProductService extends ViewController {
         return products;
     }
 
+    public ArrayList<Product> getProductsSortedByLowestPrice() throws SQLException {
+        connection = DBHandler.getConnection();
+
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.ORDER_PRODUCTS_BY_LOWEST_PRICE);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ArrayList<Product> products = new ArrayList<>();
+        while (resultSet.next()) {
+            products.add(new Product(
+                    resultSet.getInt("product_id"),
+                    resultSet.getString("product_name"),
+                    resultSet.getDouble("quantity"),
+                    resultSet.getDouble("price"),
+                    ProductUnit.valueOf(resultSet.getString("unit")),
+                    Category.valueOf(resultSet.getString("category")),
+                    resultSet.getString("image")));
+        }
+        // DBHandler.closeConnections(resultSet, preparedStatement, connection);
+        return products;
+    }
+
+    public ArrayList<Product> getProductsSortedByHighestPrice() throws SQLException {
+        connection = DBHandler.getConnection();
+
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.ORDER_PRODUCTS_BY_HIGHEST_PRICE);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ArrayList<Product> products = new ArrayList<>();
+        while (resultSet.next()) {
+            products.add(new Product(
+                    resultSet.getInt("product_id"),
+                    resultSet.getString("product_name"),
+                    resultSet.getDouble("quantity"),
+                    resultSet.getDouble("price"),
+                    ProductUnit.valueOf(resultSet.getString("unit")),
+                    Category.valueOf(resultSet.getString("category")),
+                    resultSet.getString("image")));
+        }
+        // DBHandler.closeConnections(resultSet, preparedStatement, connection);
+        return products;
+    }
+
     public ArrayList<Product> getDrinksProductsForShop() throws SQLException {
         connection = DBHandler.getConnection();
 

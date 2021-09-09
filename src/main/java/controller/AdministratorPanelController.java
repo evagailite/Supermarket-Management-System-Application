@@ -2,15 +2,13 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -19,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -144,11 +143,24 @@ public class AdministratorPanelController extends ViewController implements Init
     @FXML
     private BarChart<?, ?> productBarChart;
     @FXML
-    private CategoryAxis productNameXAxis;
+    private Label salesCountLabel;
     @FXML
-    private NumberAxis productQtyYAxis;
+    private TableView<Sale> salesTable;
+    @FXML
+    private TableColumn<Sale, Integer> salesOrderColumn;
+    @FXML
+    private TableColumn<Sale, Integer> quantityColumn;
+    @FXML
+    private TableColumn<Sale, Double> priceColumn;
+    @FXML
+    private TableColumn<Sale, String> dateColumn;
+    @FXML
+    private TableColumn<Sale, String> userColumn;
+    @FXML
+    private TableColumn<Sale, String> productSalesNameColumn;
+    @FXML
+    private CategoryAxis productNameXAxis;
     private Image image;
-    private ObservableList<Users> userList;
     private UserService userService = new UserService();
     private ProductService productService = new ProductService();
     private SaleService saleService = new SaleService();
@@ -161,7 +173,7 @@ public class AdministratorPanelController extends ViewController implements Init
             showAllProducts();
         } else if (event.getSource() == buttonDashboard) {
             anchorPaneDashboard.toFront();
-            // showCurrentDate();
+            showAllSales();
             getCurrentDate();
         } else if (event.getSource() == buttonUsers) {
             anchorPaneUsers.toFront();
@@ -177,13 +189,20 @@ public class AdministratorPanelController extends ViewController implements Init
         }
         XYChart.Series set = new XYChart.Series();
 
+
         for (int i = 0; i < topThreeProducts.size(); i++) {
-            String x = topThreeProducts.get(i).getProductName();
+            String x = topThreeProducts.get(i).getProductName().trim();
+            int ind = x.lastIndexOf(" ");
+            if (ind > 0) {
+                x = x.substring(0, ind).trim();
+            }
             int y = topThreeProducts.get(i).getQuantity();
             set.getData().add(new XYChart.Data<>(x, y));
         }
         productBarChart.getData().addAll(set);
-
+        productBarChart.setBarGap(1);
+        productBarChart.setCategoryGap(10);
+        productNameXAxis.tickLabelFontProperty().set(Font.font(9));
     }
 
     private List<Sale> getBestSellingData(List<Sale> bestSellingProducts) {
@@ -209,6 +228,7 @@ public class AdministratorPanelController extends ViewController implements Init
     }
 
     private void showAllUsers() {
+        ObservableList<Users> userList;
 
         columnId.setCellValueFactory(new PropertyValueFactory<Users, Integer>("id"));
         columnUsername.setCellValueFactory(new PropertyValueFactory<Users, String>("username"));
@@ -224,6 +244,24 @@ public class AdministratorPanelController extends ViewController implements Init
         try {
             userList = userService.getAllUsers();
             userTable.setItems(userList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showAllSales() {
+        ObservableList<Sale> saleList;
+
+        salesOrderColumn.setCellValueFactory(new PropertyValueFactory<Sale, Integer>("orderNumber"));
+        productSalesNameColumn.setCellValueFactory(new PropertyValueFactory<Sale, String>("productName"));
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<Sale, Integer>("quantity"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<Sale, Double>("price"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<Sale, String>("orderDate"));
+        userColumn.setCellValueFactory(new PropertyValueFactory<Sale, String>("username"));
+
+        try {
+            saleList = saleService.getAllSales();
+            salesTable.setItems(saleList);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -471,6 +509,7 @@ public class AdministratorPanelController extends ViewController implements Init
 
         setComboBoxValues();
 
+
         productsButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -629,7 +668,7 @@ public class AdministratorPanelController extends ViewController implements Init
 
     private void showFirstPage() {
         anchorPaneDashboard.toFront();
-        // showCurrentDate();
+        showAllSales();
         dateDashboardLabel.setText(getCurrentDate());
         getStatistic();
         showProductChart();
@@ -640,6 +679,7 @@ public class AdministratorPanelController extends ViewController implements Init
             userCountLabel.setText(String.valueOf(userService.getUserCount()));
             productCountLabel.setText(String.valueOf(productService.getProductCount()));
             orderCountLabel.setText(String.valueOf(saleService.getSalesCount()));
+            salesCountLabel.setText(String.valueOf(saleService.getAllSalesTotal()));
         } catch (SQLException e) {
             e.printStackTrace();
         }
