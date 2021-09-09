@@ -7,8 +7,6 @@ import database.Queries;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Sale;
-import model.Users;
-import types.UserType;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -56,4 +56,6 @@ public class Queries {
     public static final String ORDER_PRODUCTS_BY_LOWEST_PRICE = "SELECT * FROM product ORDER by price asc";
     public static final String GET_SALES_TOTAL = "SELECT SUM(quantity*price) FROM sales";
     public static final String GET_ALL_SALES = "SELECT order_number, product, quantity, username, purchase_date, price from sales";
+
+    public static final String GET_PRODUCT_QUANTITY = "SELECT quantity FROM product WHERE product_id = ?";
 }

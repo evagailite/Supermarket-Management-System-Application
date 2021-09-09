@@ -10,16 +10,27 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="331.0" prefWidth="205.0" stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ItemController">
    <children>
-      <VBox alignment="CENTER" prefHeight="331.0" prefWidth="255.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane fx:id="notAvailablePane1" opacity="0.63" prefHeight="266.0" prefWidth="226.0" style="-fx-background-color: white; -fx-background-radius: 30;" visible="false" />
+      <Pane fx:id="notAvailablePane2" layoutY="239.0" prefHeight="92.0" prefWidth="226.0" style="-fx-background-color: white; -fx-background-radius: 30;" stylesheets="@style/style.css" visible="false">
+         <children>
+            <Label alignment="CENTER" layoutX="27.0" layoutY="23.0" prefHeight="34.0" prefWidth="173.0" text="Temporary out of stock" textAlignment="CENTER" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <VBox fx:id="productVbox" alignment="CENTER" prefHeight="331.0" prefWidth="255.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane prefHeight="169.0" prefWidth="216.0">
                <children>
-                  <ImageView fx:id="productImage" fitHeight="159.0" fitWidth="150.0" layoutX="41.0" layoutY="5.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" smooth="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="41.0" AnchorPane.rightAnchor="41.895355224609375" AnchorPane.topAnchor="5.0">
+                  <ImageView fx:id="productImage" fitHeight="151.0" fitWidth="134.0" layoutX="50.0" layoutY="9.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" smooth="false" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="49.592445373535156" AnchorPane.topAnchor="9.0">
                      <image>
                         <Image url="@images/shop/apple.png" />
                      </image>
