@@ -226,17 +226,28 @@ public class ProductService extends ViewController {
         return products;
     }
 
-    public int productQuantity(int id) throws SQLException {
+    public int productQuantity(String productName) throws SQLException {
         int total = 0;
         connection = DBHandler.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_PRODUCT_QUANTITY);
-        preparedStatement.setInt(1, id);
+        preparedStatement.setString(1, productName);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
             total = resultSet.getInt(1);
             //  DBHandler.closeConnections(resultSet, preparedStatement, connection);
         }
         return total;
+    }
+
+    public void editProductQuantity(String name, int quantity) throws SQLException {
+        connection = DBHandler.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.UPDATE_PRODUCT_QUANTITY);
+
+        preparedStatement.setString(1, name);
+        preparedStatement.setInt(2, quantity);
+
+        preparedStatement.executeUpdate();
+        DBHandler.closeConnections(preparedStatement, connection);
     }
 
 }

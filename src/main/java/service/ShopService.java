@@ -103,30 +103,11 @@ public class ShopService extends ViewController {
     }
 
 
-//    public void updatePrice(String name, double totalPrice) throws SQLException {
-//        connection = DBHandler.getConnection();
-//
-//        PreparedStatement preparedStatement = connection.prepareStatement(Queries.UPDATE_SHOPPING_BASKET);
-//        preparedStatement.setDouble(1, totalPrice);
-//        preparedStatement.setString(2, name);
-//
-//        preparedStatement.executeUpdate();
-//    }
-//
-//    public void getTotalPrice(String name) throws SQLException {
-//        connection = DBHandler.getConnection();
-//
-//        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_TOTAL_PRICE);
-//        preparedStatement.setString(1, name);
-//
-//        preparedStatement.executeUpdate();
-//    }
-
     public double getQuantity(String name) throws SQLException {
         double quantity = 0;
         connection = DBHandler.getConnection();
 
-        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_QTY);
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_BASKET_QTY);
         preparedStatement.setString(1, name);
         ResultSet resultSet = preparedStatement.executeQuery();
 

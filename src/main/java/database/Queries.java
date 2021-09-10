@@ -20,7 +20,7 @@ public class Queries {
     public static final String DELETE_FROM_SHOPPING_BASKET = "DELETE FROM basket WHERE name = ?";
     public static final String UPDATE_SHOPPING_BASKET_QUANTITY = "UPDATE basket SET quantity = ? WHERE name = ?;";
     public static final String UPDATE_SHOPPING_BASKET = "UPDATE basket SET price = ? WHERE name = ?";
-    public static final String GET_QTY = "SELECT quantity FROM basket WHERE name = ?";
+    public static final String GET_BASKET_QTY = "SELECT quantity FROM basket WHERE name = ?";
     public static final String SET_USER_ONLINE_STATUS = "UPDATE user SET isOnline = ? WHERE username = ?";
     public static final String SET_ONLINE_USER = "SELECT username FROM user WHERE isOnline =?";
     public static final String CREATE_ORDER = "INSERT INTO sales (order_number, product, quantity, username, purchase_date, price, image) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -36,7 +36,6 @@ public class Queries {
     public static final String CREATE_DELIVERY_DETAILS = "INSERT INTO delivery (first_name, last_name, email, mobile_number, house_number, street, zip_code, city, note, username, order_number)\n" +
             " VALUES (?, ?, ?,?,?,?,?,?,?, ?, ?)";
     public static final String GET_ALL_CUSTOMER_SALES = "SELECT order_number, product, quantity, price, image, username, purchase_date FROM sales";
-    public static final String GET_CUSTOMER_SALES_TOTAL = "";
     public static final String CHECK_PRODUCT_EXISTS_IN_THE_SALES = "SELECT order_number FROM sales WHERE USERNAME = ?";
     public static final String GET_CUSTOMER_SALES = "SELECT order_number, product, quantity, price, image, username, purchase_date FROM sales WHERE username = ?";
     public static final String GET_CUSTOMER_ORDER_SALES = "SELECT DISTINCT *  FROM sales WHERE username = ? GROUP BY order_number";
@@ -56,6 +55,7 @@ public class Queries {
     public static final String ORDER_PRODUCTS_BY_LOWEST_PRICE = "SELECT * FROM product ORDER by price asc";
     public static final String GET_SALES_TOTAL = "SELECT SUM(quantity*price) FROM sales";
     public static final String GET_ALL_SALES = "SELECT order_number, product, quantity, username, purchase_date, price from sales";
+    public static final String GET_PRODUCT_QUANTITY = "select quantity from product where product_name =?";
+    public static final String UPDATE_PRODUCT_QUANTITY = "UPDATE product SET quantity = ? WHERE product_name = ?";
 
-    public static final String GET_PRODUCT_QUANTITY = "SELECT quantity FROM product WHERE product_id = ?";
 }

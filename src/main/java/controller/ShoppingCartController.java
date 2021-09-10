@@ -134,7 +134,6 @@ public class ShoppingCartController extends ViewController implements Initializa
             public void handle(ActionEvent event) {
                 try {
                     changeSceneHome(event, "payment");
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

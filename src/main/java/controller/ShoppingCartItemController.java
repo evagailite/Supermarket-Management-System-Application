@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import model.Product;
+import service.ProductService;
 import service.ShopService;
 import service.UserService;
 
@@ -44,7 +45,7 @@ public class ShoppingCartItemController extends ViewController implements Initia
     private ShopService shopService = new ShopService();
     private final DecimalFormat df = new DecimalFormat("0.00");
     private UserService userService = new UserService();
-
+    private ProductService productService = new ProductService();
 
     public void setShoppingCartData(Product product) {
         try {
@@ -93,6 +94,7 @@ public class ShoppingCartItemController extends ViewController implements Initia
                 public void handle(ActionEvent event) {
                     try {
                         shopService.removeProductFromShoppingBasket(product.getName());
+                        resetWarehouseQuantity(product);
                         anchorPane.setVisible(false);
 
                         changeSceneForShop(event, "shoppingCart");
@@ -106,17 +108,19 @@ public class ShoppingCartItemController extends ViewController implements Initia
             e.printStackTrace();
         }
     }
-//
-//    private boolean checkIfBasketIsEmpty(int shoppingCartSize) {
-//        if (shoppingCartSize == 0) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
+
+    private void resetWarehouseQuantity(Product product) {
+        try {
+            int basketQty = (int) shopService.getQuantity(product.getName());
+            int warehouseQty = productService.productQuantity(product.getName());
+            int totalQuantity = warehouseQty + basketQty;
+            productService.editProductQuantity(product.getName(), totalQuantity);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void decreaseValue(Product product) {
-
         try {
             String shopUser = userService.getOnlineUser("TRUE");
 
@@ -128,6 +132,7 @@ public class ShoppingCartItemController extends ViewController implements Initia
             if (value == 0) {
                 try {
                     shopService.removeProductFromShoppingBasket(product.getName());
+                    resetWarehouseQuantity(product);
                     anchorPane.setVisible(false);
 
                 } catch (SQLException e) {

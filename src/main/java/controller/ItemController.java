@@ -59,17 +59,7 @@ public class ItemController extends ViewController implements Initializable {
             productImage.setImage(image);
             quantityNumberLabel.setText(String.valueOf(1));
 
-            if (product.getQuantity() == 0) {
-                notAvailablePane1.toFront();
-                notAvailablePane2.toFront();
-                notAvailablePane1.setVisible(true);
-                notAvailablePane2.setVisible(true);
-            } else {
-                notAvailablePane1.toBack();
-                notAvailablePane2.toBack();
-                notAvailablePane1.setVisible(false);
-                notAvailablePane2.setVisible(false);
-            }
+            setOutOfStockLabel(product);
 
             ArrayList<Product> chosenProducts = shopService.getAllShoppingBasketProducts();
             for (Product product1 : chosenProducts) {
@@ -83,7 +73,6 @@ public class ItemController extends ViewController implements Initializable {
                     decrementButton.setOnAction(event1 -> {
                         decreaseValue(product);
                     });
-
                 }
             }
 
@@ -119,6 +108,20 @@ public class ItemController extends ViewController implements Initializable {
         }
     }
 
+    private void setOutOfStockLabel(Product product) {
+        if (product.getQuantity() == 0) {
+            notAvailablePane1.toFront();
+            notAvailablePane2.toFront();
+            notAvailablePane1.setVisible(true);
+            notAvailablePane2.setVisible(true);
+        } else {
+            notAvailablePane1.toBack();
+            notAvailablePane2.toBack();
+            notAvailablePane1.setVisible(false);
+            notAvailablePane2.setVisible(false);
+        }
+    }
+
 
     private void decreaseValue(Product product) {
         int value = Integer.parseInt(quantityNumberLabel.getText());
@@ -137,7 +140,6 @@ public class ItemController extends ViewController implements Initializable {
                 shopService.addProductInTheBasket(product.getName(), (-1),
                         product.getPricePerUnit(), product.getImage(), shopUser);
 
-//                shopService.getTotalPrice(product.getName());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -161,32 +163,7 @@ public class ItemController extends ViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        setOutOfStockLabel();
+
     }
 
-//    private void setOutOfStockLabel() {
-//        try {
-//            ArrayList<Product> products = productService.getAllProductsForShop();
-//            for (Product product : products) {
-//                int productQuantity = productService.productQuantity(product.getId());
-//                System.out.println(productQuantity);
-//                if (productQuantity == 0) {
-//                    productVbox.setVisible(false);
-//                    notAvailablePane1.toFront();
-//                    notAvailablePane2.toFront();
-//                    notAvailablePane1.setVisible(true);
-//                    notAvailablePane2.setVisible(true);
-//                } else {
-//                    notAvailablePane1.toBack();
-//                    notAvailablePane2.toBack();
-//                    notAvailablePane1.setVisible(false);
-//                    notAvailablePane2.setVisible(false);
-//                    productVbox.setVisible(true);
-//                }
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
 }

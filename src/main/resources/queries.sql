@@ -31,16 +31,5 @@ foreign key(product) references product(product_id),
 foreign key(user) references user(user_id)
 );
 
-create table if not exists balance(
-balance_id int auto_increment not null,
-user int not null,
-bank_account varchar(50) not null,
-amount decimal(20,2) not null,
-operation varchar(50) not null,
-operation_date date not null,
-primary key(balance_id),
-foreign key(user) references user(user_id)
-);
-
 SELECT user_id, username, name, email, budget, user_type
 FROM user;

@@ -10,7 +10,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -27,7 +26,6 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class ShopController extends ViewController implements Initializable {
-    UserService userService = new UserService();
     @FXML
     private TextField searchTextField;
     @FXML
@@ -52,8 +50,9 @@ public class ShopController extends ViewController implements Initializable {
     private GridPane gridpane;
     private List<Product> productList = new ArrayList<>();
     private ProductService productService = new ProductService();
-    private String user;
     private ShopService shopService = new ShopService();
+    private UserService userService = new UserService();
+    private String user;
 
     public List<Product> getData(ArrayList<Product> allProductsForShop) {
         List<Product> products = allProductsForShop;
@@ -273,6 +272,10 @@ public class ShopController extends ViewController implements Initializable {
         }
     }
 
+    public void setUsername(String username) {
+        this.user = username;
+    }
+
 //    public void findProduct(){
 //        ArrayList<Product> foundProduct = new ArrayList<>();
 //        for (Product product : productList) {
@@ -297,7 +300,5 @@ public class ShopController extends ViewController implements Initializable {
 //        }).collect(Collectors.toList());
 //    }
 
-    public void setUsername(String username) {
-        this.user = username;
-    }
+
 }
