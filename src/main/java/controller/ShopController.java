@@ -153,6 +153,7 @@ public class ShopController extends ViewController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 //if users logged out
+                resetWarehouseQuantity();
                 try {
                     String username = userService.getOnlineUser("TRUE");
                     shopService.clearBasket();
@@ -196,7 +197,6 @@ public class ShopController extends ViewController implements Initializable {
                 }
             }
         });
-
     }
 
     @FXML
@@ -221,6 +221,34 @@ public class ShopController extends ViewController implements Initializable {
             e.printStackTrace();
         }
         placeProductsInTheShop(productList);
+    }
+
+    private void resetWarehouseQuantity() {
+        if (!checkIfBasketIsEmpty()) {
+            try {
+                List<Product> productsInBasket = shopService.getAllShoppingBasketProducts();
+                for (Product product : productsInBasket) {
+                    int basketQty = (int) shopService.getQuantity(product.getName());
+                    int warehouseQty = productService.productQuantity(product.getName());
+                    int totalQuantity = warehouseQty + basketQty;
+                    productService.editProductQuantity(product.getName(), totalQuantity);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private boolean checkIfBasketIsEmpty() {
+        try {
+            int amountOfProductsInBasket = shopService.getShoppingCartSize();
+            if (amountOfProductsInBasket == 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     private void placeProductsInTheShop(List<Product> productList) {

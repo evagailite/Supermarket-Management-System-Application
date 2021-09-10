@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import main.finalproject.Main;
 import model.Product;
+import service.ProductService;
 import service.ShopService;
 import service.UserService;
 
@@ -59,6 +60,7 @@ public class ShoppingCartController extends ViewController implements Initializa
     private List<Product> shoppingBasket = new ArrayList<>();
     private final DecimalFormat df = new DecimalFormat("0.00");
     private UserService userService = new UserService();
+    private ProductService productService = new ProductService();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -73,6 +75,7 @@ public class ShoppingCartController extends ViewController implements Initializa
             //action happens after click on it
             @Override
             public void handle(ActionEvent event) {
+                resetWarehouseQuantity();
                 //if users logged out
                 try {
                     String username = userService.getOnlineUser("TRUE");
@@ -139,6 +142,34 @@ public class ShoppingCartController extends ViewController implements Initializa
                 }
             }
         });
+    }
+
+    private void resetWarehouseQuantity() {
+        if (!checkIfBasketIsEmpty()) {
+            try {
+                List<Product> productsInBasket = shopService.getAllShoppingBasketProducts();
+                for (Product product : productsInBasket) {
+                    int basketQty = (int) shopService.getQuantity(product.getName());
+                    int warehouseQty = productService.productQuantity(product.getName());
+                    int totalQuantity = warehouseQty + basketQty;
+                    productService.editProductQuantity(product.getName(), totalQuantity);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private boolean checkIfBasketIsEmpty() {
+        try {
+            int amountOfProductsInBasket = shopService.getShoppingCartSize();
+            if (amountOfProductsInBasket == 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public List<Product> getShoppingCartData() {

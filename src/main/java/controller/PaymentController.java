@@ -13,10 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import model.Delivery;
 import model.Product;
-import service.DeliveryService;
-import service.SaleService;
-import service.ShopService;
-import service.UserService;
+import service.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -108,6 +105,7 @@ public class PaymentController extends ViewController implements Initializable {
     private SaleService saleService = new SaleService();
     private ShopService shopService = new ShopService();
     private UserService userService = new UserService();
+    private ProductService productService = new ProductService();
     private DeliveryService deliveryService = new DeliveryService();
     private final DecimalFormat df = new DecimalFormat("0.00");
 
@@ -123,10 +121,10 @@ public class PaymentController extends ViewController implements Initializable {
             //action happens after click on it
             @Override
             public void handle(ActionEvent event) {
-
                 shoppingCartItemsLabel.setVisible(true);
                 confirmationLabel.setVisible(false);
                 //if users logged out
+                resetWarehouseQuantity();
                 try {
                     String username = userService.getOnlineUser("TRUE");
                     userService.setUserIsOnlineStatus("FALSE", username);
@@ -208,6 +206,8 @@ public class PaymentController extends ViewController implements Initializable {
                 createOrder();
                 createDeliveryDetails();
 
+                updateStockQuantity();
+
                 try {
                     shopService.clearBasket();
                 } catch (SQLException e) {
@@ -228,6 +228,53 @@ public class PaymentController extends ViewController implements Initializable {
 
             }
         });
+    }
+
+    private void updateStockQuantity() {
+        try {
+            List<Product> productsInBasket = shopService.getAllShoppingBasketProducts();
+            for (Product product : productsInBasket) {
+                int basketQty = (int) shopService.getQuantity(product.getName());
+                int warehouseQty = productService.productQuantity(product.getName());
+                if (warehouseQty > basketQty) {
+                    int totalQuantity = warehouseQty - basketQty;
+                    productService.editProductQuantity(product.getName(), totalQuantity);
+                } else {
+                    int totalQuantity = basketQty - warehouseQty;
+                    productService.editProductQuantity(product.getName(), totalQuantity);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void resetWarehouseQuantity() {
+        if (!checkIfBasketIsEmpty()) {
+            try {
+                List<Product> productsInBasket = shopService.getAllShoppingBasketProducts();
+                for (Product product : productsInBasket) {
+                    int basketQty = (int) shopService.getQuantity(product.getName());
+                    int warehouseQty = productService.productQuantity(product.getName());
+                    int totalQuantity = warehouseQty + basketQty;
+                    productService.editProductQuantity(product.getName(), totalQuantity);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private boolean checkIfBasketIsEmpty() {
+        try {
+            int amountOfProductsInBasket = shopService.getShoppingCartSize();
+            if (amountOfProductsInBasket == 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     private void getOrderSummaryDetails() {
@@ -281,7 +328,6 @@ public class PaymentController extends ViewController implements Initializable {
     private String getCurrentDate() {
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.ENGLISH);
         String date = dateFormat.format(new Date());
-//        Date date = new Date();
         return date;
     }
 

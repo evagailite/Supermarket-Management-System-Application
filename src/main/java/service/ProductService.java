@@ -242,9 +242,8 @@ public class ProductService extends ViewController {
     public void editProductQuantity(String name, int quantity) throws SQLException {
         connection = DBHandler.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(Queries.UPDATE_PRODUCT_QUANTITY);
-
-        preparedStatement.setString(1, name);
-        preparedStatement.setInt(2, quantity);
+        preparedStatement.setInt(1, quantity);
+        preparedStatement.setString(2, name);
 
         preparedStatement.executeUpdate();
         DBHandler.closeConnections(preparedStatement, connection);

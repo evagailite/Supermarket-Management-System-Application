@@ -79,20 +79,33 @@ public class ItemController extends ViewController implements Initializable {
             addToCart.setOnAction(event -> {
                 try {
                     String shopUser = userService.getOnlineUser("TRUE");
-                    shopService.addProductInTheBasket(product.getName(), Double.parseDouble(quantityNumberLabel.getText()),
+                    shopService.addProductInTheBasket(product.getName(), Integer.parseInt(quantityNumberLabel.getText()),
                             product.getPricePerUnit(), product.getImage(), shopUser);
+
+                    int stockQuantity = productService.productQuantity(product.getName());
+                    int totalQuantity = stockQuantity - Integer.parseInt(quantityNumberLabel.getText());
+                    productService.editProductQuantity(product.getName(), totalQuantity);
 
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
 
                 incrementButton.setOnAction(event1 -> {
-                    increaseValue(product);
+                    if (checkIfSufficientQuantity(product)) {
+                        incrementButton.setDisable(false);
+                        increaseValue(product);
+                    } else {
+                        incrementButton.setDisable(true);
+                    }
                 });
 
                 decrementButton.setOnAction(event1 -> {
-                    decreaseValue(product);
-
+                    if (!checkIfSufficientQuantity(product)) {
+                        incrementButton.setDisable(false);
+                        decreaseValue(product);
+                    } else {
+                        decreaseValue(product);
+                    }
                 });
                 addToCart.setVisible(false);
 
@@ -107,6 +120,19 @@ public class ItemController extends ViewController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    private boolean checkIfSufficientQuantity(Product product) {
+        try {
+            int quantity = productService.productQuantity(product.getName());
+            if (quantity == 0) {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
 
     private void setOutOfStockLabel(Product product) {
         if (product.getQuantity() == 0) {
@@ -128,6 +154,7 @@ public class ItemController extends ViewController implements Initializable {
         value--;
         if (value == 0) {
             try {
+                resetWarehouseQuantity(product);
                 shopService.removeProductFromShoppingBasket(product.getName());
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -140,9 +167,24 @@ public class ItemController extends ViewController implements Initializable {
                 shopService.addProductInTheBasket(product.getName(), (-1),
                         product.getPricePerUnit(), product.getImage(), shopUser);
 
+                int stockQuantity = productService.productQuantity(product.getName());
+                int totalQuantity = stockQuantity + 1;
+                productService.editProductQuantity(product.getName(), totalQuantity);
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void resetWarehouseQuantity(Product product) {
+        try {
+            int basketQty = (int) shopService.getQuantity(product.getName());
+            int warehouseQty = productService.productQuantity(product.getName());
+            int totalQuantity = warehouseQty + basketQty;
+            productService.editProductQuantity(product.getName(), totalQuantity);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -155,6 +197,9 @@ public class ItemController extends ViewController implements Initializable {
             shopService.addProductInTheBasket(product.getName(), 1,
                     product.getPricePerUnit(), product.getImage(), shopUser);
 
+            int stockQuantity = productService.productQuantity(product.getName());
+            int totalQuantity = stockQuantity - 1;
+            productService.editProductQuantity(product.getName(), totalQuantity);
             //  shopService.updatePrice(product.getName(), product.getPricePerUnit() * value);
         } catch (SQLException e) {
             e.printStackTrace();

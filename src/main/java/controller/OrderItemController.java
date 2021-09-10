@@ -10,7 +10,6 @@ import model.Sale;
 import service.ShopService;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
@@ -31,8 +30,6 @@ public class OrderItemController implements Initializable {
     private final DecimalFormat df = new DecimalFormat("0.00");
 
     public void setOrderDetails(Sale sale) {
-//        try {
-//            double totalPrice = shopService.getOrderSubTotal(sale.getOrderNumber()) * 1.21;
         productNameBasketLabel.setText(sale.getProductName());
         priceBasketLabel.setText("$" + (sale.getPrice()));
         quantityNumberLabel.setText(String.valueOf(sale.getQuantity()));
@@ -41,9 +38,6 @@ public class OrderItemController implements Initializable {
         Image image = new Image("file:///C:/Users/Eva/Dropbox/Programming/AccentureBootcamp2021/projects/finalProject/src/main/resources/main/finalproject/images/shop/"
                 + sale.getImage());
         productImageBasketImage.setImage(image);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
     }
 
     @Override

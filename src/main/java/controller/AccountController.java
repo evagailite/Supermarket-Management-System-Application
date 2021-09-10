@@ -14,8 +14,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import main.finalproject.Main;
+import model.Product;
 import model.Sale;
-import model.Users;
+import service.ProductService;
 import service.SaleService;
 import service.ShopService;
 import service.UserService;
@@ -24,10 +25,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
+
 
 public class AccountController extends ViewController implements Initializable {
     @FXML
@@ -70,6 +70,7 @@ public class AccountController extends ViewController implements Initializable {
     private SaleService saleService = new SaleService();
     private ShopService shopService = new ShopService();
     private UserService userService = new UserService();
+    private ProductService productService = new ProductService();
 
     public List<Sale> getCustomerSales() {
         List<Sale> sales = null;
@@ -102,6 +103,7 @@ public class AccountController extends ViewController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 //if users logged out
+                resetWarehouseQuantity();
                 try {
                     String username = userService.getOnlineUser("TRUE");
                     shopService.clearBasket();
@@ -156,6 +158,34 @@ public class AccountController extends ViewController implements Initializable {
                 }
             }
         });
+    }
+
+    private void resetWarehouseQuantity() {
+        if (!checkIfBasketIsEmpty()) {
+            try {
+                List<Product> productsInBasket = shopService.getAllShoppingBasketProducts();
+                for (Product product : productsInBasket) {
+                    int basketQty = (int) shopService.getQuantity(product.getName());
+                    int warehouseQty = productService.productQuantity(product.getName());
+                    int totalQuantity = warehouseQty + basketQty;
+                    productService.editProductQuantity(product.getName(), totalQuantity);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private boolean checkIfBasketIsEmpty() {
+        try {
+            int amountOfProductsInBasket = shopService.getShoppingCartSize();
+            if (amountOfProductsInBasket == 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public void showBasketSize() {

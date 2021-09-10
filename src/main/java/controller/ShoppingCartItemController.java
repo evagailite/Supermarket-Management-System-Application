@@ -69,7 +69,12 @@ public class ShoppingCartItemController extends ViewController implements Initia
                     }
 
                     increaseButton.setOnAction(event1 -> {
-                        increaseValue(product);
+                        if (checkIfSufficientQuantity(product)) {
+                            increaseButton.setDisable(false);
+                            increaseValue(product);
+                        } else {
+                            increaseButton.setDisable(true);
+                        }
                         try {
                             changeSceneForShop(event1, "shoppingCart");
                         } catch (IOException e) {
@@ -78,7 +83,12 @@ public class ShoppingCartItemController extends ViewController implements Initia
                     });
 
                     decreaseButton.setOnAction(event1 -> {
-                        decreaseValue(product);
+                        if (!checkIfSufficientQuantity(product)) {
+                            decreaseButton.setDisable(false);
+                            decreaseValue(product);
+                        } else {
+                            decreaseValue(product);
+                        }
                         try {
                             changeSceneForShop(event1, "shoppingCart");
 
@@ -93,8 +103,8 @@ public class ShoppingCartItemController extends ViewController implements Initia
                 @Override
                 public void handle(ActionEvent event) {
                     try {
-                        shopService.removeProductFromShoppingBasket(product.getName());
                         resetWarehouseQuantity(product);
+                        shopService.removeProductFromShoppingBasket(product.getName());
                         anchorPane.setVisible(false);
 
                         changeSceneForShop(event, "shoppingCart");
@@ -107,6 +117,18 @@ public class ShoppingCartItemController extends ViewController implements Initia
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean checkIfSufficientQuantity(Product product) {
+        try {
+            int quantity = productService.productQuantity(product.getName());
+            if (quantity == 0) {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     private void resetWarehouseQuantity(Product product) {
@@ -131,8 +153,8 @@ public class ShoppingCartItemController extends ViewController implements Initia
             value--;
             if (value == 0) {
                 try {
-                    shopService.removeProductFromShoppingBasket(product.getName());
                     resetWarehouseQuantity(product);
+                    shopService.removeProductFromShoppingBasket(product.getName());
                     anchorPane.setVisible(false);
 
                 } catch (SQLException e) {
@@ -145,6 +167,10 @@ public class ShoppingCartItemController extends ViewController implements Initia
 
                     shopService.addProductInTheBasket(product.getName(), (-1),
                             totalPrice, product.getImage(), shopUser);
+
+                    int stockQuantity = productService.productQuantity(product.getName());
+                    int totalQuantity = stockQuantity + 1;
+                    productService.editProductQuantity(product.getName(), totalQuantity);
 
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -170,6 +196,10 @@ public class ShoppingCartItemController extends ViewController implements Initia
 
             shopService.addProductInTheBasket(product.getName(), 1,
                     totalPrice, product.getImage(), shopUser);
+
+            int stockQuantity = productService.productQuantity(product.getName());
+            int totalQuantity = stockQuantity - 1;
+            productService.editProductQuantity(product.getName(), totalQuantity);
 
         } catch (SQLException e) {
             e.printStackTrace();
