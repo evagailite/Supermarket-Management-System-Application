@@ -74,10 +74,10 @@ public class SalesManagerPanelController extends ViewController implements Initi
     private JFXButton handleCreateButtonAction;
 
     @FXML
-    private JFXComboBox<?> unitComboBox;
+    private JFXComboBox<ProductUnit> unitComboBox;
 
     @FXML
-    private JFXComboBox<?> categoryComboBox;
+    private JFXComboBox<Category> categoryComboBox;
 
     @FXML
     private ImageView productImageView;
@@ -278,6 +278,7 @@ public class SalesManagerPanelController extends ViewController implements Initi
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         showFirstPage();
+        setComboBoxValues();
 
 
         buttonLoggedOut.setOnAction(new EventHandler<ActionEvent>() {
@@ -345,7 +346,11 @@ public class SalesManagerPanelController extends ViewController implements Initi
         else
             return fileName;
     }
+    private void setComboBoxValues() {
+        unitComboBox.getItems().setAll(ProductUnit.values());
+        categoryComboBox.getItems().setAll(Category.values());
 
+    }
     private void showFirstPage() {
         anchorPaneDashboard.toFront();
     }
