@@ -29,7 +29,7 @@ public class ProductService extends ViewController {
 
         preparedStatement.executeUpdate();
 
-        showAlert("Product Created", "Product created successfully", Alert.AlertType.CONFIRMATION);
+        showAlert("Product Created", "Product created successfully", Alert.AlertType.INFORMATION);
         DBHandler.closeConnections(preparedStatement, connection);
 
     }

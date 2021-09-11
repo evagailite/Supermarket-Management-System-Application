@@ -77,6 +77,18 @@ public class SaleService extends ViewController {
         return orderNumber;
     }
 
+    public int getOrderNumber(String username) throws SQLException {
+        connection = DBHandler.getConnection();
+        int orderNumber = 0;
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_ORDER_NUMBER);
+        preparedStatement.setString(1, username);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            orderNumber = resultSet.getInt(1);
+        }
+        return orderNumber;
+    }
+
     public void createSale(int orderNumber, String productName, double quantity,
                            String username, String currentDate, double pricePerUnit, String image) throws SQLException {
         connection = DBHandler.getConnection();

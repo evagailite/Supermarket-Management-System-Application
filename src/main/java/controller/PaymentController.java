@@ -205,8 +205,8 @@ public class PaymentController extends ViewController implements Initializable {
                 setDeliveryDetails();
                 createOrder();
                 createDeliveryDetails();
-
-                updateStockQuantity();
+                showBasketSize();
+                numberInTheBasket.setVisible(false);
 
                 try {
                     shopService.clearBasket();
@@ -228,25 +228,7 @@ public class PaymentController extends ViewController implements Initializable {
 
             }
         });
-    }
 
-    private void updateStockQuantity() {
-        try {
-            List<Product> productsInBasket = shopService.getAllShoppingBasketProducts();
-            for (Product product : productsInBasket) {
-                int basketQty = (int) shopService.getQuantity(product.getName());
-                int warehouseQty = productService.productQuantity(product.getName());
-                if (warehouseQty > basketQty) {
-                    int totalQuantity = warehouseQty - basketQty;
-                    productService.editProductQuantity(product.getName(), totalQuantity);
-                } else {
-                    int totalQuantity = basketQty - warehouseQty;
-                    productService.editProductQuantity(product.getName(), totalQuantity);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     private void resetWarehouseQuantity() {
@@ -293,10 +275,26 @@ public class PaymentController extends ViewController implements Initializable {
         }
     }
 
+    private void createOrder() {
+        try {
+            int orderNumber = getOrderNumber();
+            List<Product> basket = shopService.getAllShoppingBasketProducts();
+            for (Product product : basket) {
+                saleService.createSale(orderNumber, product.getName(), product.getQuantity(), getShopUser(),
+                        getCurrentDate(), product.getPricePerUnit(), product.getImage());
+                orderNumberLabel.setText("#" + orderNumber);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void createDeliveryDetails() {
         try {
+            String username = userService.getOnlineUser("TRUE");
+            int orderNumber = saleService.getOrderNumber(username);
             Delivery delivery = setDeliveryDetails();
-            deliveryService.createDelivery(delivery, getShopUser(), getOrderNumber());
+            deliveryService.createDelivery(delivery, getShopUser(), orderNumber);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -310,20 +308,6 @@ public class PaymentController extends ViewController implements Initializable {
         return userService.getOnlineUser("TRUE");
     }
 
-    private void createOrder() {
-        try {
-            int orderNumber = getOrderNumber();
-            List<Product> basket = shopService.getAllShoppingBasketProducts();
-            for (Product product : basket) {
-                saleService.createSale(orderNumber, product.getName(), product.getQuantity(), getShopUser(),
-                        getCurrentDate(), product.getPricePerUnit(), product.getImage());
-                orderNumberLabel.setText("#" + orderNumber);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     private String getCurrentDate() {
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.ENGLISH);

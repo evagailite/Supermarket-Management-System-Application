@@ -2,7 +2,6 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -37,6 +36,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class AdministratorPanelController extends ViewController implements Initializable {
@@ -165,6 +165,7 @@ public class AdministratorPanelController extends ViewController implements Init
     private ProductService productService = new ProductService();
     private SaleService saleService = new SaleService();
     private List<Sale> topThreeProducts = new ArrayList<>();
+    private final DecimalFormat df = new DecimalFormat("0.00");
 
     @FXML
     void handleButtonAction(ActionEvent event) {
@@ -504,7 +505,6 @@ public class AdministratorPanelController extends ViewController implements Init
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         showFirstPage();
 
         setComboBoxValues();
@@ -679,7 +679,7 @@ public class AdministratorPanelController extends ViewController implements Init
             userCountLabel.setText(String.valueOf(userService.getUserCount()));
             productCountLabel.setText(String.valueOf(productService.getProductCount()));
             orderCountLabel.setText(String.valueOf(saleService.getSalesCount()));
-            salesCountLabel.setText(String.valueOf(saleService.getAllSalesTotal()));
+            salesCountLabel.setText(String.valueOf(df.format(saleService.getAllSalesTotal())));
         } catch (SQLException e) {
             e.printStackTrace();
         }

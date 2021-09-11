@@ -90,7 +90,6 @@ public class AccountController extends ViewController implements Initializable {
         return sales;
     }
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
