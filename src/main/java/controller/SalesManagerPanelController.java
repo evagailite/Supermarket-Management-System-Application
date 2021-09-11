@@ -336,7 +336,7 @@ public class SalesManagerPanelController extends ViewController implements Initi
             }
         });
 
-       }
+    }
 
     private String fileComponent(String fileName) {
         int pos = fileName.lastIndexOf(File.separator);
