@@ -102,6 +102,8 @@ public class PaymentController extends ViewController implements Initializable {
     private Button returnToDeliveryButton;
     @FXML
     private Button goNextToPayButton;
+    @FXML
+    private JFXButton viewOrdersButton;
     private SaleService saleService = new SaleService();
     private ShopService shopService = new ShopService();
     private UserService userService = new UserService();
@@ -216,6 +218,17 @@ public class PaymentController extends ViewController implements Initializable {
 
                 deliveryPaymentsWindowVBox.setVisible(false);
                 thankYouPagePane.setVisible(true);
+
+                viewOrdersButton.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        try {
+                            changeSceneHome(event, "account");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
 
                 shoppingCartItemsLabel.setVisible(false);
                 confirmationLabel.setVisible(true);

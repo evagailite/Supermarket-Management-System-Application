@@ -218,4 +218,17 @@ public class SaleService extends ViewController {
         //   DBHandler.closeConnections(resultSet, preparedStatement, connection);
         return saleOrders;
     }
+
+    public String getOrderDate(String orderNumber) throws SQLException {
+        String orderDate = null;
+        connection = DBHandler.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_SALES_DATE);
+        preparedStatement.setInt(1, Integer.parseInt(orderNumber));
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            orderDate = resultSet.getString(1);
+            //  DBHandler.closeConnections(resultSet, preparedStatement, connection);
+        }
+        return orderDate;
+    }
 }

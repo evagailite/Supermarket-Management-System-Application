@@ -150,6 +150,7 @@ public class ShopController extends ViewController implements Initializable {
                 if (productList.isEmpty()) {
                     productNotFoundPane.toFront();
                     productNotFoundPane.setVisible(true);
+
                     backToTheShopButton.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
@@ -161,6 +162,7 @@ public class ShopController extends ViewController implements Initializable {
                             }
                         }
                     });
+
                 } else {
                     productNotFoundPane.toBack();
                     productNotFoundPane.setVisible(false);

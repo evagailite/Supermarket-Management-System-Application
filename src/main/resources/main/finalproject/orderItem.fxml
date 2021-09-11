@@ -11,7 +11,7 @@
 
 <AnchorPane fx:id="anchorPane" prefHeight="67.0" prefWidth="569.0" stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.OrderItemController">
     <children>
-        <HBox alignment="CENTER_LEFT" layoutX="25.0" prefHeight="58.0" prefWidth="493.0">
+        <HBox alignment="CENTER_LEFT" layoutX="25.0" prefHeight="58.0" prefWidth="527.0">
             <children>
                 <AnchorPane prefHeight="56.0" prefWidth="95.0">
                     <children>
@@ -25,9 +25,9 @@
                         <Insets />
                     </HBox.margin>
                 </AnchorPane>
-                <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="175.0">
+                <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="228.0">
                     <children>
-                        <Label fx:id="productNameBasketLabel" prefHeight="50.0" prefWidth="175.0" text="Ades Tropical Fruit Juice 2L&#10;" textAlignment="CENTER" wrapText="true" />
+                        <Label fx:id="productNameBasketLabel" prefHeight="50.0" prefWidth="200.0" text="Ades Tropical Fruit Juice 2L&#10;" textAlignment="CENTER" wrapText="true" />
                     </children>
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="56.0" prefWidth="54.0">
