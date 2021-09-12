@@ -57,5 +57,7 @@ public class Queries {
     public static final String GET_ALL_SALES = "SELECT order_number, product, quantity, username, purchase_date, price from sales";
     public static final String GET_PRODUCT_QUANTITY = "select quantity from product where product_name =?";
     public static final String UPDATE_PRODUCT_QUANTITY = "UPDATE product SET quantity = ? WHERE product_name = ?";
+    public static final String GET_ORDER_NUMBER = "SELECT order_number FROM sales WHERE username = ? ORDER BY sales_id desc LIMIT 1";
 
+    public static final String GET_SALES_DATE = "SELECT purchase_date FROM sales WHERE order_number = ?";
 }

@@ -190,6 +190,14 @@
                                        </font>
                                     </Label>
                                     <Label layoutX="422.0" layoutY="400.0" text="View order details in your account" />
+                                    <JFXButton fx:id="viewOrdersButton" buttonType="RAISED" contentDisplay="CENTER" ellipsisString="" layoutX="451.0" layoutY="424.0" prefHeight="34.0" prefWidth="126.0" style="-fx-background-color: #4e961c; -fx-background-radius: 5;" text="View Orders" textAlignment="CENTER" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </JFXButton>
                                  </children>
                               </AnchorPane>
                            </children>

@@ -123,6 +123,14 @@ public class OrderController extends ViewController implements Initializable {
             getOrderSummaryDetails(Integer.parseInt(this.orderNumber));
 
             try {
+                String orderDate = saleService.getOrderDate(this.orderNumber);
+                orderDateLabel.setText(orderDate);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+
+            try {
                 StringBuilder stringBuilder = new StringBuilder();
                 List<Delivery> delivery = deliveryService.getAllDeliveryDetails(Integer.parseInt(this.orderNumber));
                 for (Delivery delivery1 : delivery) {

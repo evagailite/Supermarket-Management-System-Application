@@ -18,6 +18,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -232,34 +233,66 @@
                         </HBox>
                   <HBox alignment="CENTER" prefHeight="702.0" prefWidth="1000.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <ScrollPane fx:id="scroll" hbarPolicy="ALWAYS" prefHeight="673.0" prefWidth="970.0" style="-fx-background-color: transparent;" stylesheets="@style/style.css" vbarPolicy="ALWAYS" HBox.hgrow="ALWAYS">
+                        <StackPane HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
                            </HBox.margin>
-                           <content>
-                              <AnchorPane prefHeight="35.0" prefWidth="969.0">
+                           <children>
+                              <Pane fx:id="productNotFoundPane" prefHeight="200.0" prefWidth="200.0" visible="false">
                                  <children>
-                                    <GridPane fx:id="gridpane" alignment="TOP_RIGHT" prefHeight="24.0" prefWidth="127.0">
-                                       <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" />
-                                       </rowConstraints>
-                                    </GridPane>
-                                    <MenuButton layoutX="875.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="88.0" style="-fx-background-color: transparent;" text="Sort By">
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" onAction="#sortByLowestPrice" text="Lowest Price First" />
-                                          <MenuItem mnemonicParsing="false" onAction="#sortByHighestPrice" text="Highest Price First" />
-                                       </items>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </MenuButton>
+                                    <AnchorPane layoutX="113.0" layoutY="94.0" prefHeight="507.0" prefWidth="722.0">
+                                       <children>
+                                          <Label alignment="CENTER" layoutX="152.0" layoutY="266.0" prefHeight="32.0" prefWidth="418.0" text="We can't seem to find the product you're looking for. " />
+                                          <ImageView fitHeight="124.0" fitWidth="115.0" layoutX="304.0" layoutY="103.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@images/empty-box.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label alignment="CENTER" layoutX="188.0" layoutY="239.0" prefHeight="24.0" prefWidth="346.0" text="No product found">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="230.0" layoutY="298.0" text="It either does not exist or the name is not correct." />
+                                          <JFXButton fx:id="backToTheShopButton" buttonType="RAISED" contentDisplay="CENTER" ellipsisString="" layoutX="298.0" layoutY="328.0" prefHeight="34.0" prefWidth="126.0" style="-fx-background-color: #4e961c; -fx-background-radius: 5;" text="Back to the Shop" textAlignment="CENTER" textFill="WHITE">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </JFXButton>
+                                       </children>
+                                    </AnchorPane>
                                  </children>
-                              </AnchorPane>
-                           </content>
-                        </ScrollPane>
+                              </Pane>
+                              <ScrollPane fx:id="scroll" hbarPolicy="ALWAYS" prefHeight="673.0" prefWidth="970.0" style="-fx-background-color: transparent;" stylesheets="@style/style.css" vbarPolicy="ALWAYS">
+                                 <content>
+                                    <AnchorPane prefHeight="35.0" prefWidth="969.0">
+                                       <children>
+                                          <GridPane fx:id="gridpane" alignment="TOP_RIGHT" prefHeight="24.0" prefWidth="127.0">
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                             </rowConstraints>
+                                          </GridPane>
+                                          <MenuButton layoutX="875.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="88.0" style="-fx-background-color: transparent;" text="Sort By">
+                                             <items>
+                                                <MenuItem mnemonicParsing="false" onAction="#sortByLowestPrice" text="Lowest Price First" />
+                                                <MenuItem mnemonicParsing="false" onAction="#sortByHighestPrice" text="Highest Price First" />
+                                             </items>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </MenuButton>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </StackPane>
                      </children>
                   </HBox>
                     </children>

@@ -13,7 +13,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+//import org.controlsfx.control.textfield.AutoCompletionBinding;
+//import org.controlsfx.control.textfield.TextFields;
 import main.finalproject.Main;
 import model.Product;
 import service.ProductService;
@@ -24,6 +27,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ShopController extends ViewController implements Initializable {
     @FXML
@@ -48,6 +52,10 @@ public class ShopController extends ViewController implements Initializable {
     private Button nonFoodButton;
     @FXML
     private GridPane gridpane;
+    @FXML
+    private Pane productNotFoundPane;
+    @FXML
+    private Button backToTheShopButton;
     private List<Product> productList = new ArrayList<>();
     private ProductService productService = new ProductService();
     private ShopService shopService = new ShopService();
@@ -93,6 +101,7 @@ public class ShopController extends ViewController implements Initializable {
                     gridpane.getChildren().retainAll(gridpane.getChildren().get(0));
                     productList.clear();
                     productList.addAll(getData(productService.getFoodProductsForShop()));
+
                     placeProductsInTheShop(productList);
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -133,18 +142,31 @@ public class ShopController extends ViewController implements Initializable {
         searchButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                try {
-                    gridpane.getChildren().retainAll(gridpane.getChildren().get(0));
-                    productList.clear();
+                gridpane.getChildren().retainAll(gridpane.getChildren().get(0));
+                gridpane.getChildren().get(0).setVisible(false);
+                productList.clear();
+                productList.addAll(getData(findProduct(searchTextField.getText())));
+                placeProductsInTheShop(productList);
+                if (productList.isEmpty()) {
+                    productNotFoundPane.toFront();
+                    productNotFoundPane.setVisible(true);
 
+                    backToTheShopButton.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            try {
+                                productNotFoundPane.setVisible(false);
+                                changeSceneForShop(event, "shop");
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
 
-                    //*********************
-                    productList.addAll(getData(productService.getNonFoodProductsForShop()));
-                    placeProductsInTheShop(productList);
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                } else {
+                    productNotFoundPane.toBack();
+                    productNotFoundPane.setVisible(false);
                 }
-
             }
         });
 
@@ -304,29 +326,26 @@ public class ShopController extends ViewController implements Initializable {
         this.user = username;
     }
 
-//    public void findProduct(){
-//        ArrayList<Product> foundProduct = new ArrayList<>();
-//        for (Product product : productList) {
-//            if (searchList(searchTextField.getText(), ))
-//                foundProduct.add(product);
-//        }
-//    }
+    public ArrayList<Product> findProduct(String findProduct) {
+        try {
+            ArrayList<Product> foundProduct = new ArrayList<>();
+            ArrayList<Product> allShopProducts = productService.getAllProductsForShop();
 
-//    private List<String> searchList(String searchWords, List<String> listOfProducts) {
-//        List<String> searchWordsArray = Arrays.asList(searchWords.trim().split(" "));
-//
-//        return listOfProducts.stream().filter(input -> {
-//            return searchWordsArray.stream().allMatch(word -> input.toLowerCase().contains(word.toLowerCase()));
-//        }).collect(Collectors.toList());
-//    }
+            for (Product product : allShopProducts) {
+                if (productIsEqual(product, findProduct))
+                    foundProduct.add(product);
+            }
+            return foundProduct;
 
-//    private boolean searchList(String searchWords, List<Product> listOfProducts) {
-//        List<String> searchWordsArray = Arrays.asList(searchWords.trim().split(" "));
-//
-//        return listOfProducts.stream().filter(input -> {
-//            return searchWordsArray.stream().allMatch(word -> input.toLowerCase().contains(word.toLowerCase()));
-//        }).collect(Collectors.toList());
-//    }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private boolean productIsEqual(Product product, String contactToFind) {
+        return product.getName().trim().toLowerCase().contains(contactToFind.trim().toLowerCase());
+    }
 
 
 }

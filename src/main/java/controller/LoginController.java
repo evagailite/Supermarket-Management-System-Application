@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
+
 import javafx.scene.control.TextField;
 import service.UserService;
 
@@ -19,13 +20,11 @@ public class LoginController extends ViewController implements Initializable {
     private Button loginButton;
     @FXML
     private Button signUpButton;
-
     @FXML
     private TextField usernameTextField;
     @FXML
     private PasswordField passwordTextField;
-
-    UserService userService = new UserService();
+    private UserService userService = new UserService();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -52,5 +51,6 @@ public class LoginController extends ViewController implements Initializable {
             }
         });
     }
+
 
 }

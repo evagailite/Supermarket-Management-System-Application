@@ -50,7 +50,6 @@ public class ItemController extends ViewController implements Initializable {
 
     public void setData(Product product) {
         try {
-
             df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
 
             nameLabel.setText(product.getName());

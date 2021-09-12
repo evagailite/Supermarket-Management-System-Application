@@ -41,7 +41,7 @@ public class ShoppingCartController extends ViewController implements Initializa
     @FXML
     private Pane emptyCartPanel;
     @FXML
-    private Button goBackShoppingButton;
+    private JFXButton continueShoppingButton;
     @FXML
     private Label shoppingCartItemsLabel;
     @FXML
@@ -110,7 +110,7 @@ public class ShoppingCartController extends ViewController implements Initializa
             }
         });
 
-        goBackShoppingButton.setOnAction(new EventHandler<ActionEvent>() {
+        continueShoppingButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 try {

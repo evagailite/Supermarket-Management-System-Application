@@ -7,6 +7,7 @@ module main.finalproject {
     requires com.jfoenix;
     requires lombok;
     requires java.desktop;
+//    requires org.controlsfx.controls;
 
 
     opens main.finalproject to javafx.fxml, javafx.base;

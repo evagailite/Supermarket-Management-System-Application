@@ -42,7 +42,7 @@ public class UserService extends ViewController {
             preparedStatement.setString(7, users.getIsOnline());
             preparedStatement.executeUpdate();
 
-            showAlert("Registration successful", "Registration successful, login to continue", Alert.AlertType.CONFIRMATION);
+            showAlert("Registration successful", "Registration successful, login to continue", Alert.AlertType.INFORMATION);
             changeScene(event, "login");
             DBHandler.closeConnections(resultSet, preparedStatement, connection);
 
@@ -110,6 +110,7 @@ public class UserService extends ViewController {
         preparedStatement.setString(4, users.getEmail());
         preparedStatement.setDouble(5, users.getBudget());
         preparedStatement.setString(6, String.valueOf(users.getUserType()));
+        preparedStatement.setString(7, "FALSE");
         preparedStatement.executeUpdate();
 
         showAlert("User Created", "User created successfully", Alert.AlertType.INFORMATION);
