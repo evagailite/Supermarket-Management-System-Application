@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -14,16 +15,17 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.converter.DoubleStringConverter;
 import model.Product;
+import model.Sale;
 import model.Users;
 import service.ProductService;
-import service.UserService;
+import service.SaleService;
 import types.Category;
 import types.ProductUnit;
 import types.UserType;
@@ -32,9 +34,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Date;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.util.*;
 
 public class SalesManagerPanelController extends ViewController implements Initializable {
     //@FXML
@@ -119,15 +121,64 @@ public class SalesManagerPanelController extends ViewController implements Initi
     private TableColumn columnEditProduct;
 
     @FXML
-    private AnchorPane anchorPaneDashboard;
+    private AnchorPane anchorPaneSales;
 
     @FXML
-    private Pane dashboardPanel;
+    private Pane salesPanel;
 
     @FXML
-    private Label dateDashboardLabel;
+    private Label dateSalesLabel;
+
+    @FXML
+    private Button productsButton;
+
+    @FXML
+    private Button orderButton;
+
+    @FXML
+    private Button orderButton1;
+
+    @FXML
+    private Label productCountLabel;
+
+    @FXML
+    private Label orderCountLabel;
+
+    @FXML
+    private Label salesCountLabel;
+
+    @FXML
+    private BarChart<?, ?> productBarChart;
+
+    @FXML
+    private CategoryAxis productNameXAxis;
+
+    @FXML
+    private TableView<Sale> salesTable;
+
+    @FXML
+    private TableColumn<Sale, Integer> salesOrderColumn;
+
+    @FXML
+    private TableColumn<Sale, String> productSalesNameColumn;
+
+    @FXML
+    private TableColumn<Sale, Integer> quantityColumn;
+
+    @FXML
+    private TableColumn<Sale, Double> priceColumn;
+
+    @FXML
+    private TableColumn<Sale, String> dateColumn;
+
+    @FXML
+    private TableColumn<Sale, String> userColumn;
+    //private CategoryAxis productNameXAxis;
     private Image image;
     private ProductService productService = new ProductService();
+    private SaleService saleService = new SaleService();
+    private List<Sale> topThreeProducts = new ArrayList<>();
+    private final DecimalFormat df = new DecimalFormat("0.00");
 
     @FXML
     void handleButtonAction(ActionEvent event) {
@@ -135,11 +186,75 @@ public class SalesManagerPanelController extends ViewController implements Initi
             anchorPaneProducts.toFront();
             showAllProducts();
         } else if (event.getSource() == buttonSales) {
-            anchorPaneDashboard.toFront();
-            showSales();
+            anchorPaneSales.toFront();
+            showAllSales();
+            getCurrentDate();
         }
     }
-    private void showSales() {
+
+    private void showProductChart() {
+        try {
+            topThreeProducts.addAll(getBestSellingData(saleService.getBestSellingItems()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        XYChart.Series set = new XYChart.Series();
+
+
+        for (int i = 0; i < topThreeProducts.size(); i++) {
+            String x = topThreeProducts.get(i).getProductName().trim();
+            int ind = x.lastIndexOf(" ");
+            if (ind > 0) {
+                x = x.substring(0, ind).trim();
+            }
+            int y = topThreeProducts.get(i).getQuantity();
+            set.getData().add(new XYChart.Data<>(x, y));
+        }
+        productBarChart.getData().addAll(set);
+        productBarChart.setBarGap(1);
+        productBarChart.setCategoryGap(10);
+        productNameXAxis.tickLabelFontProperty().set(Font.font(9));
+    }
+
+
+    private List<Sale> getBestSellingData(List<Sale> bestSellingProducts) {
+        List<Sale> products = bestSellingProducts;
+        for (int i = 0; i < topThreeProducts.size(); i++) {
+            Sale sale = new Sale();
+            sale.setProductName(sale.getProductName());
+            sale.setQuantity(sale.getQuantity());
+            products.add(sale);
+        }
+        return products;
+    }
+
+    private void showCurrentDate() {
+        Date date = new Date();
+        dateSalesLabel.setText(String.valueOf(date));
+    }
+
+    private String getCurrentDate() {
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG, Locale.ENGLISH);
+        String date = dateFormat.format(new Date());
+        return date;
+    }
+
+    private void showAllSales() {
+        ObservableList<Sale> saleList;
+
+        salesOrderColumn.setCellValueFactory(new PropertyValueFactory<Sale, Integer>("orderNumber"));
+        productSalesNameColumn.setCellValueFactory(new PropertyValueFactory<Sale, String>("productName"));
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<Sale, Integer>("quantity"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<Sale, Double>("price"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<Sale, String>("orderDate"));
+        userColumn.setCellValueFactory(new PropertyValueFactory<Sale, String>("username"));
+
+        try {
+            saleList = saleService.getAllSales();
+            salesTable.setItems(saleList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private void showAllProducts() {
@@ -278,8 +393,24 @@ public class SalesManagerPanelController extends ViewController implements Initi
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         showFirstPage();
+
         setComboBoxValues();
 
+
+        productsButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                anchorPaneProducts.toFront();
+                showAllProducts();
+            }
+        });
+
+        orderButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+            }
+        });
 
         buttonLoggedOut.setOnAction(new EventHandler<ActionEvent>() {
             //action happens after click on it
@@ -287,13 +418,12 @@ public class SalesManagerPanelController extends ViewController implements Initi
             public void handle(ActionEvent event) {
                 //if users logged out
                 try {
-                    productService.changeScene(event, "login");
+                    saleService.changeScene(event, "login");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         });
-
 
         handleCreateButtonAction.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -308,10 +438,13 @@ public class SalesManagerPanelController extends ViewController implements Initi
                 );
                 try {
                     productService.createProduct(product);
-                    //clearProductTextFields();
+                    clearProductTextFields();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+
+                showAllProducts();
+                getStatistic();
             }
         });
 
@@ -339,6 +472,23 @@ public class SalesManagerPanelController extends ViewController implements Initi
 
     }
 
+    private void clearProductTextFields() {
+        productNameTextField.clear();
+        priceTextField.clear();
+        quantityTextField.clear();
+        unitComboBox.getSelectionModel().clearSelection();
+        categoryComboBox.getSelectionModel().clearSelection();
+        imagePathTextField.clear();
+    }
+
+    private double checkUserTypeForBudget(String comboBoxUserTypeChoice) {
+        if (comboBoxUserTypeChoice.equals("CUSTOMER")) {
+            return 500;
+        } else {
+            return 0;
+        }
+    }
+
     private String fileComponent(String fileName) {
         int pos = fileName.lastIndexOf(File.separator);
         if (pos > -1)
@@ -346,13 +496,28 @@ public class SalesManagerPanelController extends ViewController implements Initi
         else
             return fileName;
     }
+
     private void setComboBoxValues() {
         unitComboBox.getItems().setAll(ProductUnit.values());
         categoryComboBox.getItems().setAll(Category.values());
-
     }
+
     private void showFirstPage() {
-        anchorPaneDashboard.toFront();
+        anchorPaneSales.toFront();
+        showAllSales();
+        dateSalesLabel.setText(getCurrentDate());
+        getStatistic();
+        showProductChart();
+    }
+
+    private void getStatistic() {
+        try {
+            productCountLabel.setText(String.valueOf(productService.getProductCount()));
+            orderCountLabel.setText(String.valueOf(saleService.getSalesCount()));
+            salesCountLabel.setText(String.valueOf(df.format(saleService.getAllSalesTotal())));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
