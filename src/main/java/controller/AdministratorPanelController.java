@@ -2,6 +2,8 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -393,6 +396,52 @@ public class AdministratorPanelController extends ViewController implements Init
         }
     }
 
+    public void styleRowColor() {
+        Callback<TableColumn<Product, Double>, TableCell<Product, Double>> cellFactory
+                = //
+                new Callback<TableColumn<Product, Double>, TableCell<Product, Double>>() {
+                    @Override
+                    public TableCell<Product, Double> call(final TableColumn<Product, Double> param) {
+                        final TableCell<Product, Double> cell = new TableCell<Product, Double>() {
+
+                            @Override
+                            public void updateItem(Double item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    setText(String.valueOf(item));
+                                    TableRow<Product> row = getTableRow();
+                                    if (row.getItem().getQuantity() == 0.0) {
+                                        row.getStyleClass().clear();
+                                        row.setStyle("-fx-background-color: red");
+                                        row.getStyleClass().add("-fx-background-color: red");
+                                        setText(String.valueOf(item));
+                                    }
+                                    if (row.getItem().getQuantity() == 1) {
+                                        row.getStyleClass().clear();
+                                        row.setStyle("-fx-background-color: orange");
+                                        setText(String.valueOf(item));
+//                                        row.getStyleClass().add("orange-row");
+                                    }
+//                                    if (row.getItem().getColor().equals("green")) {
+//                                        row.getStyleClass().clear();
+//                                        row.getStyleClass().add("green-row");
+//                                    }
+//                                    if (row.getItem().getColor().equals("yellow")) {
+//                                        row.getStyleClass().clear();
+//                                        row.getStyleClass().add("yellow-row");
+//                                    }
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+        productQtyColumn.setCellFactory(cellFactory);
+    }
+
     private void addEditButtonInTheProductTable() {
         Callback<TableColumn<Product, String>, TableCell<Product, String>> cellEditFactory = (param) -> {
             final TableCell<Product, String> cell = new TableCell<Product, String>() {
@@ -515,6 +564,7 @@ public class AdministratorPanelController extends ViewController implements Init
             public void handle(ActionEvent event) {
                 anchorPaneProducts.toFront();
                 showAllProducts();
+                styleRowColor();
             }
         });
 
@@ -565,6 +615,7 @@ public class AdministratorPanelController extends ViewController implements Init
                 }
 
                 showAllProducts();
+                styleRowColor();
                 getStatistic();
             }
         });

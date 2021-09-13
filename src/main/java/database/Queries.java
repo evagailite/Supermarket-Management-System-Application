@@ -12,6 +12,7 @@ public class Queries {
     public static final String GET_ALL_PRODUCTS = "SELECT product_id, product_name, quantity, price, unit, category, image FROM product";
     public static final String DELETE_PRODUCT = "DELETE FROM product WHERE product_id = ?";
     public static final String DELETE_USER = "DELETE FROM user WHERE user_id = ?;";
+    public static final String DELETE_USER_BY_USERNAME = "DELETE FROM user WHERE username = ?;";
     public static final String UPDATE_USER = "UPDATE user SET username = ?, name = ?, email = ?, budget = ?, user_type =? WHERE user_id = ?";
     public static final String UPDATE_PRODUCT = "UPDATE product SET product_name = ?, quantity = ?, price = ?, " +
             "unit = ?, category = ?, image = ? WHERE product_id = ?";
@@ -60,4 +61,12 @@ public class Queries {
     public static final String GET_ORDER_NUMBER = "SELECT order_number FROM sales WHERE username = ? ORDER BY sales_id desc LIMIT 1";
 
     public static final String GET_SALES_DATE = "SELECT purchase_date FROM sales WHERE order_number = ?";
+    public static final String GET_USER_EMAIL = "SELECT email FROM user WHERE username = ?";
+
+    public static final String UPDATE_USER_USERNAME = "UPDATE user SET username = ? WHERE user_id = ?";
+    public static final String GET_USER_ID = "SELECT user_id FROM user WHERE username=?";
+    public static final String UPDATE_USER_EMAIL = "UPDATE user SET email = ? WHERE user_id = ?";
+    public static final String UPDATE_USER_USERNAME_AND_EMAIL = "UPDATE user SET username = ?, email = ? WHERE user_id = ?";
+    public static final String UPDATE_USER_PASSWORD = "UPDATE user SET password = ? WHERE username = ?";
+    public static final String GET_PASSWORD = "SELECT password FROM user WHERE username=?";
 }

@@ -144,6 +144,18 @@ public class OrderController extends ViewController implements Initializable {
         });
         showBasketSize();
 
+        searchButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    String userSearch = searchTextField.getText();
+                    changeSceneSearch(event, "shop", userSearch);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         buttonLogOut.setOnAction(new EventHandler<ActionEvent>() {
             //action happens after click on it
             @Override

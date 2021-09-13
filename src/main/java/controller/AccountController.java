@@ -6,9 +6,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -26,14 +24,12 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
-
 
 public class AccountController extends ViewController implements Initializable {
     @FXML
-    private Label usernameLabel;
-    @FXML
-    private VBox vbox;
+    private VBox orderHistoryVBox;
     @FXML
     private TextField searchTextField;
     @FXML
@@ -49,23 +45,45 @@ public class AccountController extends ViewController implements Initializable {
     @FXML
     private JFXButton accountButton;
     @FXML
-    private Label shoppingCartItemsLabel;
-    @FXML
-    private HBox hbox;
-    @FXML
-    private HBox tableNamesForBasket;
-    @FXML
-    private VBox orderSummaryVbox;
-    @FXML
-    private AnchorPane profileAnchorPane;
-    @FXML
-    private Pane editProfilePane;
-    @FXML
-    private VBox orderProductsVBox;
-    @FXML
-    private HBox tableNamesForBasket1;
-    @FXML
     private Button goBackShoppingButton;
+    @FXML
+    private Label usernameTextField;
+    @FXML
+    private Label emailTextField;
+    @FXML
+    private PasswordField currentPasswordTextField;
+    @FXML
+    private PasswordField newPasswordTextField;
+    @FXML
+    private PasswordField confirmNewPasswordField;
+    @FXML
+    private Button backToTheEditProfileButton;
+    @FXML
+    private JFXButton savePasswordButton;
+    @FXML
+    private JFXButton changePasswordButton;
+    @FXML
+    private TextField changeUsernameField;
+    @FXML
+    private TextField changeEmailField;
+    @FXML
+    private JFXButton deleteAnAccountButton;
+    @FXML
+    private Button backToTheProfileAfterEditButton;
+    @FXML
+    private JFXButton editProfileInfoButton;
+    @FXML
+    private AnchorPane userInfoAnchorPane;
+    @FXML
+    private AnchorPane editProfileAnchorPane;
+    @FXML
+    private AnchorPane changePasswordAnchorPane;
+    @FXML
+    private JFXButton changeUsernameButton;
+    @FXML
+    private JFXButton changeEmailButton;
+    @FXML
+    private Pane noHistoryPane;
     private List<Sale> customerSales = new ArrayList<>();
     private SaleService saleService = new SaleService();
     private ShopService shopService = new ShopService();
@@ -96,6 +114,21 @@ public class AccountController extends ViewController implements Initializable {
         loadSaleOrders();
 
         showBasketSize();
+
+        loadUserProfileInformation();
+
+        searchButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    String userSearch = searchTextField.getText();
+                    changeSceneSearch(event, "shop", userSearch);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
 
         buttonLogOut.setOnAction(new EventHandler<ActionEvent>() {
             //action happens after click on it
@@ -157,6 +190,196 @@ public class AccountController extends ViewController implements Initializable {
                 }
             }
         });
+
+        deleteAnAccountButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation dialog");
+                alert.setContentText("Are you sure you want to delete your account? \nYour account will be deleted permanently!");
+                alert.setHeaderText(null);
+                Optional<ButtonType> action = alert.showAndWait();
+                if (action.get() == ButtonType.OK) {
+                    String shopUser = getShopUser();
+                    try {
+                        userService.deleteUserByUsername(shopUser);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    showAlert("Delete", "You have deleted your account", Alert.AlertType.INFORMATION);
+                }
+                try {
+                    userService.changeScene(event, "login");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        savePasswordButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                showChangePassword();
+                if (currentPasswordTextField.getText().isEmpty() || newPasswordTextField.getText().isEmpty() ||
+                        confirmNewPasswordField.getText().isEmpty()) {
+                    showAlert("Error", "Please fill fields to make changes", Alert.AlertType.ERROR);
+                } else {
+                    try {
+                        String username = setUsername();
+                        validateUserCurrentPassword(currentPasswordTextField.getText());
+                        System.out.println(username);
+                        validateUserPassword(newPasswordTextField.getText(), confirmNewPasswordField.getText());
+                        userService.changeUserPassword(newPasswordTextField.getText(), username);
+                        showAlert("Password Change", "You have changed password successfully", Alert.AlertType.INFORMATION);
+
+                        try {
+                            changeSceneForShop(event, "account");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        currentPasswordTextField.clear();
+                        newPasswordTextField.clear();
+                        confirmNewPasswordField.clear();
+                        showChangePassword();
+                    } catch (Exception e) {
+                        showAlert("Error", e.getMessage(), Alert.AlertType.ERROR);
+                    }
+                }
+
+            }
+
+        });
+
+        backToTheProfileAfterEditButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+//                showUserProfile();
+                try {
+                    changeSceneForShop(event, "account");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        backToTheEditProfileButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                showEditUserProfile();
+            }
+        });
+
+        editProfileInfoButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                showEditUserProfile();
+            }
+        });
+
+        changePasswordButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                showChangePassword();
+            }
+        });
+
+        changeEmailButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                showEditUserProfile();
+                if (!changeEmailField.getText().isEmpty()) {
+                    try {
+                        String username = getShopUser();
+                        int userId = userService.getUserId(username);
+                        userService.changeUserEmail(changeEmailField.getText(), userId);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    showAlert("Edit Profile", "Email changed successfully", Alert.AlertType.INFORMATION);
+                    changeUsernameField.clear();
+                    changeEmailField.clear();
+                    try {
+                        changeSceneForShop(event, "account");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    showAlert("Error", "Please fill fields to make changes", Alert.AlertType.ERROR);
+                }
+            }
+        });
+
+        changeUsernameButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (!changeUsernameField.getText().isEmpty()) {
+                    try {
+                        String username = getShopUser();
+                        int userId = userService.getUserId(username);
+                        validateUserUsername(changeUsernameField.getText());
+                        userService.changeUsername(changeUsernameField.getText(), userId);
+                    } catch (Exception e) {
+                        showAlert("Error", e.getMessage(), Alert.AlertType.ERROR);
+                        e.printStackTrace();
+                    }
+                    showAlert("Edit Profile", "Username changed successfully", Alert.AlertType.INFORMATION);
+                    changeUsernameField.clear();
+                    changeEmailField.clear();
+                    try {
+                        changeSceneForShop(event, "account");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    showAlert("Error", "Please fill fields to make changes", Alert.AlertType.ERROR);
+                }
+            }
+        });
+
+
+    }
+
+    private void validateUserCurrentPassword(String currentPassword) throws Exception {
+        String shopUser = getShopUser();
+        String userPasswordInDB = userService.getUserPassword(shopUser);
+        System.out.println(currentPassword);
+        System.out.println(userPasswordInDB);
+        if (!currentPassword.equals(userPasswordInDB))
+            throw new Exception("Incorrect Password!");
+    }
+
+    private void showEditUserProfile() {
+        changePasswordAnchorPane.toBack();
+        userInfoAnchorPane.toBack();
+        editProfileAnchorPane.toFront();
+    }
+
+    private void showChangePassword() {
+        editProfileAnchorPane.toBack();
+        userInfoAnchorPane.toBack();
+        changePasswordAnchorPane.toFront();
+    }
+
+    private String getShopUser() {
+        try {
+            String username = userService.getOnlineUser("TRUE");
+            return username;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void validateUserPassword(String password, String passwordConfirmation) throws Exception {
+        if (!password.equals(passwordConfirmation))
+            throw new Exception("Password does not match, confirm password");
+        if (password.length() < 4)
+            throw new Exception("Password needs to be minimum 4 characters");
+    }
+
+    public void validateUserUsername(String username) throws Exception {
+        if (username.length() < 4)
+            throw new Exception("Username needs to be minimum 4 characters");
     }
 
     private void resetWarehouseQuantity() {
@@ -205,20 +428,47 @@ public class AccountController extends ViewController implements Initializable {
 
         customerSales.addAll(getCustomerSales());
 
-        for (int i = 0; i < customerSales.size(); i++) {
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("accountItem.fxml"));
-                AnchorPane hBox = fxmlLoader.load();
-                AccountItemController accountItemController = fxmlLoader.getController();
-                accountItemController.setSalesDates(customerSales.get(i));
-                vbox.getChildren().add(hBox);
-            } catch (IOException e) {
-                e.printStackTrace();
+        if(customerSales.size()==0){
+            orderHistoryVBox.setVisible(false);
+            orderHistoryVBox.toBack();
+            noHistoryPane.toFront();
+            noHistoryPane.setVisible(true);
+        }else {
+            for (int i = 0; i < customerSales.size(); i++) {
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("accountItem.fxml"));
+                    AnchorPane hBox = fxmlLoader.load();
+                    AccountItemController accountItemController = fxmlLoader.getController();
+                    accountItemController.setSalesDates(customerSales.get(i));
+                    orderHistoryVBox.getChildren().add(hBox);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+            noHistoryPane.toBack();
+            noHistoryPane.setVisible(false);
+            orderHistoryVBox.setVisible(true);
+            orderHistoryVBox.toFront();
+        }
+
+    }
+
+    private void loadUserProfileInformation() {
+        usernameTextField.setText(setUsername());
+        try {
+            emailTextField.setText(userService.getUserEmail(setUsername()));
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
-    public void setUsername(String username) {
-
+    public String setUsername() {
+        try {
+            String username = userService.getOnlineUser("TRUE");
+            return username;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

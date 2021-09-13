@@ -49,7 +49,7 @@ public class ViewController {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource(scenePath));
         Parent root = loader.load();
 
-        ShopController shopController = loader.getController();;
+        ShopController shopController = loader.getController();
         shopController.setUsername(username);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -63,8 +63,8 @@ public class ViewController {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource(scenePath));
         Parent root = loader.load();
 
-        AccountController accountController = loader.getController();
-        accountController.setUsername(username);
+//        AccountController accountController = loader.getController();
+//        accountController.setUsername(username);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root, 1000, 830));
@@ -106,6 +106,20 @@ public class ViewController {
 
         OrderController orderController = loader.getController();
         orderController.setOrderNumber(orderNumber);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root, 1000, 830));
+        stage.show();
+    }
+
+    public void changeSceneSearch(ActionEvent event, String sceneName, String searchName) throws IOException {
+        String scenePath = sceneName + ".fxml";
+
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource(scenePath));
+        Parent root = loader.load();
+
+        ShopController shopController = loader.getController();
+        shopController.search(searchName);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root, 1000, 830));

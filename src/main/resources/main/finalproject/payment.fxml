@@ -7,7 +7,6 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -213,69 +212,6 @@
                                                 <Insets bottom="110.0" left="30.0" right="30.0" />
                                              </HBox.margin>
                                              <children>
-                                                            <AnchorPane fx:id="paymentAnchorPane" prefHeight="489.0" prefWidth="567.0" style="-fx-background-radius: 10;" stylesheets="@style/style.css" visible="false">
-                                                                <children>
-                                                      <AnchorPane layoutX="131.0" layoutY="293.0" prefHeight="78.0" prefWidth="303.0">
-                                                         <children>
-                                                                          <JFXButton fx:id="payButton" alignment="CENTER" layoutX="56.0" layoutY="20.0" prefHeight="40.0" prefWidth="192.0" style="-fx-background-radius: 5; -fx-background-color: #4e961c;" stylesheets="@style/style.css" text="Pay" textAlignment="CENTER" textFill="WHITE">
-                                                                              <styleClass>
-                                                                                  <String fx:value="search-box" />
-                                                                                  <String fx:value="shadow" />
-                                                                              </styleClass>
-                                                                              <font>
-                                                                                  <Font name="System Bold" size="16.0" />
-                                                                              </font>
-                                                               <cursor>
-                                                                  <Cursor fx:constant="HAND" />
-                                                               </cursor>
-                                                                          </JFXButton>
-                                                         </children>
-                                                      </AnchorPane>
-                                                                    <TextField fx:id="cardholderTextField" layoutX="145.0" layoutY="108.0" prefHeight="34.0" prefWidth="278.0" promptText="Name and Surname" style="-fx-background-radius: 5;" styleClass="payment" stylesheets="@style/style.css" />
-                                                      <PasswordField fx:id="cardNUmberTextField" layoutX="144.0" layoutY="168.0" prefHeight="34.0" prefWidth="278.0" promptText="****    ****    ****   ****" style="-fx-background-radius: 5;" />
-                                                      <Label layoutX="151.0" layoutY="91.0" text="Cardholder Name:" />
-                                                      <Label layoutX="151.0" layoutY="150.0" text="Card Number:" />
-                                                      <ImageView fitHeight="26.0" fitWidth="34.0" layoutX="383.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@images/mc_symbol_opt_73_1x.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                      <ImageView fitHeight="26.0" fitWidth="34.0" layoutX="349.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@images/visa.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                      <JFXComboBox fx:id="monthComboBox" layoutX="145.0" layoutY="231.0" opacity="0.6" promptText="MM" styleClass="scroll-pane" stylesheets="@style/style.css" />
-                                                      <JFXComboBox fx:id="yearComboBox" layoutX="243.0" layoutY="232.0" opacity="0.6" promptText="YYYY" />
-                                                      <TextField fx:id="cvvTextField" layoutX="342.0" layoutY="227.0" prefHeight="34.0" prefWidth="82.0" promptText="***" style="-fx-background-radius: 5;" styleClass="payment" stylesheets="@style/style.css" />
-                                                      <Label layoutX="348.0" layoutY="209.0" text="CVV:" />
-                                                      <Label layoutX="151.0" layoutY="218.0" text="Expiration Date:" />
-                                                      <Button fx:id="returnToDeliveryButton" layoutX="23.0" layoutY="388.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Back" textFill="#4e961c" underline="true">
-                                                         <cursor>
-                                                            <Cursor fx:constant="HAND" />
-                                                         </cursor>
-                                                         <font>
-                                                            <Font name="System Bold" size="16.0" />
-                                                         </font>
-                                                      </Button>
-                                                      <AnchorPane layoutX="160.0" layoutY="14.0">
-                                                         <children>
-                                                                          <Label alignment="CENTER" layoutX="7.0" layoutY="14.0" prefHeight="47.0" prefWidth="234.0" text="Payment Details">
-                                                                              <font>
-                                                                                  <Font name="Arial Bold" size="20.0" />
-                                                                              </font>
-                                                                          </Label>
-                                                         </children>
-                                                      </AnchorPane>
-                                                                </children>
-                                                                <styleClass>
-                                                                    <String fx:value="chosen-fruit-card" />
-                                                                    <String fx:value="shadow" />
-                                                                </styleClass>
-                                                   <StackPane.margin>
-                                                      <Insets left="35.0" />
-                                                   </StackPane.margin>
-                                                            </AnchorPane>
                                                             <AnchorPane fx:id="deliveryAnchorPane" prefHeight="446.0" prefWidth="631.0" style="-fx-background-radius: 10;" stylesheets="@style/style.css">
                                                                 <children>
                                                                     <Label alignment="CENTER" layoutX="155.0" layoutY="20.0" prefHeight="47.0" prefWidth="234.0" text="Delivery details">
@@ -308,6 +244,69 @@
                                                             <Font name="System Bold" size="16.0" />
                                                          </font>
                                                       </Button>
+                                                                </children>
+                                                                <styleClass>
+                                                                    <String fx:value="chosen-fruit-card" />
+                                                                    <String fx:value="shadow" />
+                                                                </styleClass>
+                                                   <StackPane.margin>
+                                                      <Insets left="35.0" />
+                                                   </StackPane.margin>
+                                                            </AnchorPane>
+                                                            <AnchorPane fx:id="paymentAnchorPane" prefHeight="489.0" prefWidth="567.0" style="-fx-background-radius: 10;" stylesheets="@style/style.css">
+                                                                <children>
+                                                      <AnchorPane layoutX="131.0" layoutY="293.0" prefHeight="78.0" prefWidth="303.0">
+                                                         <children>
+                                                                          <JFXButton fx:id="payButton" alignment="CENTER" layoutX="56.0" layoutY="20.0" prefHeight="40.0" prefWidth="192.0" style="-fx-background-radius: 5; -fx-background-color: #4e961c;" stylesheets="@style/style.css" text="Pay" textAlignment="CENTER" textFill="WHITE">
+                                                                              <styleClass>
+                                                                                  <String fx:value="search-box" />
+                                                                                  <String fx:value="shadow" />
+                                                                              </styleClass>
+                                                                              <font>
+                                                                                  <Font name="System Bold" size="16.0" />
+                                                                              </font>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="HAND" />
+                                                               </cursor>
+                                                                          </JFXButton>
+                                                         </children>
+                                                      </AnchorPane>
+                                                                    <TextField fx:id="cardholderTextField" layoutX="145.0" layoutY="108.0" prefHeight="34.0" prefWidth="278.0" promptText="Name and Surname" style="-fx-background-radius: 5;" styleClass="payment" stylesheets="@style/style.css" />
+                                                      <Label layoutX="151.0" layoutY="91.0" text="Cardholder Name:" />
+                                                      <Label layoutX="151.0" layoutY="150.0" text="Card Number:" />
+                                                      <JFXComboBox fx:id="monthComboBox" layoutX="145.0" layoutY="231.0" opacity="0.6" promptText="MM" styleClass="scroll-pane" stylesheets="@style/style.css" />
+                                                      <JFXComboBox fx:id="yearComboBox" layoutX="243.0" layoutY="232.0" opacity="0.6" promptText="YYYY" />
+                                                      <TextField fx:id="cvvTextField" layoutX="342.0" layoutY="227.0" prefHeight="34.0" prefWidth="82.0" promptText="***" style="-fx-background-radius: 5;" styleClass="payment" stylesheets="@style/style.css" />
+                                                      <Label layoutX="348.0" layoutY="209.0" text="CVV:" />
+                                                      <Label layoutX="151.0" layoutY="218.0" text="Expiration Date:" />
+                                                      <Button fx:id="returnToDeliveryButton" layoutX="23.0" layoutY="388.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Back" textFill="#4e961c" underline="true">
+                                                         <cursor>
+                                                            <Cursor fx:constant="HAND" />
+                                                         </cursor>
+                                                         <font>
+                                                            <Font name="System Bold" size="16.0" />
+                                                         </font>
+                                                      </Button>
+                                                      <AnchorPane layoutX="160.0" layoutY="14.0">
+                                                         <children>
+                                                                          <Label alignment="CENTER" layoutX="7.0" layoutY="14.0" prefHeight="47.0" prefWidth="234.0" text="Payment Details">
+                                                                              <font>
+                                                                                  <Font name="Arial Bold" size="20.0" />
+                                                                              </font>
+                                                                          </Label>
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <TextField fx:id="cardholderTextField1" layoutX="145.0" layoutY="167.0" prefHeight="34.0" prefWidth="278.0" promptText="**** **** **** ****" style="-fx-background-radius: 5;" styleClass="payment" stylesheets="@style/style.css" />
+                                                      <ImageView fitHeight="26.0" fitWidth="34.0" layoutX="383.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@images/mc_symbol_opt_73_1x.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <ImageView fitHeight="26.0" fitWidth="34.0" layoutX="349.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@images/visa.png" />
+                                                         </image>
+                                                      </ImageView>
                                                                 </children>
                                                                 <styleClass>
                                                                     <String fx:value="chosen-fruit-card" />

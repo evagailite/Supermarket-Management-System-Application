@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import main.finalproject.Main;
 import model.Product;
@@ -56,6 +57,11 @@ public class ShoppingCartController extends ViewController implements Initializa
     private Label taxRateLabel;
     @FXML
     private Label totalLabel;
+    @FXML
+    private TextField searchTextField;
+    @FXML
+    private JFXButton searchButton;
+
     private ShopService shopService = new ShopService();
     private List<Product> shoppingBasket = new ArrayList<>();
     private final DecimalFormat df = new DecimalFormat("0.00");
@@ -70,6 +76,18 @@ public class ShoppingCartController extends ViewController implements Initializa
         loadShoppingCartItems();
 
         getOrderSummaryDetails();
+
+        searchButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    String userSearch = searchTextField.getText();
+                    changeSceneSearch(event, "shop", userSearch);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         buttonLogOut.setOnAction(new EventHandler<ActionEvent>() {
             //action happens after click on it

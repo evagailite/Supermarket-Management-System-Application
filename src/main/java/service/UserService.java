@@ -29,7 +29,7 @@ public class UserService extends ViewController {
         //isBeforeFirst - checks if resultSet is empty
         //if true - username is already taken
         if (resultSet.isBeforeFirst()) {
-            showAlert("User already exists!", "You cannot use this username", Alert.AlertType.ERROR);
+            showAlert("Error", "Username already exists!", Alert.AlertType.ERROR);
         } else {
             //if username isn't taken - insert into the database
             preparedStatement = connection.prepareStatement(Queries.CREATE_USER);
@@ -127,6 +127,16 @@ public class UserService extends ViewController {
         DBHandler.closeConnections(preparedStatement, connection);
     }
 
+    public void deleteUserByUsername(String username) throws SQLException {
+        connection = DBHandler.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.DELETE_USER_BY_USERNAME);
+        preparedStatement.setString(1, username);
+        preparedStatement.executeUpdate();
+        //   showAlert("User Deleted", "User deleted successfully", Alert.AlertType.CONFIRMATION);
+        DBHandler.closeConnections(preparedStatement, connection);
+    }
+
+
     public void editUser(String username, String name, String email, double budget, UserType userType, Integer id) throws SQLException {
         connection = DBHandler.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(Queries.UPDATE_USER);
@@ -168,6 +178,20 @@ public class UserService extends ViewController {
         return username;
     }
 
+    public String getUserEmail(String username) throws SQLException {
+        String email = null;
+        connection = DBHandler.getConnection();
+
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_USER_EMAIL);
+        preparedStatement.setString(1, username);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            email = resultSet.getString("email");
+        }
+        return email;
+    }
+
     public int getUserCount() throws SQLException {
         int total = 0;
         connection = DBHandler.getConnection();
@@ -178,5 +202,73 @@ public class UserService extends ViewController {
             //  DBHandler.closeConnections(resultSet, preparedStatement, connection);
         }
         return total;
+    }
+
+    public void changeUsername(String newUsername, Integer userId) throws SQLException {
+        connection = DBHandler.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.UPDATE_USER_USERNAME);
+        preparedStatement.setString(1, newUsername);
+        preparedStatement.setInt(2, userId);
+
+        preparedStatement.executeUpdate();
+        DBHandler.closeConnections(preparedStatement, connection);
+
+    }
+
+    public int getUserId(String username) throws SQLException {
+        int userId = 0;
+        connection = DBHandler.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_USER_ID);
+        preparedStatement.setString(1, username);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            userId = resultSet.getInt(1);
+            //  DBHandler.closeConnections(resultSet, preparedStatement, connection);
+        }
+        return userId;
+    }
+
+    public void changeUserEmail(String email, Integer userId) throws SQLException {
+        connection = DBHandler.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.UPDATE_USER_EMAIL);
+        preparedStatement.setString(1, email);
+        preparedStatement.setInt(2, userId);
+
+        preparedStatement.executeUpdate();
+        DBHandler.closeConnections(preparedStatement, connection);
+    }
+
+    public void changeUsernameAndEmail(String username, String email, int userId) throws SQLException {
+        connection = DBHandler.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.UPDATE_USER_USERNAME_AND_EMAIL);
+        preparedStatement.setString(1, username);
+        preparedStatement.setString(2, email);
+        preparedStatement.setInt(3, userId);
+
+        preparedStatement.executeUpdate();
+        DBHandler.closeConnections(preparedStatement, connection);
+    }
+
+    public void changeUserPassword(String password, String username) throws SQLException {
+        connection = DBHandler.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.UPDATE_USER_PASSWORD);
+        preparedStatement.setString(1, password);
+        preparedStatement.setString(2, username);
+
+        preparedStatement.executeUpdate();
+        DBHandler.closeConnections(preparedStatement, connection);
+    }
+
+    public String getUserPassword(String shopUser) throws SQLException {
+        String password = null;
+        connection = DBHandler.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_PASSWORD);
+        preparedStatement.setString(1, shopUser);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            password = resultSet.getString(1);
+            //  DBHandler.closeConnections(resultSet, preparedStatement, connection);
+        }
+        return password;
     }
 }

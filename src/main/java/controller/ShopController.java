@@ -11,12 +11,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
-//import org.controlsfx.control.textfield.AutoCompletionBinding;
-//import org.controlsfx.control.textfield.TextFields;
+import javafx.scene.layout.*;
 import main.finalproject.Main;
 import model.Product;
 import service.ProductService;
@@ -27,7 +22,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ShopController extends ViewController implements Initializable {
     @FXML
@@ -51,16 +45,19 @@ public class ShopController extends ViewController implements Initializable {
     @FXML
     private Button nonFoodButton;
     @FXML
-    private GridPane gridpane;
+    public GridPane gridpane;
     @FXML
     private Pane productNotFoundPane;
     @FXML
     private Button backToTheShopButton;
+    @FXML
+    private HBox hbox;
     private List<Product> productList = new ArrayList<>();
     private ProductService productService = new ProductService();
     private ShopService shopService = new ShopService();
     private UserService userService = new UserService();
     private String user;
+    private String searchItem;
 
     public List<Product> getData(ArrayList<Product> allProductsForShop) {
         List<Product> products = allProductsForShop;
@@ -78,6 +75,14 @@ public class ShopController extends ViewController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         Platform.runLater(() -> {
+            if (this.searchItem != null) {
+                clearProductTable();
+                productList.addAll(getData(findProduct(this.searchItem)));
+                hbox.setVisible(true);
+                placeProductsInTheShop(productList);
+                checkIfProductExists();
+            }
+
             try {
                 userService.setUserIsOnlineStatus("TRUE", this.user);
             } catch (SQLException e) {
@@ -92,6 +97,7 @@ public class ShopController extends ViewController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         placeProductsInTheShop(productList);
 
         foodButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -142,31 +148,10 @@ public class ShopController extends ViewController implements Initializable {
         searchButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                gridpane.getChildren().retainAll(gridpane.getChildren().get(0));
-                gridpane.getChildren().get(0).setVisible(false);
-                productList.clear();
+                clearProductTable();
                 productList.addAll(getData(findProduct(searchTextField.getText())));
                 placeProductsInTheShop(productList);
-                if (productList.isEmpty()) {
-                    productNotFoundPane.toFront();
-                    productNotFoundPane.setVisible(true);
-
-                    backToTheShopButton.setOnAction(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent event) {
-                            try {
-                                productNotFoundPane.setVisible(false);
-                                changeSceneForShop(event, "shop");
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-
-                } else {
-                    productNotFoundPane.toBack();
-                    productNotFoundPane.setVisible(false);
-                }
+                checkIfProductExists();
             }
         });
 
@@ -219,6 +204,35 @@ public class ShopController extends ViewController implements Initializable {
                 }
             }
         });
+    }
+
+    private void checkIfProductExists() {
+        if (productList.isEmpty()) {
+            productNotFoundPane.toFront();
+            productNotFoundPane.setVisible(true);
+
+            backToTheShopButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    try {
+                        productNotFoundPane.setVisible(false);
+                        changeSceneForShop(event, "shop");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+        } else {
+            productNotFoundPane.toBack();
+            productNotFoundPane.setVisible(false);
+        }
+    }
+
+    private void clearProductTable() {
+        gridpane.getChildren().retainAll(gridpane.getChildren().get(0));
+        gridpane.getChildren().get(0).setVisible(false);
+        productList.clear();
     }
 
     @FXML
@@ -347,5 +361,8 @@ public class ShopController extends ViewController implements Initializable {
         return product.getName().trim().toLowerCase().contains(contactToFind.trim().toLowerCase());
     }
 
-
+    public void search(String searchName) {
+        this.searchItem = searchName;
+        hbox.setVisible(false);
+    }
 }

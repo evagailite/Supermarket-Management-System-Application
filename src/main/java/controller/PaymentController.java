@@ -2,6 +2,7 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -113,11 +114,40 @@ public class PaymentController extends ViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        Platform.runLater(() -> {
+//            searchButton.setOnAction(new EventHandler<ActionEvent>() {
+//                //action happens after click on it
+//                @Override
+//                public void handle(ActionEvent event) {
+//                    try {
+//                        changeSceneSearch(event, "shop", searchTextField.getText());
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            });
+
+        });
+
         getOrderSummaryDetails();
 
         setComboBoxValues();
 
         showBasketSize();
+
+        searchButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    String userSearch = searchTextField.getText();
+                    changeSceneSearch(event, "shop", userSearch);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
 
         buttonLogOut.setOnAction(new EventHandler<ActionEvent>() {
             //action happens after click on it
@@ -137,6 +167,7 @@ public class PaymentController extends ViewController implements Initializable {
                 }
             }
         });
+
 
         goNextToPayButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
