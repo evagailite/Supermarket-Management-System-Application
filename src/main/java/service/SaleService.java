@@ -231,4 +231,14 @@ public class SaleService extends ViewController {
         }
         return orderDate;
     }
+
+    public void changeUsername(String newUsername, String username) throws SQLException {
+        connection = DBHandler.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(Queries.UPDATE_SALE_USERNAME);
+        preparedStatement.setString(1, newUsername);
+        preparedStatement.setString(2, username);
+
+        preparedStatement.executeUpdate();
+        DBHandler.closeConnections(preparedStatement, connection);
+    }
 }

@@ -25,6 +25,7 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class OrderController extends ViewController implements Initializable {
@@ -267,11 +268,11 @@ public class OrderController extends ViewController implements Initializable {
             shippingLabel.setText("FREE");
             double subTotal = saleService.getSaleSubTotal(orderNumber);
             double total = subTotal * tax;
-            subtotalLabel.setText("$" + df.format(Math.round(subTotal * 100) / 100D));
+            subtotalLabel.setText("$" + String.format(Locale.ENGLISH, "%.2f", (Math.round(subTotal * 100) / 100D)));
             double totalPrice = Math.round(total * 100) / 100D;
-            totalLabel.setText("$" + df.format(totalPrice));
+            totalLabel.setText("$" + String.format(Locale.ENGLISH, "%.2f", totalPrice));
             double taxValue = Math.round((totalPrice - subTotal) * 100) / 100D;
-            taxRateLabel.setText("$" + taxValue);
+            taxRateLabel.setText("$" + String.format(Locale.ENGLISH, "%.2f", taxValue));
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -62,10 +62,6 @@ public class ViewController {
 
         FXMLLoader loader = new FXMLLoader(Main.class.getResource(scenePath));
         Parent root = loader.load();
-
-//        AccountController accountController = loader.getController();
-//        accountController.setUsername(username);
-
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root, 1000, 830));
         stage.show();
@@ -76,9 +72,6 @@ public class ViewController {
         String scenePath = sceneName + ".fxml";
         Parent root = FXMLLoader.load(Main.class.getResource(scenePath));
 
-//        LoggedInController loggedInController = loader.getController();
-//        loggedInController.setUserInformation(username);
-
         Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
         stage.setScene(new Scene(root, 850, 600));
@@ -88,12 +81,7 @@ public class ViewController {
     public void changeSceneForShop(ActionEvent event, String sceneName) throws IOException {
         String scenePath = sceneName + ".fxml";
         Parent root = FXMLLoader.load(Main.class.getResource(scenePath));
-
-//        LoggedInController loggedInController = loader.getController();
-//        loggedInController.setUserInformationForCustomer(username, retrievedBudget);
-
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        stage.setTitle(title);
         stage.setScene(new Scene(root, 1000, 830));
         stage.show();
     }

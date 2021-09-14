@@ -22,9 +22,12 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ShoppingCartController extends ViewController implements Initializable {
+    @FXML
+    private Button goBackShoppingButtonShoppingCart;
     @FXML
     private JFXButton basketButton;
     @FXML
@@ -33,6 +36,8 @@ public class ShoppingCartController extends ViewController implements Initializa
     private JFXButton accountButton;
     @FXML
     private JFXButton buttonLogOut;
+    @FXML
+    private Label continueLabel;
     @FXML
     private VBox vbox;
     @FXML
@@ -83,6 +88,17 @@ public class ShoppingCartController extends ViewController implements Initializa
                 try {
                     String userSearch = searchTextField.getText();
                     changeSceneSearch(event, "shop", userSearch);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        goBackShoppingButtonShoppingCart.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    changeSceneHome(event, "shop");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -213,11 +229,11 @@ public class ShoppingCartController extends ViewController implements Initializa
             shippingLabel.setText("FREE");
             double subTotal = shopService.getSubTotal();
             double total = subTotal * tax;
-            subtotalLabel.setText("$" + df.format(Math.round(subTotal * 100) / 100D));
+            subtotalLabel.setText("$" + String.format(Locale.ENGLISH, "%.2f", (Math.round(subTotal * 100) / 100D)));
             double totalPrice = Math.round(total * 100) / 100D;
-            totalLabel.setText("$" + df.format(totalPrice));
+            totalLabel.setText("$" + String.format(Locale.ENGLISH, "%.2f", totalPrice));
             double taxValue = Math.round((totalPrice - subTotal) * 100) / 100D;
-            taxRateLabel.setText("$" + taxValue);
+            taxRateLabel.setText("$" + String.format(Locale.ENGLISH, "%.2f", taxValue));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -248,6 +264,9 @@ public class ShoppingCartController extends ViewController implements Initializa
                 tableNamesForBasket.setVisible(false);
                 emptyCartPanel.setVisible(true);
                 orderSummaryVbox.setVisible(false);
+                continueLabel.setVisible(false);
+                goBackShoppingButtonShoppingCart.setVisible(false);
+
                 emptyCartPanel.toFront();
             } else {
                 numberInTheBasket.setVisible(true);
@@ -256,6 +275,8 @@ public class ShoppingCartController extends ViewController implements Initializa
                 tableNamesForBasket.setVisible(true);
                 emptyCartPanel.toBack();
                 orderSummaryVbox.setVisible(true);
+                goBackShoppingButtonShoppingCart.setVisible(true);
+                continueLabel.setVisible(true);
                 emptyCartPanel.setVisible(false);
             }
         } catch (SQLException e) {

@@ -56,7 +56,7 @@ public class SalesManagerPanelController extends ViewController implements Initi
     @FXML
     private JFXButton browseImageButton;
     @FXML
-    private JFXButton handleCreateButtonAction;
+    private JFXButton handleCreateProductButtonAction;
     @FXML
     private JFXComboBox<ProductUnit> unitComboBox;
     @FXML
@@ -342,6 +342,9 @@ public class SalesManagerPanelController extends ViewController implements Initi
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        productImageView.setVisible(false);
+
         showFirstPage();
 
         setComboBoxValues();
@@ -375,32 +378,39 @@ public class SalesManagerPanelController extends ViewController implements Initi
             }
         });
 
-        handleCreateButtonAction.setOnAction(new EventHandler<ActionEvent>() {
+        handleCreateProductButtonAction.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Product product = new Product(
-                        productNameTextField.getText(),
-                        Double.parseDouble(priceTextField.getText()),
-                        Double.parseDouble(quantityTextField.getText()),
-                        unitComboBox.getSelectionModel().getSelectedItem().toString(),
-                        categoryComboBox.getSelectionModel().getSelectedItem().toString(),
-                        imagePathTextField.getText()
-                );
                 try {
-                    productService.createProduct(product);
-                    clearProductTextFields();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                    if (productNameTextField.getText().isEmpty() || priceTextField.getText().isEmpty() || quantityTextField.getText().isEmpty() ||
+                            imagePathTextField.getText().isEmpty() || unitComboBox.getSelectionModel().getSelectedItem() == null || categoryComboBox.getSelectionModel().getSelectedItem() == null) {
+                        showAlert("Error", "Please fill all fields", Alert.AlertType.ERROR);
+                    } else {
+                        Product product = new Product(
+                                productNameTextField.getText(),
+                                Double.parseDouble(priceTextField.getText()),
+                                Double.parseDouble(quantityTextField.getText()),
+                                unitComboBox.getSelectionModel().getSelectedItem().toString(),
+                                categoryComboBox.getSelectionModel().getSelectedItem().toString(),
+                                imagePathTextField.getText()
+                        );
+                        productService.createProduct(product);
+                        clearProductTextFields();
+                    }
+                } catch (Exception e) {
+                    showAlert("Error", e.getMessage(), Alert.AlertType.ERROR);
                 }
-
                 showAllProducts();
                 getStatistic();
+                productImageView.setVisible(false);
             }
         });
 
         browseImageButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                productImageView.setVisible(true);
+                productImageView.setImage(null);
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.setTitle("Open File Dialog");
                 fileChooser.getExtensionFilters().addAll(

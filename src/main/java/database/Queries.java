@@ -69,4 +69,5 @@ public class Queries {
     public static final String UPDATE_USER_USERNAME_AND_EMAIL = "UPDATE user SET username = ?, email = ? WHERE user_id = ?";
     public static final String UPDATE_USER_PASSWORD = "UPDATE user SET password = ? WHERE username = ?";
     public static final String GET_PASSWORD = "SELECT password FROM user WHERE username=?";
+    public static final String UPDATE_SALE_USERNAME = "UPDATE sales SET username = ? WHERE username = ?";
 }

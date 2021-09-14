@@ -8,7 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import main.finalproject.Main;
@@ -84,6 +83,8 @@ public class AccountController extends ViewController implements Initializable {
     private JFXButton changeEmailButton;
     @FXML
     private Pane noHistoryPane;
+    @FXML
+    private Label orderHistoryLabel;
     private List<Sale> customerSales = new ArrayList<>();
     private SaleService saleService = new SaleService();
     private ShopService shopService = new ShopService();
@@ -207,11 +208,11 @@ public class AccountController extends ViewController implements Initializable {
                         e.printStackTrace();
                     }
                     showAlert("Delete", "You have deleted your account", Alert.AlertType.INFORMATION);
-                }
-                try {
-                    userService.changeScene(event, "login");
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    try {
+                        userService.changeScene(event, "login");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -304,7 +305,7 @@ public class AccountController extends ViewController implements Initializable {
                         e.printStackTrace();
                     }
                 } else {
-                    showAlert("Error", "Please fill fields to make changes", Alert.AlertType.ERROR);
+                    showAlert("Error - empty field", "Please fill email field to make changes", Alert.AlertType.ERROR);
                 }
             }
         });
@@ -318,6 +319,7 @@ public class AccountController extends ViewController implements Initializable {
                         int userId = userService.getUserId(username);
                         validateUserUsername(changeUsernameField.getText());
                         userService.changeUsername(changeUsernameField.getText(), userId);
+                        saleService.changeUsername(changeUsernameField.getText(), username);
                     } catch (Exception e) {
                         showAlert("Error", e.getMessage(), Alert.AlertType.ERROR);
                         e.printStackTrace();
@@ -331,7 +333,7 @@ public class AccountController extends ViewController implements Initializable {
                         e.printStackTrace();
                     }
                 } else {
-                    showAlert("Error", "Please fill fields to make changes", Alert.AlertType.ERROR);
+                    showAlert("Error - empty field", "Please fill username field to make changes", Alert.AlertType.ERROR);
                 }
             }
         });
@@ -428,12 +430,13 @@ public class AccountController extends ViewController implements Initializable {
 
         customerSales.addAll(getCustomerSales());
 
-        if(customerSales.size()==0){
+        if (customerSales.size() == 0) {
+            orderHistoryLabel.setVisible(false);
             orderHistoryVBox.setVisible(false);
             orderHistoryVBox.toBack();
             noHistoryPane.toFront();
             noHistoryPane.setVisible(true);
-        }else {
+        } else {
             for (int i = 0; i < customerSales.size(); i++) {
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("accountItem.fxml"));
@@ -448,6 +451,7 @@ public class AccountController extends ViewController implements Initializable {
             noHistoryPane.toBack();
             noHistoryPane.setVisible(false);
             orderHistoryVBox.setVisible(true);
+            orderHistoryLabel.setVisible(true);
             orderHistoryVBox.toFront();
         }
 

@@ -3,6 +3,7 @@ package main.finalproject;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -10,7 +11,9 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("login.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 793, 600);
-        primaryStage.setTitle("Supermarket");
+        Image icon = new Image(getClass().getResourceAsStream("images/shopping.png"));
+        primaryStage.getIcons().add(icon);
+        primaryStage.setTitle("The Supermarket");
         primaryStage.setScene(scene);
         primaryStage.show();
 

@@ -212,65 +212,8 @@
                                                 <Insets bottom="110.0" left="30.0" right="30.0" />
                                              </HBox.margin>
                                              <children>
-                                                            <AnchorPane fx:id="deliveryAnchorPane" prefHeight="446.0" prefWidth="631.0" style="-fx-background-radius: 10;" stylesheets="@style/style.css">
-                                                                <children>
-                                                                    <Label alignment="CENTER" layoutX="155.0" layoutY="20.0" prefHeight="47.0" prefWidth="234.0" text="Delivery details">
-                                                                        <font>
-                                                                            <Font name="Arial Bold" size="20.0" />
-                                                                        </font>
-                                                                    </Label>
-                                                      <TextField fx:id="firstNameTextField" layoutX="79.0" layoutY="90.0" prefHeight="34.0" prefWidth="178.0" promptText="First Name" style="-fx-background-radius: 5;" />
-                                                      <TextField fx:id="lastNameTextField" layoutX="285.0" layoutY="90.0" prefHeight="34.0" prefWidth="178.0" promptText="Last Name" style="-fx-background-radius: 5;" />
-                                                      <TextField fx:id="emailAddressTextField" layoutX="79.0" layoutY="138.0" prefHeight="34.0" prefWidth="178.0" promptText="Email Address" style="-fx-background-radius: 5;" />
-                                                      <TextField fx:id="mobileNumberTextField" layoutX="285.0" layoutY="138.0" prefHeight="34.0" prefWidth="178.0" promptText="Mobile Number" style="-fx-background-radius: 5;" />
-                                                      <TextField fx:id="houseFlatNumberTextField" layoutX="79.0" layoutY="189.0" prefHeight="34.0" prefWidth="178.0" promptText="House No/Flat No/Floor" style="-fx-background-radius: 5;" />
-                                                      <TextField fx:id="streetNameTextField" layoutX="285.0" layoutY="189.0" prefHeight="34.0" prefWidth="178.0" promptText="Street name" style="-fx-background-radius: 5;" />
-                                                      <TextField fx:id="zipCodeTextField" layoutX="79.0" layoutY="243.0" prefHeight="34.0" prefWidth="178.0" promptText="ZIP Code" style="-fx-background-radius: 5;" />
-                                                      <TextField fx:id="cityTextField" layoutX="285.0" layoutY="243.0" prefHeight="34.0" prefWidth="178.0" promptText="City" style="-fx-background-radius: 5;" />
-                                                      <TextField fx:id="notesTextField" layoutX="119.0" layoutY="314.0" prefHeight="62.0" prefWidth="306.0" promptText="Note" />
-                                                      <Label layoutX="79.0" layoutY="75.0" prefHeight="24.0" prefWidth="6.0" text="*" textFill="RED" />
-                                                      <Label layoutX="78.0" layoutY="123.0" prefHeight="24.0" prefWidth="6.0" text="*" textFill="RED" />
-                                                      <Label layoutX="284.0" layoutY="76.0" prefHeight="24.0" prefWidth="6.0" text="*" textFill="RED" />
-                                                      <Label layoutX="284.0" layoutY="123.0" prefHeight="24.0" prefWidth="6.0" text="*" textFill="RED" />
-                                                      <Label layoutX="284.0" layoutY="175.0" prefHeight="24.0" prefWidth="6.0" text="*" textFill="RED" />
-                                                      <Label layoutX="284.0" layoutY="229.0" prefHeight="24.0" prefWidth="6.0" text="*" textFill="RED" />
-                                                      <Label layoutX="78.0" layoutY="174.0" prefHeight="24.0" prefWidth="6.0" text="*" textFill="RED" />
-                                                      <Label layoutX="78.0" layoutY="228.0" prefHeight="24.0" prefWidth="6.0" text="*" textFill="RED" />
-                                                      <Button fx:id="goNextToPayButton" layoutX="496.0" layoutY="399.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Next" textFill="#4e961c" underline="true">
-                                                         <cursor>
-                                                            <Cursor fx:constant="HAND" />
-                                                         </cursor>
-                                                         <font>
-                                                            <Font name="System Bold" size="16.0" />
-                                                         </font>
-                                                      </Button>
-                                                                </children>
-                                                                <styleClass>
-                                                                    <String fx:value="chosen-fruit-card" />
-                                                                    <String fx:value="shadow" />
-                                                                </styleClass>
-                                                   <StackPane.margin>
-                                                      <Insets left="35.0" />
-                                                   </StackPane.margin>
-                                                            </AnchorPane>
                                                             <AnchorPane fx:id="paymentAnchorPane" prefHeight="489.0" prefWidth="567.0" style="-fx-background-radius: 10;" stylesheets="@style/style.css">
                                                                 <children>
-                                                      <AnchorPane layoutX="131.0" layoutY="293.0" prefHeight="78.0" prefWidth="303.0">
-                                                         <children>
-                                                                          <JFXButton fx:id="payButton" alignment="CENTER" layoutX="56.0" layoutY="20.0" prefHeight="40.0" prefWidth="192.0" style="-fx-background-radius: 5; -fx-background-color: #4e961c;" stylesheets="@style/style.css" text="Pay" textAlignment="CENTER" textFill="WHITE">
-                                                                              <styleClass>
-                                                                                  <String fx:value="search-box" />
-                                                                                  <String fx:value="shadow" />
-                                                                              </styleClass>
-                                                                              <font>
-                                                                                  <Font name="System Bold" size="16.0" />
-                                                                              </font>
-                                                               <cursor>
-                                                                  <Cursor fx:constant="HAND" />
-                                                               </cursor>
-                                                                          </JFXButton>
-                                                         </children>
-                                                      </AnchorPane>
                                                                     <TextField fx:id="cardholderTextField" layoutX="145.0" layoutY="108.0" prefHeight="34.0" prefWidth="278.0" promptText="Name and Surname" style="-fx-background-radius: 5;" styleClass="payment" stylesheets="@style/style.css" />
                                                       <Label layoutX="151.0" layoutY="91.0" text="Cardholder Name:" />
                                                       <Label layoutX="151.0" layoutY="150.0" text="Card Number:" />
@@ -296,7 +239,7 @@
                                                                           </Label>
                                                          </children>
                                                       </AnchorPane>
-                                                      <TextField fx:id="cardholderTextField1" layoutX="145.0" layoutY="167.0" prefHeight="34.0" prefWidth="278.0" promptText="**** **** **** ****" style="-fx-background-radius: 5;" styleClass="payment" stylesheets="@style/style.css" />
+                                                      <TextField fx:id="cardNumberTextField" layoutX="145.0" layoutY="167.0" prefHeight="34.0" prefWidth="278.0" promptText="**** **** **** ****" style="-fx-background-radius: 5;" styleClass="payment" stylesheets="@style/style.css" />
                                                       <ImageView fitHeight="26.0" fitWidth="34.0" layoutX="383.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
                                                             <Image url="@images/mc_symbol_opt_73_1x.png" />
@@ -307,6 +250,63 @@
                                                             <Image url="@images/visa.png" />
                                                          </image>
                                                       </ImageView>
+                                                      <AnchorPane layoutX="131.0" layoutY="293.0" prefHeight="78.0" prefWidth="303.0">
+                                                         <children>
+                                                                          <JFXButton fx:id="payButton" alignment="CENTER" layoutX="56.0" layoutY="20.0" prefHeight="40.0" prefWidth="192.0" style="-fx-background-radius: 5; -fx-background-color: #4e961c;" stylesheets="@style/style.css" text="Pay" textAlignment="CENTER" textFill="WHITE">
+                                                                              <styleClass>
+                                                                                  <String fx:value="search-box" />
+                                                                                  <String fx:value="shadow" />
+                                                                              </styleClass>
+                                                                              <font>
+                                                                                  <Font name="System Bold" size="16.0" />
+                                                                              </font>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="HAND" />
+                                                               </cursor>
+                                                                          </JFXButton>
+                                                         </children>
+                                                      </AnchorPane>
+                                                                </children>
+                                                                <styleClass>
+                                                                    <String fx:value="chosen-fruit-card" />
+                                                                    <String fx:value="shadow" />
+                                                                </styleClass>
+                                                   <StackPane.margin>
+                                                      <Insets left="35.0" />
+                                                   </StackPane.margin>
+                                                            </AnchorPane>
+                                                            <AnchorPane fx:id="deliveryAnchorPane" prefHeight="446.0" prefWidth="631.0" style="-fx-background-radius: 10;" stylesheets="@style/style.css">
+                                                                <children>
+                                                                    <Label alignment="CENTER" layoutX="155.0" layoutY="20.0" prefHeight="47.0" prefWidth="234.0" text="Delivery details">
+                                                                        <font>
+                                                                            <Font name="Arial Bold" size="20.0" />
+                                                                        </font>
+                                                                    </Label>
+                                                      <TextField fx:id="firstNameTextField" layoutX="79.0" layoutY="90.0" prefHeight="34.0" prefWidth="178.0" promptText="First Name" style="-fx-background-radius: 5;" />
+                                                      <TextField fx:id="lastNameTextField" layoutX="285.0" layoutY="90.0" prefHeight="34.0" prefWidth="178.0" promptText="Last Name" style="-fx-background-radius: 5;" />
+                                                      <TextField fx:id="emailAddressTextField" layoutX="79.0" layoutY="138.0" prefHeight="34.0" prefWidth="178.0" promptText="Email Address" style="-fx-background-radius: 5;" />
+                                                      <TextField fx:id="mobileNumberTextField" layoutX="285.0" layoutY="138.0" prefHeight="34.0" prefWidth="178.0" promptText="Mobile Number" style="-fx-background-radius: 5;" />
+                                                      <TextField fx:id="houseFlatNumberTextField" layoutX="79.0" layoutY="189.0" prefHeight="34.0" prefWidth="178.0" promptText="House No/Flat No/Floor" style="-fx-background-radius: 5;" />
+                                                      <TextField fx:id="streetNameTextField" layoutX="285.0" layoutY="189.0" prefHeight="34.0" prefWidth="178.0" promptText="Street name" style="-fx-background-radius: 5;" />
+                                                      <TextField fx:id="zipCodeTextField" layoutX="79.0" layoutY="243.0" prefHeight="34.0" prefWidth="178.0" promptText="ZIP Code" style="-fx-background-radius: 5;" />
+                                                      <TextField fx:id="cityTextField" layoutX="285.0" layoutY="243.0" prefHeight="34.0" prefWidth="178.0" promptText="City" style="-fx-background-radius: 5;" />
+                                                      <TextField fx:id="notesTextField" layoutX="119.0" layoutY="314.0" prefHeight="62.0" prefWidth="306.0" promptText="Note" />
+                                                      <Label layoutX="79.0" layoutY="75.0" prefHeight="24.0" prefWidth="6.0" text="*" textFill="RED" />
+                                                      <Label layoutX="78.0" layoutY="123.0" prefHeight="24.0" prefWidth="6.0" text="*" textFill="RED" />
+                                                      <Label layoutX="284.0" layoutY="76.0" prefHeight="24.0" prefWidth="6.0" text="*" textFill="RED" />
+                                                      <Label layoutX="284.0" layoutY="123.0" prefHeight="24.0" prefWidth="6.0" text="*" textFill="RED" />
+                                                      <Label layoutX="284.0" layoutY="175.0" prefHeight="24.0" prefWidth="6.0" text="*" textFill="RED" />
+                                                      <Label layoutX="284.0" layoutY="229.0" prefHeight="24.0" prefWidth="6.0" text="*" textFill="RED" />
+                                                      <Label layoutX="78.0" layoutY="174.0" prefHeight="24.0" prefWidth="6.0" text="*" textFill="RED" />
+                                                      <Label layoutX="78.0" layoutY="228.0" prefHeight="24.0" prefWidth="6.0" text="*" textFill="RED" />
+                                                      <Button fx:id="goNextToPayButton" disable="true" layoutX="496.0" layoutY="399.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Next" textFill="#4e961c" underline="true">
+                                                         <cursor>
+                                                            <Cursor fx:constant="HAND" />
+                                                         </cursor>
+                                                         <font>
+                                                            <Font name="System Bold" size="16.0" />
+                                                         </font>
+                                                      </Button>
                                                                 </children>
                                                                 <styleClass>
                                                                     <String fx:value="chosen-fruit-card" />

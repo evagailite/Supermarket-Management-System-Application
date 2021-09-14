@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class AccountItemController extends ViewController implements Initializable {
@@ -30,7 +31,7 @@ public class AccountItemController extends ViewController implements Initializab
             double totalPrice = shopService.getOrderSubTotal(sale.getOrderNumber()) * 1.21;
             orderNumberLabel.setText(sale.getOrderNumber());
             dateLabel.setText(String.valueOf(sale.getOrderDate()));
-            totalPriceLabel.setText("$" + (df.format(totalPrice)));
+            totalPriceLabel.setText("$" + String.format(Locale.ENGLISH, "%.2f", totalPrice));
             viewOrderButton.setOnAction(event -> {
                 try {
                     changeSceneViewOrder(event, "order", sale.getOrderNumber());

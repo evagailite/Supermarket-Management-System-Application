@@ -275,10 +275,11 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" />
                                              </rowConstraints>
                                           </GridPane>
-                                          <MenuButton layoutX="875.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="88.0" style="-fx-background-color: transparent;" text="Sort By">
+                                          <MenuButton fx:id="menuButton" layoutX="875.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="88.0" style="-fx-background-color: transparent;" text="Sort By">
                                              <items>
                                                 <MenuItem mnemonicParsing="false" onAction="#sortByLowestPrice" text="Lowest Price First" />
                                                 <MenuItem mnemonicParsing="false" onAction="#sortByHighestPrice" text="Highest Price First" />
+                                                <MenuItem mnemonicParsing="false" onAction="#sortByDefault" text="By Default" />
                                              </items>
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />

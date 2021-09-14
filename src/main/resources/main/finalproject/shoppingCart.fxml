@@ -284,7 +284,25 @@
                   </StackPane>
                   <HBox prefHeight="71.0" prefWidth="1000.0">
                      <children>
-                        <AnchorPane prefHeight="71.0" prefWidth="278.0" />
+                        <AnchorPane prefHeight="71.0" prefWidth="278.0">
+                           <children>
+                              <Button fx:id="goBackShoppingButtonShoppingCart" layoutX="26.0" layoutY="15.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <graphic>
+                                    <ImageView fitHeight="23.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/left-arrow.png" />
+                                       </image>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Label fx:id="continueLabel" layoutX="65.0" layoutY="22.0" opacity="0.53" text="Continue Shopping" />
+                           </children></AnchorPane>
                      </children></HBox>
                </children>
             </VBox>

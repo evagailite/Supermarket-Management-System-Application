@@ -2,7 +2,9 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import javafx.application.Platform;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -68,7 +70,7 @@ public class PaymentController extends ViewController implements Initializable {
     @FXML
     private TextField cardholderTextField;
     @FXML
-    private PasswordField cardNUmberTextField;
+    private TextField cardNumberTextField;
     @FXML
     private JFXComboBox monthComboBox;
     @FXML
@@ -115,27 +117,19 @@ public class PaymentController extends ViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        Platform.runLater(() -> {
-//            searchButton.setOnAction(new EventHandler<ActionEvent>() {
-//                //action happens after click on it
-//                @Override
-//                public void handle(ActionEvent event) {
-//                    try {
-//                        changeSceneSearch(event, "shop", searchTextField.getText());
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            });
-
-        });
-
         getOrderSummaryDetails();
 
         setComboBoxValues();
 
         showBasketSize();
 
+        disableGoPayButtonWhileTextFieldsIsEmpty();
+
+        disablePayButtonWhileTextFieldsIsEmpty();
+
+        formatCvvField();
+
+        formatCardNumberField();
         searchButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -275,6 +269,69 @@ public class PaymentController extends ViewController implements Initializable {
 
     }
 
+    private void formatCvvField() {
+        cvvTextField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("[\\d*]")) {
+                    cvvTextField.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+    }
+
+    private void formatCardNumberField() {
+        cardNumberTextField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("[\\d*]")) {
+                    cardNumberTextField.setText(newValue.replaceAll("([^\\d])", ""));
+                }
+            }
+        });
+    }
+
+
+    private void disablePayButtonWhileTextFieldsIsEmpty() {
+        BooleanBinding bb = new BooleanBinding() {
+            {
+                super.bind(cardholderTextField.textProperty(), cardNumberTextField.textProperty(), monthComboBox.valueProperty(),
+                        yearComboBox.valueProperty(), cvvTextField.textProperty());
+            }
+
+            @Override
+            protected boolean computeValue() {
+                return (cardNumberTextField.getText().isEmpty() || cardNumberTextField.getText().isEmpty() ||
+                        cvvTextField.getText().isEmpty() || yearComboBox.getSelectionModel().isEmpty() ||
+                        monthComboBox.getSelectionModel().isEmpty());
+            }
+        };
+
+        payButton.disableProperty().bind(bb);
+    }
+
+    private void disableGoPayButtonWhileTextFieldsIsEmpty() {
+        BooleanBinding bb = new BooleanBinding() {
+            {
+                super.bind(firstNameTextField.textProperty(), lastNameTextField.textProperty(), emailAddressTextField.textProperty(),
+                        mobileNumberTextField.textProperty(), houseFlatNumberTextField.textProperty(), streetNameTextField.textProperty(),
+                        zipCodeTextField.textProperty(), cityTextField.textProperty());
+            }
+
+            @Override
+            protected boolean computeValue() {
+                return (firstNameTextField.getText().isEmpty() || lastNameTextField.getText().isEmpty() ||
+                        emailAddressTextField.getText().isEmpty() || mobileNumberTextField.getText().isEmpty() ||
+                        houseFlatNumberTextField.getText().isEmpty() || streetNameTextField.getText().isEmpty() ||
+                        zipCodeTextField.getText().isEmpty() || cityTextField.getText().isEmpty());
+            }
+        };
+
+        goNextToPayButton.disableProperty().bind(bb);
+    }
+
     private void resetWarehouseQuantity() {
         if (!checkIfBasketIsEmpty()) {
             try {
@@ -309,11 +366,11 @@ public class PaymentController extends ViewController implements Initializable {
             shippingLabel.setText("FREE");
             double subTotal = shopService.getSubTotal();
             double total = subTotal * tax;
-            subtotalLabel.setText("$" + df.format(Math.round(subTotal * 100) / 100D));
+            subtotalLabel.setText("$" + String.format(Locale.ENGLISH, "%.2f", Math.round(subTotal * 100) / 100D));
             double totalPrice = Math.round(total * 100) / 100D;
-            totalLabel.setText("$" + df.format(totalPrice));
+            totalLabel.setText("$" + String.format(Locale.ENGLISH, "%.2f", totalPrice));
             double taxValue = Math.round((totalPrice - subTotal) * 100) / 100D;
-            taxRateLabel.setText("$" + taxValue);
+            taxRateLabel.setText("$" + String.format(Locale.ENGLISH, "%.2f", taxValue));
         } catch (SQLException e) {
             e.printStackTrace();
         }

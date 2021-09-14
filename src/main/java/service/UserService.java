@@ -62,7 +62,6 @@ public class UserService extends ViewController {
                 showAlert("Login Error", "Provided credentials are incorrect!", Alert.AlertType.ERROR);
             } else {
                 while (resultSet.next()) {
-//                    double retrievedBudget = resultSet.getDouble("budget");
                     String retrieveUserType = resultSet.getString("user_type");
 
                     if (retrieveUserType.equals("CUSTOMER")) {

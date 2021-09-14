@@ -95,49 +95,6 @@
                            <children>
                               <AnchorPane prefHeight="542.0" prefWidth="652.0">
                                  <children>
-                                    <AnchorPane fx:id="anchorPaneProducts" prefHeight="530.0" prefWidth="652.0" AnchorPane.bottomAnchor="243.20000000000002" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <children>
-                                          <Pane fx:id="panelCreateProduct" prefHeight="554.0" prefWidth="652.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="-269.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                             <children>
-                                                <TextField fx:id="priceTextField" layoutX="30.0" layoutY="310.0" prefHeight="25.0" prefWidth="66.0" promptText="price" />
-                                                <TextField fx:id="quantityTextField" layoutX="114.0" layoutY="310.0" prefHeight="25.0" prefWidth="66.0" promptText="quantity" />
-                                                <JFXButton fx:id="browseImageButton" layoutX="371.0" layoutY="461.0" style="-fx-background-color: #EEEEEE; -fx-background-radius: 5;" styleClass="comboBox" stylesheets="@style/style.css" text="Browse Image" />
-                                                <JFXButton fx:id="handleCreateButtonAction" layoutX="64.0" layoutY="461.0" style="-fx-background-color: #EEEEEE; -fx-background-radius: 5;" styleClass="comboBox" stylesheets="@style/style.css" text="Create Product" textFill="#4e961c">
-                                                   <font>
-                                                      <Font name="System Bold" size="12.0" />
-                                                   </font></JFXButton>
-                                                <JFXComboBox fx:id="unitComboBox" focusColor="#405aa800" layoutX="32.0" layoutY="351.0" prefHeight="25.0" prefWidth="152.0" promptText="  Choose unit" style="-fx-background-radius: 5; -fx-background-color: #EEEEEE;" styleClass="comboBox" stylesheets="@style/style.css" unFocusColor="#dc444400" />
-                                                <JFXComboBox fx:id="categoryComboBox" focusColor="#405aa800" layoutX="31.0" layoutY="397.0" prefHeight="25.0" prefWidth="155.0" promptText="  Choose category" style="-fx-background-color: #EEEEEE; -fx-background-radius: 5;" styleClass="comboBox" stylesheets="@style/style.css" unFocusColor="#4d4d4d00" />
-                                                <ImageView fx:id="productImageView" fitHeight="150.0" fitWidth="203.0" layoutX="317.0" layoutY="261.0" pickOnBounds="true" preserveRatio="true" />
-                                                <TextField fx:id="productNameTextField" layoutX="24.0" layoutY="262.0" prefHeight="28.0" prefWidth="247.0" promptText="Product Name" />
-                                                <TextField fx:id="imagePathTextField" layoutX="313.0" layoutY="422.0" prefHeight="25.0" prefWidth="208.0" />
-                                             </children>
-                                          </Pane>
-                                          <GridPane prefHeight="226.0" prefWidth="565.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                            <columnConstraints>
-                                              <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
-                                             <children>
-                                                <TableView fx:id="productTable" editable="true" prefHeight="226.0" prefWidth="585.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
-                                                  <columns>
-                                                    <TableColumn fx:id="idProductColumn" prefWidth="39.999998450279236" text="ID" />
-                                                    <TableColumn fx:id="productNameColumn" prefWidth="140.79999542236328" text="Product Name" />
-                                                      <TableColumn fx:id="productQtyColumn" minWidth="0.0" prefWidth="55.199951171875" text="QTY" />
-                                                      <TableColumn fx:id="productPriceColumn" prefWidth="64.7999267578125" text="Price, €" />
-                                                      <TableColumn fx:id="productUnitColumn" prefWidth="56.000030517578125" text="Unit" />
-                                                      <TableColumn fx:id="productCategoryColumn" prefWidth="65.5999755859375" text="Category" />
-                                                      <TableColumn fx:id="productImageColumn" prefWidth="66.0" text="Image" />
-                                                      <TableColumn fx:id="columnDeleteProduct" prefWidth="75.0" text="Delete" />
-                                                      <TableColumn fx:id="columnEditProduct" prefWidth="79.0" text="Edit" />
-                                                  </columns>
-                                                </TableView>
-                                             </children>
-                                          </GridPane>
-                                       </children>
-                                    </AnchorPane>
                                     <AnchorPane fx:id="anchorPaneUsers" prefHeight="567.0" prefWidth="652.0" AnchorPane.bottomAnchor="-38.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
                                           <Pane fx:id="panelCreateUser" prefHeight="554.0" prefWidth="652.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -167,11 +124,54 @@
                                                     <TableColumn fx:id="columnId" prefWidth="28.80004918575287" text="ID" />
                                                     <TableColumn fx:id="columnUsername" prefWidth="95.99993705749512" text="Username" />
                                                       <TableColumn fx:id="columnName" prefWidth="102.40003204345703" text="Name" />
-                                                      <TableColumn fx:id="columnEmail" prefWidth="95.20004272460938" text="Email" />
-                                                      <TableColumn fx:id="columnBudget" minWidth="0.0" prefWidth="59.199951171875" text="Budget" />
-                                                      <TableColumn fx:id="columnUserType" prefWidth="102.4000244140625" text="User Type" />
+                                                      <TableColumn fx:id="columnEmail" prefWidth="159.0" text="Email" />
+                                                      <TableColumn fx:id="columnBudget" minWidth="0.0" prefWidth="0.0" text="Budget" />
+                                                      <TableColumn fx:id="columnUserType" prefWidth="100.0" text="User Type" />
                                                       <TableColumn fx:id="columnDeleteUser" prefWidth="67.0" text="Delete" />
-                                                      <TableColumn fx:id="columnEditUser" prefWidth="79.0" text="Edit" />
+                                                      <TableColumn fx:id="columnEditUser" prefWidth="82.0" text="Edit" />
+                                                  </columns>
+                                                </TableView>
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="anchorPaneProducts" prefHeight="530.0" prefWidth="652.0" AnchorPane.bottomAnchor="243.20000000000002" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <Pane fx:id="panelCreateProduct" prefHeight="554.0" prefWidth="652.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="-269.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                <TextField fx:id="priceTextField" layoutX="30.0" layoutY="310.0" prefHeight="25.0" prefWidth="66.0" promptText="price" />
+                                                <TextField fx:id="quantityTextField" layoutX="114.0" layoutY="310.0" prefHeight="25.0" prefWidth="66.0" promptText="quantity" />
+                                                <JFXButton fx:id="browseImageButton" layoutX="371.0" layoutY="461.0" style="-fx-background-color: #EEEEEE; -fx-background-radius: 5;" styleClass="comboBox" stylesheets="@style/style.css" text="Browse Image" />
+                                                <JFXButton fx:id="handleProductCreateButtonAction" layoutX="64.0" layoutY="461.0" style="-fx-background-color: #EEEEEE; -fx-background-radius: 5;" styleClass="comboBox" stylesheets="@style/style.css" text="Create Product" textFill="#4e961c">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></JFXButton>
+                                                <JFXComboBox fx:id="unitComboBox" focusColor="#405aa800" layoutX="32.0" layoutY="351.0" prefHeight="25.0" prefWidth="152.0" promptText="  Choose unit" style="-fx-background-radius: 5; -fx-background-color: #EEEEEE;" styleClass="comboBox" stylesheets="@style/style.css" unFocusColor="#dc444400" />
+                                                <JFXComboBox fx:id="categoryComboBox" focusColor="#405aa800" layoutX="31.0" layoutY="397.0" prefHeight="25.0" prefWidth="155.0" promptText="  Choose category" style="-fx-background-color: #EEEEEE; -fx-background-radius: 5;" styleClass="comboBox" stylesheets="@style/style.css" unFocusColor="#4d4d4d00" />
+                                                <ImageView fx:id="productImageView" fitHeight="150.0" fitWidth="203.0" layoutX="317.0" layoutY="261.0" pickOnBounds="true" preserveRatio="true" />
+                                                <TextField fx:id="productNameTextField" layoutX="24.0" layoutY="262.0" prefHeight="28.0" prefWidth="247.0" promptText="Product Name" />
+                                                <TextField fx:id="imagePathTextField" layoutX="313.0" layoutY="422.0" prefHeight="25.0" prefWidth="208.0" />
+                                             </children>
+                                          </Pane>
+                                          <GridPane prefHeight="226.0" prefWidth="565.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <TableView fx:id="productTable" editable="true" prefHeight="226.0" prefWidth="585.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+                                                  <columns>
+                                                    <TableColumn fx:id="idProductColumn" prefWidth="26.0" text="ID" />
+                                                    <TableColumn fx:id="productNameColumn" prefWidth="134.0" text="Product Name" />
+                                                      <TableColumn fx:id="productQtyColumn" minWidth="0.0" prefWidth="37.0" text="QTY" />
+                                                      <TableColumn fx:id="productPriceColumn" prefWidth="45.0" text="Price" />
+                                                      <TableColumn fx:id="productUnitColumn" prefWidth="76.0" text="Unit" />
+                                                      <TableColumn fx:id="productCategoryColumn" prefWidth="68.0" text="Category" />
+                                                      <TableColumn fx:id="productImageColumn" prefWidth="83.0" text="Image" />
+                                                      <TableColumn fx:id="columnDeleteProduct" prefWidth="77.0" text="Delete" />
+                                                      <TableColumn fx:id="columnEditProduct" text="Edit" />
                                                   </columns>
                                                 </TableView>
                                              </children>
@@ -287,7 +287,7 @@
                                                 <Label layoutX="20.0" layoutY="18.0" text="Today" />
                                              </children>
                                           </Pane>
-                                          <GridPane layoutX="11.0" layoutY="267.0" prefHeight="263.0" prefWidth="624.0">
+                                          <GridPane layoutX="11.0" layoutY="267.0" prefHeight="263.0" prefWidth="636.0">
                                              <columnConstraints>
                                                 <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                                              </columnConstraints>
@@ -295,14 +295,14 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                              </rowConstraints>
                                              <children>
-                                                <TableView fx:id="salesTable" editable="true" prefHeight="270.0" prefWidth="615.0">
+                                                <TableView fx:id="salesTable" editable="true" prefHeight="263.0" prefWidth="636.0">
                                                    <columns>
                                                       <TableColumn fx:id="salesOrderColumn" prefWidth="108.0" text="Order No." />
                                                       <TableColumn fx:id="productSalesNameColumn" minWidth="0.0" prefWidth="215.0" text="Product Name" />
                                                       <TableColumn fx:id="quantityColumn" prefWidth="55.0" text="Qty" />
                                                       <TableColumn fx:id="priceColumn" prefWidth="47.0" text="Price" />
                                                       <TableColumn fx:id="dateColumn" prefWidth="100.0" text="Date" />
-                                                      <TableColumn fx:id="userColumn" prefWidth="98.0" text="User" />
+                                                      <TableColumn fx:id="userColumn" prefWidth="89.0" text="User" />
                                                    </columns>
                                                 </TableView>
                                              </children>

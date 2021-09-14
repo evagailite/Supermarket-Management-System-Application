@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import main.finalproject.Main;
@@ -52,6 +53,8 @@ public class ShopController extends ViewController implements Initializable {
     private Button backToTheShopButton;
     @FXML
     private HBox hbox;
+    @FXML
+    private MenuButton menuButton;
     private List<Product> productList = new ArrayList<>();
     private ProductService productService = new ProductService();
     private ShopService shopService = new ShopService();
@@ -210,6 +213,7 @@ public class ShopController extends ViewController implements Initializable {
         if (productList.isEmpty()) {
             productNotFoundPane.toFront();
             productNotFoundPane.setVisible(true);
+            menuButton.setVisible(false);
 
             backToTheShopButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -226,6 +230,7 @@ public class ShopController extends ViewController implements Initializable {
         } else {
             productNotFoundPane.toBack();
             productNotFoundPane.setVisible(false);
+            menuButton.setVisible(true);
         }
     }
 
@@ -258,6 +263,19 @@ public class ShopController extends ViewController implements Initializable {
         }
         placeProductsInTheShop(productList);
     }
+
+    @FXML
+    void sortByDefault(ActionEvent event) {
+        gridpane.getChildren().retainAll(gridpane.getChildren().get(0));
+        productList.clear();
+        try {
+            productList.addAll(getData(productService.getAllProductsForShop()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        placeProductsInTheShop(productList);
+    }
+
 
     private void resetWarehouseQuantity() {
         if (!checkIfBasketIsEmpty()) {

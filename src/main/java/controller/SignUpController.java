@@ -70,7 +70,6 @@ public class SignUpController extends ViewController implements Initializable {
                     }
                 } catch (Exception e) {
                     showAlert("Registration Failed", e.getMessage(), Alert.AlertType.ERROR);
-                    e.printStackTrace();
                 }
             }
         });

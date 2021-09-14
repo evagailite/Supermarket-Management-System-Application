@@ -2,8 +2,6 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -86,7 +83,7 @@ public class AdministratorPanelController extends ViewController implements Init
     @FXML
     private JFXComboBox<Category> categoryComboBox;
     @FXML
-    private JFXButton handleCreateButtonAction;
+    private JFXButton handleProductCreateButtonAction;
     @FXML
     private TextField imagePathTextField;
     @FXML
@@ -168,7 +165,8 @@ public class AdministratorPanelController extends ViewController implements Init
     private ProductService productService = new ProductService();
     private SaleService saleService = new SaleService();
     private List<Sale> topThreeProducts = new ArrayList<>();
-    private final DecimalFormat df = new DecimalFormat("0.00");
+    private String pattern = "#0.##";
+    private final DecimalFormat df = new DecimalFormat(pattern);
 
     @FXML
     void handleButtonAction(ActionEvent event) {
@@ -192,7 +190,6 @@ public class AdministratorPanelController extends ViewController implements Init
             e.printStackTrace();
         }
         XYChart.Series set = new XYChart.Series();
-
 
         for (int i = 0; i < topThreeProducts.size(); i++) {
             String x = topThreeProducts.get(i).getProductName().trim();
@@ -218,11 +215,6 @@ public class AdministratorPanelController extends ViewController implements Init
             products.add(sale);
         }
         return products;
-    }
-
-    private void showCurrentDate() {
-        Date date = new Date();
-        dateDashboardLabel.setText(String.valueOf(date));
     }
 
     private String getCurrentDate() {
@@ -360,11 +352,11 @@ public class AdministratorPanelController extends ViewController implements Init
         columnEmail.setOnEditCommit(e -> {
             e.getTableView().getItems().get(e.getTablePosition().getRow()).setEmail(e.getNewValue());
         });
-
-        columnBudget.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
-        columnBudget.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setBudget(e.getNewValue());
-        });
+//
+//        columnBudget.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+//        columnBudget.setOnEditCommit(e -> {
+//            e.getTableView().getItems().get(e.getTablePosition().getRow()).setBudget(e.getNewValue());
+//        });
 
         columnUserType.setCellFactory(ComboBoxTableCell.forTableColumn(UserType.values()));
         columnUserType.setOnEditCommit(e -> {
@@ -394,52 +386,6 @@ public class AdministratorPanelController extends ViewController implements Init
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public void styleRowColor() {
-        Callback<TableColumn<Product, Double>, TableCell<Product, Double>> cellFactory
-                = //
-                new Callback<TableColumn<Product, Double>, TableCell<Product, Double>>() {
-                    @Override
-                    public TableCell<Product, Double> call(final TableColumn<Product, Double> param) {
-                        final TableCell<Product, Double> cell = new TableCell<Product, Double>() {
-
-                            @Override
-                            public void updateItem(Double item, boolean empty) {
-                                super.updateItem(item, empty);
-                                if (empty) {
-                                    setGraphic(null);
-                                    setText(null);
-                                } else {
-                                    setText(String.valueOf(item));
-                                    TableRow<Product> row = getTableRow();
-                                    if (row.getItem().getQuantity() == 0.0) {
-                                        row.getStyleClass().clear();
-                                        row.setStyle("-fx-background-color: red");
-                                        row.getStyleClass().add("-fx-background-color: red");
-                                        setText(String.valueOf(item));
-                                    }
-                                    if (row.getItem().getQuantity() == 1) {
-                                        row.getStyleClass().clear();
-                                        row.setStyle("-fx-background-color: orange");
-                                        setText(String.valueOf(item));
-//                                        row.getStyleClass().add("orange-row");
-                                    }
-//                                    if (row.getItem().getColor().equals("green")) {
-//                                        row.getStyleClass().clear();
-//                                        row.getStyleClass().add("green-row");
-//                                    }
-//                                    if (row.getItem().getColor().equals("yellow")) {
-//                                        row.getStyleClass().clear();
-//                                        row.getStyleClass().add("yellow-row");
-//                                    }
-                                }
-                            }
-                        };
-                        return cell;
-                    }
-                };
-        productQtyColumn.setCellFactory(cellFactory);
     }
 
     private void addEditButtonInTheProductTable() {
@@ -541,6 +487,7 @@ public class AdministratorPanelController extends ViewController implements Init
                                 }
                                 showAlert("Delete", "You have deleted product with id: " + product.getId(), Alert.AlertType.INFORMATION);
                             }
+
                         });
                         setGraphic(deleteButton);
                         setText(null);
@@ -554,24 +501,21 @@ public class AdministratorPanelController extends ViewController implements Init
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        productImageView.setVisible(false);
         showFirstPage();
-
         setComboBoxValues();
-
 
         productsButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 anchorPaneProducts.toFront();
                 showAllProducts();
-                styleRowColor();
             }
         });
 
         orderButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
             }
         });
 
@@ -584,10 +528,8 @@ public class AdministratorPanelController extends ViewController implements Init
         });
 
         buttonLoggedOut.setOnAction(new EventHandler<ActionEvent>() {
-            //action happens after click on it
             @Override
             public void handle(ActionEvent event) {
-                //if users logged out
                 try {
                     userService.changeScene(event, "login");
                 } catch (IOException e) {
@@ -596,33 +538,39 @@ public class AdministratorPanelController extends ViewController implements Init
             }
         });
 
-        handleCreateButtonAction.setOnAction(new EventHandler<ActionEvent>() {
+        handleProductCreateButtonAction.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Product product = new Product(
-                        productNameTextField.getText(),
-                        Double.parseDouble(priceTextField.getText()),
-                        Double.parseDouble(quantityTextField.getText()),
-                        unitComboBox.getSelectionModel().getSelectedItem().toString(),
-                        categoryComboBox.getSelectionModel().getSelectedItem().toString(),
-                        imagePathTextField.getText()
-                );
                 try {
-                    productService.createProduct(product);
-                    clearProductTextFields();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                    if (productNameTextField.getText().isEmpty() || priceTextField.getText().isEmpty() || quantityTextField.getText().isEmpty() ||
+                            imagePathTextField.getText().isEmpty() || unitComboBox.getSelectionModel().getSelectedItem() == null || categoryComboBox.getSelectionModel().getSelectedItem() == null) {
+                        showAlert("Error", "Please fill all fields", Alert.AlertType.ERROR);
+                    } else {
+                        Product product = new Product(
+                                productNameTextField.getText(),
+                                Double.parseDouble(priceTextField.getText()),
+                                Double.parseDouble(quantityTextField.getText()),
+                                unitComboBox.getSelectionModel().getSelectedItem().toString(),
+                                categoryComboBox.getSelectionModel().getSelectedItem().toString(),
+                                imagePathTextField.getText()
+                        );
+                        productService.createProduct(product);
+                        clearProductTextFields();
+                    }
+                } catch (Exception e) {
+                    showAlert("Error", e.getMessage(), Alert.AlertType.ERROR);
                 }
-
                 showAllProducts();
-                styleRowColor();
                 getStatistic();
+                productImageView.setVisible(false);
             }
         });
 
         browseImageButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                productImageView.setVisible(true);
+                productImageView.setImage(null);
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.setTitle("Open File Dialog");
                 fileChooser.getExtensionFilters().addAll(
@@ -647,7 +595,6 @@ public class AdministratorPanelController extends ViewController implements Init
             public void handle(ActionEvent event) {
                 SignUpController signUpController = new SignUpController();
                 try {
-
                     if (createUsernameTextField.getText().isEmpty() || createNameTextField.getText().isEmpty() || createEmailTextField.getText().isEmpty() ||
                             passwordTextField.getText().isEmpty() || userTypeComboBox.getSelectionModel().getSelectedItem() == null) {
                         showAlert("Error", "Please fill all fields", Alert.AlertType.ERROR);
@@ -668,8 +615,7 @@ public class AdministratorPanelController extends ViewController implements Init
                         clearUserTextFields();
                     }
                 } catch (Exception e) {
-                    showAlert("Something went wrong", e.getMessage(), Alert.AlertType.ERROR);
-                    e.printStackTrace();
+                    showAlert("Error", e.getMessage(), Alert.AlertType.ERROR);
                 }
                 showAllUsers();
                 getStatistic();
@@ -730,7 +676,7 @@ public class AdministratorPanelController extends ViewController implements Init
             userCountLabel.setText(String.valueOf(userService.getUserCount()));
             productCountLabel.setText(String.valueOf(productService.getProductCount()));
             orderCountLabel.setText(String.valueOf(saleService.getSalesCount()));
-            salesCountLabel.setText(String.valueOf(df.format(saleService.getAllSalesTotal())));
+            salesCountLabel.setText(String.format(Locale.ENGLISH, "%.2f", saleService.getAllSalesTotal()));
         } catch (SQLException e) {
             e.printStackTrace();
         }
