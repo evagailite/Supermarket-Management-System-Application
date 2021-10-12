@@ -18,7 +18,7 @@ Java Dekstop Application Screenshots:
 <img src="images/noProductFoundPage.PNG">
 <img src="images/emptyPurchaseHistory.PNG">
 <img src="images/customerEmptyBasketView.PNG">
-<img src="images/"adminDashboard.PNG>
-<img src="images/"adminProduct.PNG">
-<img src="images/"adminUser.PNG">
-<img src="images/"salesManagerView.PNG">
+<img src="images/adminDashboard.PNG">
+<img src="images/adminProduct.PNG">
+<img src="images/adminUser.PNG">
+<img src="images/salesManagerView.PNG">
