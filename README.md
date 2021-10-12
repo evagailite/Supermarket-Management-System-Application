@@ -5,6 +5,8 @@ The application helps effectively organize warehouse operations for placing/main
 The system provides an easy solution for customers to buy the products without going to the physical store. The system is easy to use with a user-friendly interface.
 More information in the Software Requirements Specification document.
 
+Information has been stored using MySql database.
+
 Java Dekstop Application Screenshots:
 <img src="images/loginPage.PNG">
 <img src="images/signUpPage.PNG">
